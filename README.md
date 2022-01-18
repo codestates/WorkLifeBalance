@@ -16,8 +16,8 @@
 | [곽명우](https://github.com/citysquirrel) | Frontend |
 | ---- | --------- |
 | [**이승연**](https://github.com/torangL) | **Backend**  |
-| **임지호** | **Frontend** |
-| **전상인** | **Backend**  |
+| [**임지호**](https://github.com/JHL71) | **Frontend** |
+| [**전상인**](https://github.com/jeonsangin) | **Backend**  |
 
 ## For project details
 [**checkout WIKI**](https://github.com/codestates/WorkLifeBalance/wiki)
