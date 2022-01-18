@@ -13,7 +13,7 @@
 ## 프로젝트 제작자
 ### TEAM Chickabiddy
 
-| 곽명우 | Frontend |
+| [곽명우](https://github.com/citysquirrel) | Frontend |
 | ---- | --------- |
 | [**이승연**](https://github.com/torangL) | **Backend**  |
 | **임지호** | **Frontend** |
