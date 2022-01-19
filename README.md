@@ -4,12 +4,12 @@
 
 ## 사용한 기술
 ### FRONT
-<img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=333"/>
+<img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=0D1F23"/>
 
 
 ### BACK
-<img alt="Node" src ="https://img.shields.io/badge/Node-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=333"/>
-<img alt="Express" src ="https://img.shields.io/badge/Express-006600.svg?&style=for-the-badge&logo=Express&logoColor=333"/>
+<img alt="Node" src ="https://img.shields.io/badge/Node-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=939"/>
+<img alt="Express" src ="https://img.shields.io/badge/Express-006600.svg?&style=for-the-badge&logo=Express&logoColor=DAE9DA"/>
 
 
 
