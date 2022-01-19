@@ -1,10 +1,10 @@
-
 function Header () {
-    return (
-        <>
-        해더애오
-        </>
-    )
+  return (
+    <>
+      {/* */}
+      
+    </>
+  );
 }
 
 export default Header;
