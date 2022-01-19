@@ -14,8 +14,8 @@
 
 
 ## Architecture
-### flow chart
-111
+![architecture01](https://user-images.githubusercontent.com/86960007/150040492-f8ef2b6f-4d8e-4f37-bb02-380d4193e179.png)
+
 
 ## 프로젝트 제작자
 ### TEAM Chickabiddy
