@@ -1,24 +1,27 @@
-/*
-* DB schema
-https://dbdiagram.io/d/61e5281150665b330437beec
-
- */
-
 'use strict';
-const { Model } = require('sequelize');
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
+      // define association here
     }
   }
-  Task.init(
-    {
-      // ! schema 작성 
-    },
-    {
-      sequelize,
-      modelName: 'Task',
-    }
-  );
+  Task.init({
+    userId: DataTypes.STRING,
+    tag: DataTypes.STRING,
+    task: DataTypes.STRING,
+    deadline: DataTypes.DATE,
+    check: DataTypes.BOOLEAN
+  }, {
+    sequelize,
+    modelName: 'Task',
+  });
   return Task;
 };
