@@ -1,29 +1,26 @@
 import './App.css';
-import { Header, Footer } from './components'
-import { Home, Dashboard, Profile } from './pages'
-import { Redirect } from 'react-router-dom'
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
+import { Routes, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 
-
-
-function App() {
+function App () {
   return (
     <Router>
-      <Header />
 
-      <Route exact={true} path="/">
-        <Home />
-      </Route>
-      <Route path="/dashboard">
-        <Dashboard />
-      </Route>
-      <Route path="/profile">
+      <Header />
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/profile' element={<Profile />} />
         {/* {isLogin ? <Redirect to='' */}
-        <Profile />
-      </Route>
-      
+      </Routes>
       <Footer />
+
     </Router>
-      
+
   );
 }
 
