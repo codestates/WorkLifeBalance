@@ -1,5 +1,7 @@
 # Work-Life Balance 
 
+<img src="https://user-images.githubusercontent.com/86960007/150037957-9830ed6d-45fc-40ff-b63d-9540590916b6.png" width="300" height="300">
+
 ## 사용한 기술
 ### FRONT
 <img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=333"/>
