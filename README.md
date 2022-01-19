@@ -23,6 +23,7 @@
 ## :toolbox: 사용한 기술
 ### :triangular_flag_on_post: FRONT
 <img alt="React" src="https://img.shields.io/static/v1?logo=React&logoColor=61DAFB&label=Front&message=React&color=61DAFB&style=for-the-badge" />
+<img alt="Redux" src="https://img.shields.io/static/v1?logo=Redux&logoColor=9579DB&label=Front&message=Redux&color=9579DB&style=for-the-badge" />
 
 ### :black_flag: BACK
 <img alt="Node" src="https://img.shields.io/static/v1?logo=Node.js&logoColor=339933&label=Back&message=Node&color=339933&style=for-the-badge" />
