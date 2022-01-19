@@ -20,23 +20,23 @@
 
 <i>시간에 쫓기지 말고 주도적으로 삶을 가꾸어 나가보세요!</i> :smile:
 
-## 사용한 기술
-### FRONT
+## :toolbox: 사용한 기술
+### :triangular_flag_on_post: FRONT
 <img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=0D1F23"/>
 
 
-### BACK
+### :black_flag: BACK
 <img alt="Node" src ="https://img.shields.io/badge/Node-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=939"/>
 <img alt="Express" src ="https://img.shields.io/badge/Express-006600.svg?&style=for-the-badge&logo=Express&logoColor=DAE9DA"/>
 
 
 
-## Architecture
+## :screwdriver: Architecture
 ![architecture01](https://user-images.githubusercontent.com/86960007/150040492-f8ef2b6f-4d8e-4f37-bb02-380d4193e179.png)
 
 
-## 프로젝트 제작자
-### TEAM Chickabiddy
+## :wrench: 프로젝트 제작자
+### :baby_chick: TEAM Chickabiddy
 
 | [곽명우](https://github.com/citysquirrel) | :triangular_flag_on_post: Frontend |
 | ---- | --------- |
@@ -44,5 +44,5 @@
 | [**임지호**](https://github.com/JHL71) | :triangular_flag_on_post: **Frontend** |
 | [**전상인**](https://github.com/jeonsangin) | :black_flag: **Backend**  |
 
-## For project details
+## :gear: For project details
 :point_right: [**checkout WIKI**](https://github.com/codestates/WorkLifeBalance/wiki) :point_left:
