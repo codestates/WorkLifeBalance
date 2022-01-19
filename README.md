@@ -22,13 +22,11 @@
 
 ## :toolbox: 사용한 기술
 ### :triangular_flag_on_post: FRONT
-<img alt="React" src ="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=0D1F23"/>
-
+<img alt="React" src="https://img.shields.io/static/v1?logo=React&logoColor=61DAFB&label=Front&message=React&color=61DAFB&style=for-the-badge" />
 
 ### :black_flag: BACK
-<img alt="Node" src ="https://img.shields.io/badge/Node-339933.svg?&style=for-the-badge&logo=Node.js&logoColor=939"/>
-<img alt="Express" src ="https://img.shields.io/badge/Express-006600.svg?&style=for-the-badge&logo=Express&logoColor=DAE9DA"/>
-
+<img alt="Node" src="https://img.shields.io/static/v1?logo=Node.js&logoColor=339933&label=Back&message=Node&color=339933&style=for-the-badge" />
+<img alt="Express" src="https://img.shields.io/static/v1?logo=Express&logoColor=DAE9DA&label=Back&message=Express&color=DAE9DA&style=for-the-badge" />
 
 
 ## :screwdriver: Architecture
