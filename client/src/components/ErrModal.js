@@ -40,7 +40,7 @@ const View = styled.div.attrs(props => ({
 function ErrModal ({ message, show, setShow }) {
   const handleClick = () => {
     setShow(!show);
-  }
+  };
   return (
     <Container>
       <Canvas onClick={handleClick}>

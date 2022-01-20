@@ -1,7 +1,7 @@
-import Footer from "./Footer";
-import Header from "./Header";
-import LoginModal from "./LoginModal";
-import Nav from "./Nav";
-// import Task from "./Task"
+import Footer from './Footer';
+import Header from './Header';
+import LoginModal from './LoginModal';
+import Nav from './Nav';
+import Task from './Task';
 
-export { Header, Nav, Footer, LoginModal };
+export { Header, Nav, Footer, LoginModal, Task };
