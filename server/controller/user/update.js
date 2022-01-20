@@ -66,7 +66,7 @@ module.exports = {
         "name": ,
         "password": ,
         "createdAt": ,
-        "updatedAt": 
+        "updatedAt":
     },
     "message": "user info successfully modified"
 }
