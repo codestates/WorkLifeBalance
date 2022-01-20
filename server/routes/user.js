@@ -15,6 +15,8 @@ router.post('/check', userController.check.post);
 router.post('/delete', userController.delete.post);
 
 // POST /user/update
+router.post('/update', userController.update.post);
+
 // GET /user/info
 
 module.exports = router;

@@ -48,10 +48,6 @@ module.exports = {
 
 /*
 * API 수정 요청: /user/delete
-! <Req>
-? Body
-todo -> task
-
 ! <Res>
 ? 401: Not Authorized
 {
