@@ -1,5 +1,4 @@
-/*
-* API
+/* API
 https://undefined-125.gitbook.io/wlb-api-documents/reference/work-life-balance
 
  TODO: /user/login (POST)
