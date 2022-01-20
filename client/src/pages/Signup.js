@@ -90,13 +90,12 @@ function Signup () {
   };
 
   const validPw = (item) => {
-    // /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@S!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
     const regExp = /^.{4,20}$/;
     return regExp.test(item);
   };
 
   const validEmail = (item) => {
-    const regExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
     return regExp.test(item);
   };
 
@@ -146,9 +145,10 @@ function Signup () {
     } else if (!checkEm) {
       emailRef.current.focus();
     } else {
-      // const res = await axios.post(`http://localhost:4000/user/signup`, { userId, password, name, email });
-
-      // navigate('/');
+      const res = await axios.post('http://localhost:4000/user/signup', { userId, password, name, email });
+      if (res.data) {
+        navigate('/');
+      }
     }
   };
 
