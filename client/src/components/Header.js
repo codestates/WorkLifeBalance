@@ -1,8 +1,8 @@
-import axios from "axios";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { LoginModal } from "./";
-import { useNavigate } from "react-router";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { LoginModal } from './';
+import { useNavigate } from 'react-router';
 
 // require("dotenv").config();
 
@@ -13,18 +13,25 @@ const Container = styled.div`
   /* flex-direction: row; */
   border-bottom: 1px solid #000;
   text-decoration: none;
+  h1 {
+    margin: 0px;
+  }
+  a {
+    text-decoration: none;
+  }
 `;
 const Title = styled.h1`
   flex: 3 0 0;
   font-size: 3.5em;
-  text-align: center;
+  text-align: left;
+  padding-left: 50px;
   color: violet;
 `;
 
 const ControlBox = styled.div`
   display: flex;
   flex: 1 0 0;
-  align-items: flex-end;
+  align-items: center;
   .sub {
     margin: 1px;
     background-color: #ccc;
@@ -36,7 +43,7 @@ const ControlBox = styled.div`
   }
 `;
 
-function Header({ showLogin, setShowLogin, isLogin, setIsLogin }) {
+function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
   const navigate = useNavigate();
   const handleLoginModal = () => {
     setShowLogin(true);
@@ -46,58 +53,59 @@ function Header({ showLogin, setShowLogin, isLogin, setIsLogin }) {
     //! test 진행 후 삭제할 것
 
     setIsLogin(false);
-    navigate("/");
+    navigate('/');
 
     //! --------------------------->
-    axios.post("https://localhost:4000/user/logout").then((res) => {
+    axios.post('https://localhost:4000/user/logout').then((res) => {
       // 유저 정보 핸들링 함수
       setIsLogin(false);
-      navigate("/");
+      navigate('/');
     });
   };
 
   return (
     <Container>
-      {/* 로고 */}
-
-      {/* 제목 */}
       <Title>
-        <Link to="/">
+        <Link to='/'>
           <img
-            className="logo"
-            src={process.env.PUBLIC_URL + "/logo.png"}
-            height="72px"
-            alt="로고"
-          />{" "}
+            className='logo'
+            src={process.env.PUBLIC_URL + '/logo.png'}
+            height='72px'
+            alt='로고'
+          />{' '}
           Work Life Balance
         </Link>
       </Title>
       {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
 
-      {isLogin ? (
-        <ControlBox>
-          <div className="sub logout" onClick={handleLogout}>
-            로그아웃
-          </div>
-        </ControlBox>
-      ) : (
-        <ControlBox>
-          <div className="sub login" onClick={handleLoginModal}>
-            로그인
-          </div>
-          <div className="sub signup">
-            <Link to="/signup">회원가입</Link>
-          </div>
-        </ControlBox>
-      )}
+      {isLogin
+        ? (
+          <ControlBox>
+            <div className='sub logout' onClick={handleLogout}>
+              로그아웃
+            </div>
+          </ControlBox>
+          )
+        : (
+          <ControlBox>
+            <div className='sub login' onClick={handleLoginModal}>
+              로그인
+            </div>
+            <div className='sub signup'>
+              <Link to='/signup'>회원가입</Link>
+            </div>
+          </ControlBox>
+          )}
 
-      {showLogin ? (
-        <LoginModal
-          setShowLogin={setShowLogin}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-        />
-      ) : null}
+      {showLogin
+        ? (
+          <LoginModal
+            setShowLogin={setShowLogin}
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+          />
+          )
+        : null}
     </Container>
   );
 }

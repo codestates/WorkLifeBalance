@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Body = styled.div`
   display: inline-block;
+  flex: 1 0 125px;
   border-right: 1px solid black;
   min-width: 125px;
   max-width: 205px;
@@ -22,19 +23,19 @@ const List = styled.li`
   margin: 10px 5px;
 `;
 
-function Nav() {
+function Nav () {
   return (
     <Body>
       <Container>
         <ol>
           <List>
-            <a href="#">Home</a>
+            <a href='/'>Home</a>
           </List>
           <List>
-            <a href="#">Dashboard</a>
+            <a href='/dashboard'>Dashboard</a>
           </List>
           <List>
-            <a href="#">Profile</a>
+            <a href='/profile'>Profile</a>
           </List>
         </ol>
       </Container>

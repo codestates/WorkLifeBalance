@@ -1,4 +1,4 @@
-function Footer() {
+function Footer () {
   return <footer>푸터애오</footer>;
 }
 
