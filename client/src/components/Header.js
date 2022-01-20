@@ -4,6 +4,8 @@ import styled from "styled-components";
 import LoginModal from "./LoginModal";
 import { useNavigate } from "react-router";
 
+// require("dotenv").config();
+
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -41,7 +43,13 @@ function Header({ showLogin, setShowLogin, isLogin, setIsLogin }) {
   };
 
   const handleLogout = () => {
-    axios.post("https://localhost:4000/signout").then((res) => {
+    //! test 진행 후 삭제할 것
+
+    setIsLogin(false);
+    navigate("/");
+
+    //! --------------------------->
+    axios.post("https://localhost:4000/user/logout").then((res) => {
       // 유저 정보 핸들링 함수
       setIsLogin(false);
       navigate("/");
