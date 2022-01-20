@@ -6,7 +6,7 @@ const { taskController } = require('../controller/index');
 router.post('/create', taskController.create.post);
 
 // POST /task/update
-// router.post('/update', taskController.update.post);
+router.post('/update', taskController.update.post);
 
 // POST /task/delete
 // router.post('/delete', taskController.delete.post);
