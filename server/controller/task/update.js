@@ -18,18 +18,20 @@ module.exports = {
       });
 
       // 토큰의 ID가 가입이 된 ID인지(Users 모델에서 일치하는 ID가 있는지) 검색
-      const user = await Users.findOne({ where: { userId: tokenData } });
-      if (!user) { return res.status(401).send({ message: 'not authorized' }); }
-      else {
+      const user = await Users.findOne({
+        attributes: ['id', 'userId', 'email', 'name', 'createdAt', 'updatedAt'],
+        where: { userId: tokenData }
+      });
+      if (!user) { return res.status(401).send({ message: 'not authorized' }); } else {
         // 인증 후 Task 모델에 해당 userId로 task 수정
         const [id, tag, task, deadline] = [req.body.id, req.body.tag, req.body.task, req.body.deadline];
         const today = new Date();
         const updateTask = {
           tag: tag,
           task: task,
-          deadline: deadline || new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)       
-        }
-        const updated = await Task.update(updateTask, {
+          deadline: deadline || new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+        };
+        await Task.update(updateTask, {
           where: { id: id, userId: tokenData }
         });
         return res.status(200).send({
@@ -75,7 +77,7 @@ todo -> task
         "deadline": ,
         "check": ,
         "createdAt": ,
-        "updatedAt": 
+        "updatedAt":
     },
     "message": "ok"
 }
