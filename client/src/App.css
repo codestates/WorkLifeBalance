@@ -1,8 +1,16 @@
 .App {
+  display: flex;
   text-align: center;
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+}
+
+footer {
+  flex: 1 0 0;
+  border-top: 1px solid black;
+  color: #ccc;
+  text-align: right;
 }
 
 /* .App-logo {
