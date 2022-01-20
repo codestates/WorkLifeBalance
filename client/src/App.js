@@ -8,8 +8,6 @@ import Signup from './pages/Signup';
 import { Routes, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import Signup from './pages/Signup'
-
 function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
