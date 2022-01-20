@@ -7,6 +7,7 @@ import ErrModal from '../components/ErrModal';
 const Container = styled.div`
   background: wheat;
   display: flex;
+  flex: 1 0 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -52,7 +53,7 @@ const Input = styled.input`
 const Desc = styled.div`
   font-size: 0.5rem;
   text-align: left;
-  color: ${props => props.valid ? 'green' : 'red'};
+  color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
 const Button = styled.button`
@@ -219,5 +220,4 @@ function Signup () {
     </Container>
   );
 }
-
 export default Signup;

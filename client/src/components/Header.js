@@ -13,18 +13,25 @@ const Container = styled.div`
   /* flex-direction: row; */
   border-bottom: 1px solid #000;
   text-decoration: none;
+  h1 {
+    margin: 0px;
+  }
+  a {
+    text-decoration: none;
+  }
 `;
 const Title = styled.h1`
   flex: 3 0 0;
   font-size: 3.5em;
-  text-align: center;
+  text-align: left;
+  padding-left: 50px;
   color: violet;
 `;
 
 const ControlBox = styled.div`
   display: flex;
   flex: 1 0 0;
-  align-items: flex-end;
+  align-items: center;
   .sub {
     margin: 1px;
     background-color: #ccc;
@@ -58,9 +65,6 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
 
   return (
     <Container>
-      {/* 로고 */}
-
-      {/* 제목 */}
       <Title>
         <Link to='/'>
           <img
