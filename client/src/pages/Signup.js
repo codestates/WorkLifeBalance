@@ -75,7 +75,7 @@ function Signup () {
   // const [userInfo, setUserInfo] = useState({ userId: '', password: '', repeat: '', name: '', email: '' });
   const [email, setEmail] = useState('');
   const [checkId, setCheckId] = useState(false);
-  const [checkMail, setCheckMail] = useState(false);
+  const [checkEm, setCheckEm] = useState(false);
   const [showId, setShowId] = useState(false);
   const [showEm, setShowEm] = useState(false);
   const userIdRef = useRef(null);
@@ -105,8 +105,9 @@ function Signup () {
     switch (type) {
       case 'userId':
         if (validId(data)) {
-          const res = await axios.post(`${process.env.url}/check`, { data, type });
-          if (res.data.message === 'is valid') {
+          const res = await axios.post(`http://localhost:4000/user/check`, { type, value: data });
+          console.log(res.data.message);
+          if (res.data.message === 'valid userId') {
             setCheckId(true);
           } else {
             setCheckId(false);
@@ -116,12 +117,12 @@ function Signup () {
         break;
       case 'email':
         if (validEmail(data)) {
-          // const res = await axios.post(`${process.env.url}/check`, { data, type });
-          // if (res.data.message === 'is valid') {
-          //   setCheckMail(true);
-          // } else {
-          //   setCheckMail(false);
-          // }
+          const res = await axios.post(`http://localhost:4000/user/check`, { type, value: data });
+          if (res.data.message === 'valid email') {
+            setCheckEm(true);
+          } else {
+            setCheckEm(false);
+          }
           setShowEm(true);
         }
         break; 
@@ -143,22 +144,22 @@ function Signup () {
       emailRef.current.focus();
     } else if (!checkId) {
       userIdRef.current.focus();
-    } else if (!checkMail) {
+    } else if (!checkEm) {
       emailRef.current.focus();
     } else {
       // const res = await axios.post(`http://localhost:4000/user/signup`, { userId, password, name, email });
-      // if (res.status(201)) {
-
-      // }
-      navigate('/');
+      
+      // navigate('/');
     }
   }
 
   return (
     <Container>
       <Contents>
-        { showId ? <ErrModal message={'이미 사용중인 아이디입니다.'} show={showId} setShow={setShowId}/> : <></> }
-        { showEm ? <ErrModal message={'이미 사용중인 이메일입니다.'} show={showEm} setShow={setShowEm} /> : <></>}
+        { showId ? checkId ? <ErrModal message={'사용 가능한 아이디입니다.'} show={showId} setShow={setShowId}/> : 
+        <ErrModal message={'이미 사용중인 아이디입니다.'} show={showId} setShow={setShowId}/> : <></> }
+        { showEm ? checkEm ? <ErrModal message={'사용 가능한 이메일입니다.'} show={showEm} setShow={setShowEm}/> :
+        <ErrModal message={'이미 사용중인 이메일입니다.'} show={showEm} setShow={setShowEm}/> : <></>}
         <Box>
           <Title>아이디</Title>
           <InputBox>
