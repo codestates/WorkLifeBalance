@@ -4,7 +4,6 @@ const { userController } = require('../controller/index');
 
 // POST /user/login
 // ? router.post('/login', userController.login.post);
-
 // POST /user/logout
 // POST /user/signup
 
@@ -18,5 +17,6 @@ router.post('/delete', userController.delete.post);
 router.post('/update', userController.update.post);
 
 // GET /user/info
+router.get('/info', userController.info.get);
 
 module.exports = router;
