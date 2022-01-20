@@ -9,9 +9,9 @@ module.exports = {
       where: { [type]: value }
     });
     if (!user) {
-      return res.status(200).send({ message: `valid ${type}` });
+      return res.status(201).send({ message: `valid ${type}` });
     } else {
-      return res.status(409).send({ message: 'already exists' });
+      return res.status(200).send({ message: 'already exists' });
     }
   }
 };
@@ -29,6 +29,11 @@ type -> Required element
 ! <Res>
 ? 200: OK
 {
-    "message": "valid userId / email"
+    "message": "already exists"
+}
+
+? 201: Created
+{
+  "message": "valid userId / email"
 }
 */
