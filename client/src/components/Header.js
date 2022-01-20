@@ -1,47 +1,96 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import LoginModal from './LoginModal';
+import axios from "axios";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import LoginModal from "./LoginModal";
+import { useNavigate } from "react-router";
 
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: flex-end; */
+  /* flex-direction: row; */
+  border-bottom: 1px solid #000;
+  text-decoration: none;
+`;
 const Title = styled.h1`
-    font-size: 3.5em;
-    text-align: center;
-    color: violet;
+  flex: 3 0 0;
+  font-size: 3.5em;
+  text-align: center;
+  color: violet;
 `;
 
 const ControlBox = styled.div`
+  display: flex;
+  flex: 1 0 0;
+  align-items: flex-end;
+  .sub {
+    margin: 1px;
+    background-color: #ccc;
+    text-align: center;
+    vertical-align: middle;
+    height: 25px;
+    width: 100px;
+    cursor: pointer;
+  }
 `;
 
-function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
+function Header({ showLogin, setShowLogin, isLogin, setIsLogin }) {
+  const navigate = useNavigate();
   const handleLoginModal = () => {
     setShowLogin(true);
   };
 
   const handleLogout = () => {
-    setIsLogin(false);
+    axios.post("https://localhost:4000/signout").then((res) => {
+      // 유저 정보 핸들링 함수
+      setIsLogin(false);
+      navigate("/");
+    });
   };
 
   return (
-    <>
+    <Container>
       {/* 로고 */}
 
       {/* 제목 */}
-      <Title><Link to='/'><img className='logo' src={process.env.PUBLIC_URL + '/logo.png'} height='72px' alt='로고' /> Work Life Balance</Link></Title>
+      <Title>
+        <Link to="/">
+          <img
+            className="logo"
+            src={process.env.PUBLIC_URL + "/logo.png"}
+            height="72px"
+            alt="로고"
+          />{" "}
+          Work Life Balance
+        </Link>
+      </Title>
       {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
 
-      {isLogin
-        ? <ControlBox>
-          <div className='logout' onClick={handleLogout}>로그아웃</div>
-        </ControlBox>
-        : <ControlBox>
-          <div className='login' onClick={handleLoginModal}>로그인</div>
-          <div className='signup'>
-            <Link to='/signup'>회원가입</Link>
+      {isLogin ? (
+        <ControlBox>
+          <div className="sub logout" onClick={handleLogout}>
+            로그아웃
           </div>
-        </ControlBox>}
+        </ControlBox>
+      ) : (
+        <ControlBox>
+          <div className="sub login" onClick={handleLoginModal}>
+            로그인
+          </div>
+          <div className="sub signup">
+            <Link to="/signup">회원가입</Link>
+          </div>
+        </ControlBox>
+      )}
 
-      {showLogin ? <LoginModal setShowLogin={setShowLogin} isLogin={isLogin} setIsLogin={setIsLogin} /> : null}
-
-    </>
+      {showLogin ? (
+        <LoginModal
+          setShowLogin={setShowLogin}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        />
+      ) : null}
+    </Container>
   );
 }
 
