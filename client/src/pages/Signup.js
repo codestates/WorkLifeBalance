@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { useState } from 'react'
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ErrModal from '../components/ErrModal';
 
 const Container = styled.div`
   background: wheat;
@@ -43,6 +45,7 @@ const InputBox = styled.div`
 `;
 
 const Input = styled.input`
+  height: 2rem;
   flex: 1;
 `
 
@@ -66,12 +69,21 @@ const Submit = styled.button`
 
 function Signup () {
   const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState('');
   const [repeat, setRepeat] = useState('');
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [checkId, setCheckId] = useState();
-  const [checkMail, setCheckMail] = useState();
+  const [name, setName] = useState('');
+  // const [userInfo, setUserInfo] = useState({ userId: '', password: '', repeat: '', name: '', email: '' });
+  const [email, setEmail] = useState('');
+  const [checkId, setCheckId] = useState(false);
+  const [checkMail, setCheckMail] = useState(false);
+  const [showId, setShowId] = useState(false);
+  const [showEm, setShowEm] = useState(false);
+  const userIdRef = useRef(null);
+  const emailRef = useRef(null);
+  const nameRef = useRef(null);
+  const passwordRef = useRef(null);
+  const repeatRef = useRef(null);
+  const navigate = useNavigate();
 
   const validId = (item) => {
     const regExp = /^[a-z0-9]{5,15}$/;
@@ -89,30 +101,69 @@ function Signup () {
     return regExp.test(item);
   }
   
-  const checkServer = async (data, type) => {
-    if (validId(data)) {
-      const res = await axios.post(`${process.env.url}/check`, { data, type });
-      switch (type) {
-        case 'userId':
-          setCheckId(true);
-          break;
-        case 'email':
-          setCheckMail(true);
-          break; 
-      }
-    } else {
+  const checkFromServer = async (data, type) => {
+    switch (type) {
+      case 'userId':
+        if (validId(data)) {
+          const res = await axios.post(`${process.env.url}/check`, { data, type });
+          if (res.data.message === 'is valid') {
+            setCheckId(true);
+          } else {
+            setCheckId(false);
+          }
+          setShowId(true);
+        }
+        break;
+      case 'email':
+        if (validEmail(data)) {
+          // const res = await axios.post(`${process.env.url}/check`, { data, type });
+          // if (res.data.message === 'is valid') {
+          //   setCheckMail(true);
+          // } else {
+          //   setCheckMail(false);
+          // }
+          setShowEm(true);
+        }
+        break; 
+    }
+  }
 
+  const sendToServer = async () => {
+    if (!userId) {
+      userIdRef.current.focus();
+    } else if (!password) {
+      passwordRef.current.focus();
+    } else if (!repeat) {
+      repeatRef.current.focus();
+    } else if (password !== repeat) {
+      repeatRef.current.focus();
+    } else if (!name) {
+      nameRef.current.focus();
+    } else if (!email) {
+      emailRef.current.focus();
+    } else if (!checkId) {
+      userIdRef.current.focus();
+    } else if (!checkMail) {
+      emailRef.current.focus();
+    } else {
+      // const res = await axios.post(`http://localhost:4000/user/signup`, { userId, password, name, email });
+      // if (res.status(201)) {
+
+      // }
+      navigate('/');
     }
   }
 
   return (
     <Container>
       <Contents>
+        { showId ? <ErrModal message={'이미 사용중인 아이디입니다.'} show={showId} setShow={setShowId}/> : <></> }
+        { showEm ? <ErrModal message={'이미 사용중인 이메일입니다.'} show={showEm} setShow={setShowEm} /> : <></>}
         <Box>
           <Title>아이디</Title>
           <InputBox>
-            <Input onChange={(e) => setUserId(e.target.value)} value={userId}></Input>
-            <Button onClick={() => checkServer(userId, 'userId')}>중복확인</Button>
+            <Input onChange={(e) => setUserId(e.target.value)} value={userId} ref={userIdRef}></Input>
+            <Button onClick={() => checkFromServer(userId, 'userId')}>중복확인</Button>
           </InputBox>
           { validId(userId) ? 
             <Desc valid={true}>사용할 수 있는 아이디입니다.</Desc> :
@@ -122,7 +173,7 @@ function Signup () {
         <Box>
           <Title>비밀번호</Title>
           <InputBox>
-            <Input type='password'onChange={(e) => setPassword(e.target.value)} value={password}></Input>
+            <Input type='password'onChange={(e) => setPassword(e.target.value)} value={password} ref={passwordRef}></Input>
           </InputBox>
           { validPw(password) ? 
             <Desc valid={true}>사용할 수 있는 비밀번호입니다.</Desc> :
@@ -132,7 +183,7 @@ function Signup () {
         <Box>
           <Title>비밀번호 확인</Title>
           <InputBox>
-            <Input type='password'onChange={(e) => setRepeat(e.target.value)} value={repeat}></Input>
+            <Input type='password'onChange={(e) => setRepeat(e.target.value)} value={repeat} ref={repeatRef}></Input>
           </InputBox>
           { password ? 
             password === repeat ? 
@@ -144,15 +195,15 @@ function Signup () {
         <Box>
           <Title>이름</Title>
           <InputBox>
-            <Input onChange={(e) => setName(e.target.value)} value={name}></Input>
+            <Input onChange={(e) => setName(e.target.value)} value={name} ref={nameRef}></Input>
           </InputBox>
           
         </Box>
         <Box>
           <Title>이메일</Title>
           <InputBox>
-            <Input onChange={(e) => setEmail(e.target.value)} value={email}></Input>
-            <Button onClick={() => checkServer(email, 'email')}>중복확인</Button>
+            <Input onChange={(e) => setEmail(e.target.value)} value={email} ref={emailRef}></Input>
+            <Button onClick={() => checkFromServer(email, 'email')}>중복확인</Button>
           </InputBox>
           { validEmail(email) ? 
             <Desc valid={true}>사용할 수 있는 email입니다.</Desc> :
@@ -160,7 +211,7 @@ function Signup () {
           }
         </Box>
       </Contents>
-      <Submit onClick={() => 'send'}>
+      <Submit onClick={sendToServer}>
         가입하기
       </Submit>
     </Container>
