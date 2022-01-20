@@ -18,9 +18,11 @@ module.exports = {
       });
 
       // 토큰의 ID가 가입이 된 ID인지(Users 모델에서 일치하는 ID가 있는지) 검색
-      const user = await Users.findOne({ where: { userId: tokenData } });
-      if (!user) { return res.status(401).send({ message: 'not authorized' }); } 
-      else {
+      const user = await Users.findOne({
+        attributes: ['id', 'userId', 'email', 'name', 'createdAt', 'updatedAt'],
+        where: { userId: tokenData }
+      });
+      if (!user) { return res.status(401).send({ message: 'not authorized' }); } else {
         // 인증 후 Task 모델에 해당 userId로 새 task 생성
         const [tag, task, deadline] = [req.body.tag, req.body.task, req.body.deadline];
         const today = new Date();
@@ -55,8 +57,6 @@ module.exports = {
 // ! 테스트용 더미데이터(ID: aaa, email: abc, name: ccc, password: 123)
 // INSERT INTO Users (id, userId, email, name, password, createdAt, updatedAt) VALUES (0, 'aaa', 'abc', 'ccc', '123', '2022-01-20 12:03:00', '2022-01-20 12:03:00');
 
-
-
 /*
 * API 수정 요청: /task/create
 ! <Req>
@@ -74,7 +74,7 @@ todo -> task
         "deadline": ,
         "check": ,
         "updatedAt": ,
-        "createdAt": 
+        "createdAt":
     },
     "message": "successfully created"
 }
