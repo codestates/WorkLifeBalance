@@ -57,14 +57,17 @@ const Desc = styled.div`
 `;
 
 const Button = styled.button`
-  background: gray;
+  background: rgb(85, 26, 139);
+  color: white;
 `;
 
 const Submit = styled.button`
-  background: black;
+  background: rgb(85, 26, 139);
   text-align: center;
   color: white;
-  width: 20rem;
+  height: 2rem;
+  width: 22rem;
+  margin: 1rem;
 `;
 
 function Signup () {
@@ -104,25 +107,30 @@ function Signup () {
     switch (type) {
       case 'userId':
         if (validId(data)) {
-          const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
-          console.log(res.data.message);
-          if (res.data.message === 'valid userId') {
-            setCheckId(true);
-          } else {
+          try {
+            const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
+            if (res.data.message === 'valid userId') {
+              setCheckId(true);
+            }
+            setShowId(true);
+          } catch {
             setCheckId(false);
+            setShowId(true);
           }
-          setShowId(true);
         }
         break;
       case 'email':
         if (validEmail(data)) {
-          const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
-          if (res.data.message === 'valid email') {
-            setCheckEm(true);
-          } else {
+          try {
+            const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
+            if (res.data.message === 'valid email') {
+              setCheckEm(true);
+            }
+            setShowEm(true);
+          } catch {
             setCheckEm(false);
+            setShowEm(true);
           }
-          setShowEm(true);
         }
         break;
     }
