@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Body = styled.div`
@@ -7,6 +8,13 @@ const Body = styled.div`
   min-width: 125px;
   max-width: 205px;
   height: 70vh;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    color: #aaa;
+  }
 `;
 
 const Container = styled.nav`
@@ -20,7 +28,16 @@ const Container = styled.nav`
 `;
 
 const List = styled.li`
+  display: flex;
+  height: 40px;
   margin: 10px 5px;
+
+  a {
+    flex: 1 0 0;
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding: 10px;
+  }
 `;
 
 function Nav () {
@@ -29,13 +46,13 @@ function Nav () {
       <Container>
         <ol>
           <List>
-            <a href='/'>Home</a>
+            <Link to='/'>Home</Link>
           </List>
           <List>
-            <a href='/dashboard'>Dashboard</a>
+            <Link to='/dashboard'>Dashboard</Link>
           </List>
           <List>
-            <a href='/profile'>Profile</a>
+            <Link to='/profile'>Profile</Link>
           </List>
         </ol>
       </Container>

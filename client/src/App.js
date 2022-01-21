@@ -15,7 +15,7 @@ function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
-    setIsLogin(true);
+    setIsLogin(true); //! 로그인 유지: 요청 정상 작동 확인 후 삭제필요
   }, []);
   return (
     <Router>
