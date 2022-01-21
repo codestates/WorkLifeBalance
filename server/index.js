@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 4000;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const models = require('./models');
-const cookieParsor = require('cookie-parser')
+const cookieParsor = require('cookie-parser');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
