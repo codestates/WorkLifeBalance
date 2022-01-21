@@ -1,8 +1,27 @@
 .App {
+  display: flex;
   text-align: center;
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+}
+
+footer {
+  flex: 1 0 0;
+  border-top: 1px solid black;
+  color: #ccc;
+  text-align: right;
+}
+
+.base-wrapper {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  border: 1px solid blue;
+}
+
+.route-wrapper {
+  flex: 50 0 0;
 }
 
 /* .App-logo {

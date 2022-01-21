@@ -9,7 +9,7 @@ router.post('/update', taskController.update.post);
 // POST /task/delete
 router.post('/delete', taskController.delete.post);
 // POST /task/check
-router.post('/check', taskController.checek.post);
+router.post('/check', taskController.check.post);
 // GET /task/list
 router.get('/list', taskController.list.get);
 
