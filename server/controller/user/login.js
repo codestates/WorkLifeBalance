@@ -1,14 +1,16 @@
+const crypto = require('crypto');
 const { Users } = require('../../models');
 const { generateAccessToken, sendAccessToken } = require('../tokenFunctions');
 
 module.exports = {
   post: (req, res) => {
     const { userId, password } = req.body;
+    const hashPassword = crypto.createHash('sha512').update(password).digest('hex');
 
     Users.findOne({
       where: {
         userId,
-        password
+        password: hashPassword
       }
     })
       .then((data) => {
