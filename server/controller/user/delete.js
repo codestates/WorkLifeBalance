@@ -1,31 +1,24 @@
 const { Task } = require('../../models');
 const { Users } = require('../../models');
-const jwt = require('jsonwebtoken');
+const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
   post: async (req, res) => {
     // Cookie Header 존재 여부, 유효한 JWT 토큰 탐색
-    const cookie = req.headers.cookie;
-    if (!cookie || !cookie.includes('jwt')) {
-      return res.status(401).send({ message: 'not authorized' });
+    // 토큰의 ID가 가입이 된 ID인지(Users 모델에서 일치하는 ID가 있는지) 검색
+    const userInfo = isAuthorized(req);
+    if (!userInfo) {
+      return res.status(400).send({ message: 'bad request' });
     } else {
-      const token = cookie.split(/[=;]/)[1];
-      const tokenData = jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
-        if (err) {
-          return res.status(400).send({ message: 'bad request' });
-        }
-        return decoded.userId;
+      const { userId } = userInfo;
+      const user = await Users.findOne({
+        where: { userId }
       });
 
-      // 토큰의 ID가 가입이 된 ID인지(Users 모델에서 일치하는 ID가 있는지) 검색
-      const user = await Users.findOne({
-        attributes: ['id', 'userId', 'email', 'name', 'createdAt', 'updatedAt'],
-        where: { userId: tokenData }
-      });
       if (!user) { return res.status(401).send({ message: 'not authorized' }); } else {
         // 인증 후 Users, Task 모델에서 해당 userId 관련 데이터 삭제
-        await Task.destroy({ where: { userId: tokenData } });
-        await Users.destroy({ where: { userId: tokenData } });
+        await Task.destroy({ where: { userId } });
+        await Users.destroy({ where: { userId } });
         return res.status(200).send({ message: 'successfully deleted' });
       }
     }
