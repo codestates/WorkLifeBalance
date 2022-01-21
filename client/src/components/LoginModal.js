@@ -98,21 +98,21 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
       //! --------------------------------------------//
       axios
         .post(
-          'https://localhost:4000/user/login',
+          'http://localhost:4000/user/login',
           {
             userId,
             password
           },
           {
-            headers: {
-              'Content-Type': 'application/json',
-              withCredentials: true
-            }
+            withCredentials: true
           }
         )
         .then((res) => {
           // 로그인 확인
-          axios.get('https://localhost:4000/user/info').then((res) => {
+          console.log(res);
+          axios.get('http://localhost:4000/user/info', {
+            withCredentials: true
+          }).then((res) => {
             // 유저 정보 저장 핸들러 함수 필요 (state)
             setIsLogin(true);
             setShowLogin(false);
