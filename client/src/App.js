@@ -1,6 +1,8 @@
 import './App.css';
+
 import { Header, Nav, Footer, LoginModal } from './components';
 import { Home, Signup, Profile, Dashboard, NotFound } from './pages';
+
 import {
   Navigate,
   Routes,
