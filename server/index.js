@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
+const models = require('./models');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 })
 app.use('/user', userRouter);
 app.use('/task', taskRouter);
+models.sequelize.sync({ force: false });
 
 app.listen(PORT, () => {
     console.log(`HTTP server listen on ${PORT}`)
