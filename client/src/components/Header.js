@@ -13,11 +13,16 @@ const Container = styled.div`
   /* flex-direction: row; */
   border-bottom: 1px solid #000;
   text-decoration: none;
+  margin-top: 5px;
   h1 {
     margin: 0px;
   }
   a {
+    color: black;
     text-decoration: none;
+  }
+  a:visited {
+    color: black;
   }
 `;
 const Title = styled.h1`

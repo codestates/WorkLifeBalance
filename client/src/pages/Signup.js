@@ -111,10 +111,7 @@ function Signup () {
         <Box>
           <Title>아이디</Title>
           <InputBox>
-            <Input
-              onChange={(e) => setUserId(e.target.value)}
-              value={userId}
-            />
+            <Input onChange={(e) => setUserId(e.target.value)} value={userId} />
             <Button onClick={() => checkServer(userId, 'userId')}>
               중복확인
             </Button>
@@ -172,19 +169,13 @@ function Signup () {
         <Box>
           <Title>이름</Title>
           <InputBox>
-            <Input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-            />
+            <Input onChange={(e) => setName(e.target.value)} value={name} />
           </InputBox>
         </Box>
         <Box>
           <Title>이메일</Title>
           <InputBox>
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
+            <Input onChange={(e) => setEmail(e.target.value)} value={email} />
             <Button onClick={() => checkServer(email, 'email')}>
               중복확인
             </Button>

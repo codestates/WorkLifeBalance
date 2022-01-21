@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import { Task } from '../components';
+import { Task, CreateTask } from '../components';
 
 const Container = styled.div`
   padding: 15px;
@@ -13,42 +14,72 @@ const Subject = styled.h2`
   margin: 2px;
 `;
 
+const NewTask = styled.div`
+  opacity: 0;
+  /* margin-left: 10px; */
+  border: 1px dashed grey;
+  text-align: center;
+  :hover {
+    opacity: 1;
+    cursor: pointer;
+    transition: all ease 0.5s 0s;
+  }
+`;
+
+// const Temp = styled.div``;
+
 function Home ({ showLogin, setShowLogin, isLogin }) {
+  const [createForm, setCreateForm] = useState(false);
   const tasks = [
     {
+      id: 1,
       tag: 'Work',
       task: '일해야됨',
-      deadline: '2022-02-22 22:22',
+      deadline: '2022-02-22T22:22',
       check: false
     },
     {
+      id: 2,
       tag: 'Life',
       task: '쉬어야됨',
-      deadline: '2022-02-22 22:22',
+      deadline: '2022-02-22T22:22',
       check: true
     }
   ];
+  //! 서버에 요청하기 전에 create 폼을 완성한 후 보내야함
+  //! create 폼은 state로 구성해서 휘발될 수 있도록
+  const handleCreateTask = () => {
+    console.log('새거 만들거임');
+    setCreateForm(true);
+  };
+
   return (
     <>
-      {isLogin
-        ? (
-          <Container>
-            <Subject>할 일 목록임</Subject>
-            <Task add list={tasks} />
-
-            <br />
-            <hr />
-            <Subject>한 일 목록임</Subject>
-            <Task add={false} list={tasks} />
-            <Subject>시간초과임ㅅㄱ</Subject>
-            <Task add={false} list={tasks} />
-          </Container>
-          )
-        : (
-          <Container center>
-            <div>목업 이미지 보여줘야함</div>
-          </Container>
-          )}
+      {isLogin ? (
+        <Container>
+          <Subject>할 일 목록임</Subject>
+          {tasks.map((task) => {
+            return <Task key={task.id} list={task} />;
+          })}
+          task들을 하나의 board로 묶어 스크롤 할수있게? (optional) 무한스크롤
+          {createForm
+            ? (
+              <CreateTask setCreateForm={setCreateForm} />
+              )
+            : (
+              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+              )}
+          <hr />
+          <Subject>한 일 목록임</Subject>
+          {/* <Task list={tasks} /> */}
+          <Subject>시간초과임ㅅㄱ</Subject>
+          {/* <Task list={tasks} /> */}
+        </Container>
+      ) : (
+        <Container center>
+          <div>목업 이미지 보여줘야함</div>
+        </Container>
+      )}
     </>
   );
 }
