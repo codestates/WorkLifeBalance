@@ -154,9 +154,13 @@ function Signup () {
     } else if (!checkEm) {
       emailRef.current.focus();
     } else {
-      const res = await axios.post('http://localhost:4000/user/signup', { userId, password, name, email });
-      if (res.data) {
-        navigate('/');
+      try {
+        const res = await axios.post('http://localhost:4000/user/signup', { userId, password, name, email });
+        if (res.data) {
+          navigate('/');
+        }
+      } catch {
+        console.log('err');
       }
     }
   };
