@@ -29,6 +29,11 @@ type -> Required element
 ! <Res>
 ? 200: OK
 {
-    "message": "valid userId / email"
+    "message": "already exists"
+}
+
+? 201: Created
+{
+  "message": "valid userId / email"
 }
 */
