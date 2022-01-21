@@ -106,7 +106,7 @@ function Task ({ list }) {
     // # check 서버 요청
     const { id, check } = obj;
     axios
-      .post('https://localhost:4000/task/check', { id, check }, { Cookie: '' })
+      .post('http://localhost:4000/task/check', { id, check }, { Cookie: '' })
       .then()
       .catch();
 
