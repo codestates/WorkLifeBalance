@@ -61,13 +61,7 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
     navigate('/');
 
     //! --------------------------->
-<<<<<<< Updated upstream
-    axios.post('http://localhost:4000/user/logout', {}, {
-      withCredentials: true
-    }).then((res) => {
-=======
     axios.post('http://localhost:4000/user/logout').then((res) => {
->>>>>>> Stashed changes
       // 유저 정보 핸들링 함수
       setIsLogin(false);
       navigate('/');
