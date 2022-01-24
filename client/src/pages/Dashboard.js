@@ -1,8 +1,8 @@
-import axios from "axios";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import url from "../urlSetup";
-import { Feedback } from "../components";
+import axios from 'axios';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import url from '../urlSetup';
+import { Feedback } from '../components';
 
 const Container = styled.div`
   margin: 12px;
@@ -23,12 +23,12 @@ const Bar = styled.progress`
   }
 `;
 
-function Dashboard() {
+function Dashboard () {
   const [rateInfo, setRateInfo] = useState({
     work: 2,
     life: 1,
     check: 5,
-    timeout: 1,
+    timeout: 1
   });
   useEffect(() => {
     axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
