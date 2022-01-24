@@ -7,5 +7,6 @@ router.post('/update', taskController.update.post);
 router.post('/delete', taskController.delete.post);
 router.post('/check', taskController.check.post);
 router.get('/list', taskController.list.get);
+router.get('/info', taskController.info.get);
 
 module.exports = router;

@@ -13,7 +13,6 @@ module.exports = {
     });
   },
   isAuthorized: (req) => {
-    console.log(req.headers.cookie);
     const cookie = req.headers.cookie;
     const token = cookie.split(/[=;]/)[1];
     if (!cookie || !cookie.includes('jwt')) {

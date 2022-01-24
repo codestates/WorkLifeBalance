@@ -52,7 +52,6 @@ const View = styled.div.attrs((props) => ({
   text-align: right;
   font-size: 1.2rem;
   padding: 100px;
-
   .alert-box {
     font-size: 1rem;
     height: 25px;
