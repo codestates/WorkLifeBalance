@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Task, CreateTask } from '../components';
 
@@ -30,6 +31,7 @@ const NewTask = styled.div`
 
 function Home ({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
+  const [current, setCurrent] = useState(Date.now());
   const tasks = [
     {
       id: 1,
@@ -53,14 +55,28 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
     setCreateForm(true);
   };
 
+  useEffect(async () => {
+    const res1 = await axios.get(`http://localhost:4000/task/list?check=${false}&time=${true}`, {
+      withCredentials: true
+    });
+    const res2 = await axios.get(`http://localhost:4000/task/list?check=${true}&time=${false}`, {
+      withCredentials: true
+    })
+    const res3 = await axios.get(`http://localhost:4000/task/list?check=${false}&time=${false}`, {
+      withCredentials: true
+    })
+  }, [tasks]);
+
   return (
     <>
       {isLogin ? (
         <Container>
           <Subject>할 일 목록임</Subject>
+          <div>
           {tasks.map((task) => {
             return <Task key={task.id} list={task} />;
           })}
+          </div>
           task들을 하나의 board로 묶어 스크롤 할수있게? (optional) 무한스크롤
           {createForm
             ? (
