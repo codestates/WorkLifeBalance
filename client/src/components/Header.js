@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import LoginModal from './LoginModal';
+import { LoginModal } from './';
 import { useNavigate } from 'react-router';
 
 // require("dotenv").config();
@@ -13,18 +13,30 @@ const Container = styled.div`
   /* flex-direction: row; */
   border-bottom: 1px solid #000;
   text-decoration: none;
+  margin-top: 5px;
+  h1 {
+    margin: 0px;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:visited {
+    color: black;
+  }
 `;
 const Title = styled.h1`
   flex: 3 0 0;
   font-size: 3.5em;
-  text-align: center;
+  text-align: left;
+  padding-left: 50px;
   color: violet;
 `;
 
 const ControlBox = styled.div`
   display: flex;
   flex: 1 0 0;
-  align-items: flex-end;
+  align-items: center;
   .sub {
     margin: 1px;
     background-color: #ccc;
@@ -49,7 +61,9 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
     navigate('/');
 
     //! --------------------------->
-    axios.post('https://localhost:4000/user/logout').then((res) => {
+    axios.post('http://localhost:4000/user/logout', {}, {
+      withCredentials: true
+    }).then((res) => {
       // 유저 정보 핸들링 함수
       setIsLogin(false);
       navigate('/');
@@ -58,9 +72,6 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
 
   return (
     <Container>
-      {/* 로고 */}
-
-      {/* 제목 */}
       <Title>
         <Link to='/'>
           <img

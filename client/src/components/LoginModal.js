@@ -98,26 +98,26 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
       //! --------------------------------------------//
       axios
         .post(
-          'https://localhost:4000/user/login',
+          'http://localhost:4000/user/login',
           {
             userId,
             password
           },
+          //! 올바르지 않은 withCredentials 사용
           {
-            headers: {
-              'Content-Type': 'application/json',
-              withCredentials: true
-            }
+            withCredentials: true
           }
         )
         .then((res) => {
           // 로그인 확인
-          axios.get('https://localhost:4000/user/info').then((res) => {
-            // 유저 정보 저장 핸들러 함수 필요 (state)
-            setIsLogin(true);
-            setShowLogin(false);
-            navigate('/');
-          });
+          axios
+            .get('https://localhost:4000/user/info', { withCredentials: true })
+            .then((res) => {
+              // 유저 정보 저장 핸들러 함수 필요 (state)
+              setIsLogin(true);
+              setShowLogin(false);
+              navigate('/');
+            });
         })
         .catch((err) => {
           setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');

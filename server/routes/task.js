@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-// const { taskController } = require('./controller/taskController');
+const { taskController } = require('../controller');
 
-// POST /task/create
-// ? router.post('/create', taskController.create.post);
-
-// POST /task/update
-// POST /task/delete
-// POST /task/check
-// GET /task/list
+router.post('/create', taskController.create.post);
+router.post('/update', taskController.update.post);
+router.post('/delete', taskController.delete.post);
+router.post('/check', taskController.check.post);
+router.get('/list', taskController.list.get);
 
 module.exports = router;
