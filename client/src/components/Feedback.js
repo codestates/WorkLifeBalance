@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useState } from "react";
-import styled from "styled-components";
-import { ClickToEdit as CTE } from ".";
-import url from "../urlSetup";
+import axios from 'axios';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { ClickToEdit as CTE } from '.';
+import url from '../urlSetup';
 
 const Container = styled.div`
   border: 1px solid green; // 테스트용 테두리
@@ -21,7 +21,7 @@ const Filter = styled.input`
 const today = new Date();
 const month = today.getMonth() + 1;
 
-function Feedback() {
+function Feedback () {
   const [day, setDay] = useState(
     `${today.getFullYear()}-${
       month.toString().length === 1 ? `0${month}` : `${month}`
@@ -40,14 +40,14 @@ function Feedback() {
   return (
     <Container>
       <span>
-        Filter:{" "}
+        Filter:{' '}
         <Filter
-          type="date"
+          type='date'
           onChange={handleChangeDate}
           value={day}
           onClick={handleClick}
           defaultValue={day}
-        ></Filter>
+        />
       </span>
       <CTE day={day} setDay={setDay} />
     </Container>

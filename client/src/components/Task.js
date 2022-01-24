@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import url from "../urlSetup";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import url from '../urlSetup';
 
 const Container = styled.div`
   min-width: 500px;
@@ -13,7 +13,7 @@ const Checkbox = styled.input`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: ${(props) => (props.deactive ? "#ddd" : "#fff")};
+  background: ${(props) => (props.deactive ? '#ddd' : '#fff')};
   height: 20px;
   width: 20px;
   border-radius: 8px;
@@ -31,7 +31,7 @@ const Checkbox = styled.input`
     width: 20%;
   }
   :checked {
-    background: ${(props) => (props.deactive ? "#aaa" : "#505bf0")};
+    background: ${(props) => (props.deactive ? '#aaa' : '#505bf0')};
   }
   :checked::after {
     display: block;
@@ -46,7 +46,7 @@ const InfoWrapper = styled.div`
 
 const TaskDiv = styled.div`
   display: inline-block;
-  text-decoration: ${(props) => (props.check ? "line-through" : "none")};
+  text-decoration: ${(props) => (props.check ? 'line-through' : 'none')};
   /* float: left; */
   height: 20px;
   margin-left: 5px;
@@ -61,7 +61,7 @@ const TagDiv = styled.div`
   display: inline-block;
   margin-left: 5px;
   color: ${(props) =>
-    props.tag === "Work" ? "red" : props.tag === "Life" ? "blue" : "black"};
+    props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
 `;
 
 // const Deadline = styled.input``;
@@ -86,11 +86,11 @@ const TagInput = styled.div`
   margin-left: 5px;
   background-color: #eee;
   color: ${(props) =>
-    props.tag === "Work" ? "red" : props.tag === "Life" ? "blue" : "black"};
+    props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
   cursor: pointer;
 `;
 
-function Task({ list }) {
+function Task ({ list }) {
   const [modify, setModify] = useState(false);
   const [inputValue, setInputValue] = useState(list);
   //! 해당 상태는 렌더링시 서버로부터 받아와 갱신되어야함
@@ -105,12 +105,12 @@ function Task({ list }) {
     // # check 상태 변경 코드
     setInputValue({ ...inputValue, check: e.target.checked });
     // # check 서버 요청
-    console.log("check sending...");
+    console.log('check sending...');
     const { id, check } = obj;
     // ! 더미데이터로 요청테스트 해보아야함
     axios
       .post(`${url}/task/check`, { id, check }, { withCredentials: true })
-      .then((res) => console.log("체크 전송완료됨!"))
+      .then((res) => console.log('체크 전송완료됨!'))
       .catch((err) => console.log(err));
 
     // console.log(e);
@@ -119,7 +119,7 @@ function Task({ list }) {
   const handleModify = (key) => (e) => {
     //! 서버로 변경된 정보를 보내야함
     const { id, task, tag, deadline } = list;
-    if (key === "ok") {
+    if (key === 'ok') {
       axios
         .post(
           `${url}/task/update`,
@@ -127,7 +127,7 @@ function Task({ list }) {
             id,
             task,
             tag,
-            deadline,
+            deadline
           },
           { withCredentials: true }
         )
@@ -137,14 +137,14 @@ function Task({ list }) {
         .catch(() => {
           setModify(true);
         });
-    } else if (key === "mod") setModify(true);
+    } else if (key === 'mod') setModify(true);
   };
 
   const handleTagClick = () => (e) => {
     const text = e.target.textContent;
 
-    if (text === "Work") setInputValue({ ...inputValue, tag: "Life" });
-    if (text === "Life") setInputValue({ ...inputValue, tag: "Work" });
+    if (text === 'Work') setInputValue({ ...inputValue, tag: 'Life' });
+    if (text === 'Life') setInputValue({ ...inputValue, tag: 'Work' });
   };
   //* task = {
   //*   id: 1,
@@ -156,7 +156,7 @@ function Task({ list }) {
   // console.log(task);
   // useEffect(() => {}, [inputValue]);
 
-  const [dateInfo, timeInfo] = list.deadline.split("T");
+  const [dateInfo, timeInfo] = list.deadline.split('T');
 
   return (
     <>
@@ -164,19 +164,19 @@ function Task({ list }) {
         <Container>
           <InfoWrapper>
             <Checkbox
-              type="checkbox"
+              type='checkbox'
               // onChange={handleInputValue("check")}
               checked={inputValue.check}
               deactive
             />
             <TaskInput
-              onChange={handleInputValue("task")}
-              value={inputValue.task || ""}
+              onChange={handleInputValue('task')}
+              value={inputValue.task || ''}
             />
             <DateInput
-              type="datetime-local"
-              onChange={handleInputValue("deadline")}
-              value={inputValue.deadline || ""}
+              type='datetime-local'
+              onChange={handleInputValue('deadline')}
+              value={inputValue.deadline || ''}
             />
             {/* deadline 형식: 2022-22-22T22:22 */}
           </InfoWrapper>
@@ -184,7 +184,7 @@ function Task({ list }) {
             <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
               {inputValue.tag}
             </TagInput>
-            <Modify onClick={handleModify("ok")}>적용</Modify>
+            <Modify onClick={handleModify('ok')}>적용</Modify>
             {/* 적용 눌렀을 때 변경하는 코드 작성 */}
           </InfoWrapper>
         </Container>
@@ -192,20 +192,19 @@ function Task({ list }) {
         <Container>
           <InfoWrapper>
             <Checkbox
-              type="checkbox"
+              type='checkbox'
               onChange={(e) =>
-                handleChangeCheck(e, { id: list.id, check: list.check })
-              }
+                handleChangeCheck(e, { id: list.id, check: list.check })}
               checked={inputValue.check}
             />
             <TaskDiv check={inputValue.check}>{list.task}</TaskDiv>
-            <DateDiv align="right">
+            <DateDiv align='right'>
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
           </InfoWrapper>
           <InfoWrapper>
             <TagDiv tag={list.tag}>{list.tag}</TagDiv>
-            <Modify onClick={handleModify("mod")}>수정(img)</Modify>
+            <Modify onClick={handleModify('mod')}>수정(img)</Modify>
           </InfoWrapper>
         </Container>
       )}
