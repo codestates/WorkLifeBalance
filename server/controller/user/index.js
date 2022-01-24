@@ -4,6 +4,7 @@ module.exports = {
   signup: require('./signup'),
   check: require('./check'),
   delete: require('./delete'),
-  update: require('./update'),
+  updateInfo: require('./updateInfo'),
+  updatePassword: require('./updatePassword'),
   info: require('./info')
 };

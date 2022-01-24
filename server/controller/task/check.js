@@ -1,4 +1,4 @@
-const { Task } = require('../../models');
+const { Tasks } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
@@ -10,13 +10,13 @@ module.exports = {
         return res.status(400).send({ message: 'bad request' });
       } else {
         const { userId } = userInfo;
-        const user = await Task.findOne({
+        const user = await Tasks.findOne({
           where: { userId }
         });
         if (!user) {
           return res.status(400).send({ message: 'bad request' });
         } else {
-          await Task.update({ check }, { where: { id } });
+          await Tasks.update({ check }, { where: { id } });
           return res.status(200).send({ message: 'ok' });
         }
       }

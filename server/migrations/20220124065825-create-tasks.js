@@ -17,7 +17,7 @@ module.exports = {
       task: {
         type: Sequelize.STRING
       },
-      deadline: {
+      time: {
         type: Sequelize.DATE
       },
       check: {

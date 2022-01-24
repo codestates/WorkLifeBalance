@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 4000;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const models = require('./models');
-const cookieParsor = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
@@ -16,7 +16,7 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS']
   })
 );
-app.use(cookieParsor());
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   res.send('<h1> Server running test </h1>');
