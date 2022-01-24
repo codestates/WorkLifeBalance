@@ -4,11 +4,14 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
+const feedbackRouter = require('./routes/feedback');
 const models = require('./models');
 const cookieParser = require('cookie-parser');
+// const fs = require('fs');
+// const http = require('http');
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: ['https://localhost:3000'],
@@ -16,7 +19,6 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS']
   })
 );
-app.use(cookieParser());
 
 app.use(cookieParser());
 
@@ -25,25 +27,22 @@ app.get('/', (req, res) => {
 });
 app.use('/user', userRouter);
 app.use('/task', taskRouter);
+app.use('/feedback', feedbackRouter);
+app.use(cookieParser());
 models.sequelize.sync({ force: false });
 
-let server;
-if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
-  const privateKey = fs.readFileSync(__dirname + '/key.pem', 'utf8');
-  const certificate = fs.readFileSync(__dirname + '/cert.pem', 'utf8');
-  const credentials = { key: privateKey, cert: certificate };
+// let server;
+// if (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) {
+//   const privateKey = fs.readFileSync(__dirname + '/key.pem', 'utf8');
+//   const certificate = fs.readFileSync(__dirname + '/cert.pem', 'utf8');
+//   const credentials = { key: privateKey, cert: certificate };
 
-  server = https.createServer(credentials, app);
-  server.listen(PORT, () => console.log('https server runnning'));
-} else {
-  server = app.listen(PORT, () => console.log('http server runnning'));
-}
+//   server = https.createServer(credentials, app);
+//   server.listen(PORT, () => console.log('https server runnning'));
+// } else {
+//   server = app.listen(PORT, () => console.log('http server runnning'));
+// }
 
-// app.listen(PORT, () => {
-//   console.log(`HTTP server listen on ${PORT}`);
-// });
-
-// ! 테스트 필요
-// DB MYSQL 연결됐는지 모름
-// Route, Controller, Model 연결되는지
-//
+app.listen(PORT, () => {
+  console.log(`HTTP server listen on ${PORT}`);
+});

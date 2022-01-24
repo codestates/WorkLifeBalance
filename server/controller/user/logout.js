@@ -2,6 +2,7 @@ const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
   post: (req, res) => {
+    console.log(req.headers.cookie)
     try {
       const userInfo = isAuthorized(req);
       if (userInfo) {
