@@ -20,6 +20,7 @@ module.exports = {
         delete data.dataValues.password;
         const jwt = generateAccessToken(data.dataValues);
         sendAccessToken(res, jwt);
+        console.log(res);
         return res.status(200).send(data.dataValues);
       });
   }

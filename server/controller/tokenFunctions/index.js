@@ -6,13 +6,14 @@ module.exports = {
     return sign(data, process.env.ACCESS_SECRET, { expiresIn: '1d' });
   },
   sendAccessToken: (res, jwt) => {
-    return res.cookie('jwt', jwt, {
+    res.cookie('jwt', jwt, {
       httpOnly: true,
       sameSite: 'None',
       secure: true
     });
   },
   isAuthorized: (req) => {
+    console.log(req.headers.cookie);
     const cookie = req.headers.cookie;
     const token = cookie.split(/[=;]/)[1];
     if (!cookie || !cookie.includes('jwt')) {

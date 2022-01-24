@@ -18,6 +18,7 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS']
   })
 );
+app.use(cookieParsor());
 
 app.use(cookieParser());
 
