@@ -45,17 +45,22 @@ function App () {
                 />
               }
             />
+            {isLogin
+              ? <Route path='/dashboard' element={<Dashboard />} />
+              : <Route path='/dashboard' element={<Navigate to='/' />} />}
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route
-              path='/profile' element={
-                <Profile
-                  userInfo={userInfo}
-                  setUserInfo={setUserInfo}
-                  isLogin={isLogin}
-                  setIsLogin={setIsLogin}
+            {isLogin
+              ? <Route
+                  path='/profile' element={
+                    <Profile
+                      userInfo={userInfo}
+                      setUserInfo={setUserInfo}
+                      isLogin={isLogin}
+                      setIsLogin={setIsLogin}
+                    />
+                  }
                 />
-              }
-            />
+              : <Route path='/profile' element={<Navigate to='/' />} />}
             <Route path='/signup' element={<Signup />} />
             <Route path='*' element={<Navigate to='/' />} />
           </Routes>

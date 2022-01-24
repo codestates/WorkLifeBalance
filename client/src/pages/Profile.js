@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import DropModal from '../components/DropModal';
+import PasswordModal from '../components/PasswordModal';
+import { Navigate } from 'react-router-dom';
 
 const Container = styled.div`
   background: wheat;
@@ -75,7 +76,7 @@ const GrayDiv = styled.div`
 const Edit = styled.div`
   margin-bottom: 10rem;
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -89,6 +90,10 @@ const DropWrapper = styled.div`
   height: 2rem;
 `;
 
+const Button = styled.button`
+  margin: 0.5rem;  
+`;
+
 const DropButton = styled.button`
   color: red;
 `;
@@ -99,16 +104,22 @@ const Desc = styled.div`
   color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
-function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
-  const [password, setPassword] = useState('');
-  const [repeat, setRepeat] = useState('');
+function Profile ({ userInfo, setUserInfo, setIsLogin }) {
+  const [userId, setUserId] = useState(userInfo.userId);
+  const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
+  const [checkId, setCheckId] = useState(true);
+  const [checkEm, setCheckEm] = useState(true);
+  const [show, setShow] = useState({
+    id: false,
+    em: false
+  });
   const [editMode, setEditMode] = useState(false);
+  const [editPw, setEditPw] = useState(false);
   const [drop, setDrop] = useState(false);
-  const navigate = useNavigate();
 
-  const validPw = (item) => {
-    const regExp = /^.{4,20}$/;
+  const validId = (item) => {
+    const regExp = /^[a-zA-Z0-9]{5,15}$/;
     return regExp.test(item);
   };
 
@@ -117,18 +128,52 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
     return regExp.test(item);
   };
 
+  const checkFromServer = async (type, data) => {
+    try {
+      const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
+      if (res.status === 200) {
+        setCheckId(true);
+      }
+    } catch {
+      setCheckId(false);
+    }
+  };
+
+  const idfunc = (type, data) => {
+    if (userInfo.userId !== userId) {
+      checkFromServer(type, data);
+      setShow({ ...show, id: true });
+    } else {
+      setCheckId(true);
+      setShow({ ...show, id: false });
+    }
+  };
+
+  const emfunc = (type, data) => {
+    if (userInfo.email !== email) {
+      checkFromServer(type, data);
+      setShow({ ...show, em: true });
+    } else {
+      setCheckEm(true);
+      setShow({ ...show, em: false });
+    }
+  };
+
   const sendEditInfo = async () => {
     try {
-      // if (password===repeat && validPw(password) && validEmail(email)) {
-      //   const result = await axios.post('http://localhost:4000/user/update', {
-      //     password,
-      //     email
-      //   }, {
-      //     withCredentials: true
-      //   })
-      // }
+      if (validId(userId) && validEmail(email)) {
+        const result = await axios.post('http://localhost:4000/user/update', {
+          userId,
+          name,
+          email
+        }, {
+          withCredentials: true
+        });
+      }
       setUserInfo({
         ...userInfo,
+        userId,
+        name,
         email
       });
       setEditMode(false);
@@ -137,65 +182,71 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
     }
   };
 
+  useEffect(async () => {
+    try {
+      console.log('hello');
+      const res = await axios.get('http://localhost:4000/user/info', {
+        withCredentials: true
+      });
+      console.log(res.data.user);
+      setUserInfo({ ...res.data.user });
+    } catch {
+      setIsLogin(false);
+      console.log('err');
+    }
+  }, []);
+
   return (
     <Container>
       <Contents>
         <Box>
           <Title><div>아이디</div></Title>
-          <Info><div>{userInfo.userId}</div></Info>
-        </Box>
-        <Box>
-          <Title>비밀번호</Title>
           <Info>
             {!editMode
-              ? <GrayDiv />
-              : <div>
-                <Input onChange={(e) => setPassword(e.target.value)} type='password' value={password} />
-                </div>}
+              ? <div>{userInfo.userId}</div>
+              : <input onChange={(e) => setUserId(e.target.value)} onBlur={() => idfunc('userId', userId)} value={userId} />}
           </Info>
         </Box>
         {!editMode
           ? <></>
-          : validPw(password)
-            ? <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
-            : <Desc valid={false}>4~20자 여야 합니다.</Desc>}
-        {!editMode
-          ? <></>
-          : <>
-            <Box>
-              <Title>비밀번호 확인</Title>
-              <Info>
-                <div>
-                  <Input onChange={(e) => setRepeat(e.target.value)} type='password' value={repeat} />
-                </div>
-              </Info>
-            </Box>
-            {password === repeat
-              ? <Desc valid>checked!</Desc>
-              : <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>}
-          </>}
+          : !show.id
+              ? <></>
+              : validId(userId) && checkId
+                ? <Desc valid>사용할 수 있는 아이디입니다.</Desc>
+                : !checkId
+                    ? <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
+                    : <Desc valid={false}>5~15자 영문 대 소문자, 숫자만 사용 가능합니다.</Desc>}
         <Box>
           <Title><div>이름</div></Title>
-          <Info><div>{userInfo.name}</div></Info>
+          <Info>
+            {!editMode
+              ? <div>{userInfo.name}</div>
+              : <input onChange={(e) => setName(e.target.value)} value={name} />}
+          </Info>
         </Box>
         <Box>
           <Title><div>이메일</div></Title>
           <Info>
             {!editMode
               ? <div>{userInfo.email}</div>
-              : <input onChange={(e) => setEmail(e.target.value)} value={email} />}
+              : <input onChange={(e) => setEmail(e.target.value)} onBlur={() => emfunc('email', email)} value={email} />}
           </Info>
         </Box>
         {!editMode
           ? <></>
-          : validEmail(email)
-            ? <Desc valid>사용할 수 있는 이메일.</Desc>
-            : <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>}
+          : !show.em
+              ? <></>
+              : validEmail(email) && checkEm
+                ? <Desc valid>사용할 수 있는 이메일.</Desc>
+                : !checkEm
+                    ? <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
+                    : <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>}
       </Contents>
       <Edit>
         {!editMode
-          ? <button onClick={() => setEditMode(true)}>정보 수정</button>
-          : <button onClick={sendEditInfo}>정보 수정 완료</button>}
+          ? <Button onClick={() => setEditMode(true)}>정보 수정</Button>
+          : <Button onClick={sendEditInfo}>정보 수정 완료</Button>}
+        <Button onClick={() => setEditPw(true)}>비밀번호 변경</Button>
       </Edit>
       <DropWrapper>
         <DropButton onClick={() => setDrop(true)}>
@@ -204,6 +255,9 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
       </DropWrapper>
       {drop
         ? <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
+        : <></>}
+      {editPw
+        ? <PasswordModal show={editPw} setShow={setEditPw} />
         : <></>}
     </Container>
   );
