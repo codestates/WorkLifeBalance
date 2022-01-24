@@ -50,16 +50,18 @@ function DropModal ({ show, setShow, setIsLogin }) {
 
   const drop = async () => {
     try {
-      // if (input === 'delete') {
-      //   const result = await axios.post('http://localhost:4000/user/delete', {}, {
-      //     withCredentials: true
-      //   });
-      // }
-      handleClick();
-      setIsLogin(false);
-      navigate('/');
+      if (input === 'delete') {
+        const res = await axios.post('http://localhost:4000/user/delete', {}, {
+          withCredentials: true
+        });
+        if (res.data) {
+          handleClick();
+          setIsLogin(false);
+          navigate('/');
+        }
+      }
     } catch {
-
+      handleClick();
     }
   };
 
