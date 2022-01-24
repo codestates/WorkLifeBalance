@@ -1,6 +1,7 @@
-import axios from 'axios';
-import { useState } from 'react';
-import styled from 'styled-components';
+import axios from "axios";
+import { useState } from "react";
+import styled from "styled-components";
+import url from "../urlSetup";
 
 const Container = styled.div`
   min-width: 500px;
@@ -12,7 +13,7 @@ const Checkbox = styled.input`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: ${(props) => (props.deactive ? '#ddd' : '#fff')};
+  background: ${(props) => (props.deactive ? "#ddd" : "#fff")};
   height: 20px;
   width: 20px;
   border-radius: 8px;
@@ -30,7 +31,7 @@ const Checkbox = styled.input`
     width: 20%;
   }
   :checked {
-    background: ${(props) => (props.deactive ? '#aaa' : '#505bf0')};
+    background: ${(props) => (props.deactive ? "#aaa" : "#505bf0")};
   }
   :checked::after {
     display: block;
@@ -52,7 +53,7 @@ const TagInput = styled.div`
   margin-left: 5px;
   background-color: #eee;
   color: ${(props) =>
-    props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
+    props.tag === "Work" ? "red" : props.tag === "Life" ? "blue" : "black"};
   cursor: pointer;
 `;
 
@@ -67,12 +68,12 @@ const ButtonDiv = styled.div`
   }
 `;
 
-function CreateTask ({ setCreateForm }) {
+function CreateTask({ setCreateForm }) {
   const [inputValue, setInputValue] = useState({
-    tag: 'Work',
-    task: '',
-    deadline: '',
-    check: false
+    tag: "Work",
+    task: "",
+    deadline: "",
+    check: false,
   });
 
   const handleInputValue = (key) => (e) => {
@@ -81,31 +82,35 @@ function CreateTask ({ setCreateForm }) {
   const handleTagClick = () => (e) => {
     const text = e.target.textContent;
 
-    if (text === 'Work') setInputValue({ ...inputValue, tag: 'Life' });
-    if (text === 'Life') setInputValue({ ...inputValue, tag: 'Work' });
+    if (text === "Work") setInputValue({ ...inputValue, tag: "Life" });
+    if (text === "Life") setInputValue({ ...inputValue, tag: "Work" });
   };
 
   const handleConfirm = () => {
     // 요청 바디는 task, tag, deadline, 해더에 cookie
     const { task, tag, deadline } = inputValue;
-    const url = 'https://localhost:4000/task/';
+    const url = "https://localhost:4000/task/";
     axios
-      .post('https://localhost:4000/task/create', {
-        task,
-        tag,
-        deadline
-      })
+      .post(
+        `${url}/task/create`,
+        {
+          task,
+          tag,
+          deadline,
+        },
+        { withCredentials: true }
+      )
       .then(() => {
         axios
-          .get('https://localhost:4000/task/list')
+          .get(`${url}/task/list`)
           .then((res) => {})
           .catch();
         setCreateForm(false);
         setInputValue({
-          tag: 'Work',
-          task: '',
-          deadline: '',
-          check: false
+          tag: "Work",
+          task: "",
+          deadline: "",
+          check: false,
         });
       })
       .catch();
@@ -117,19 +122,19 @@ function CreateTask ({ setCreateForm }) {
     <Container>
       <InfoWrapper>
         <Checkbox
-          type='checkbox'
+          type="checkbox"
           // onChange={handleInputValue("check")}
           checked={inputValue.check}
           deactive
         />
         <TaskInput
-          onChange={handleInputValue('task')}
-          value={inputValue.task || ''}
+          onChange={handleInputValue("task")}
+          value={inputValue.task || ""}
         />
         <DateInput
-          type='datetime-local'
-          onChange={handleInputValue('deadline')}
-          value={inputValue.deadline || ''}
+          type="datetime-local"
+          onChange={handleInputValue("deadline")}
+          value={inputValue.deadline || ""}
         />
         {/* deadline 형식: 2022-22-22T22:22 */}
       </InfoWrapper>
