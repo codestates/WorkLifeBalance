@@ -83,7 +83,7 @@ const Desc = styled.div`
   color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
-function PasswordModal ({show, setShow }) {
+function PasswordModal ({ show, setShow }) {
   const [password, setPassword] = useState('');
   const [newpassword, setNewpassword] = useState('');
   const [repeat, setRepeat] = useState('');
@@ -101,49 +101,49 @@ function PasswordModal ({show, setShow }) {
 
   const update = async () => {
     try {
-      // const res = axios.post('http://localhost:4000/user/update/password', { password, newpassword}, 
+      // const res = axios.post('http://localhost:4000/user/update/password', { password, newpassword},
       // {
       //   withCredentials: true
       // })
       // if (res.status === 200)
-        handleClick();
+      handleClick();
     } catch {
       handleClick();
     }
-  }
+  };
   return (
     <Container>
       <Canvas onClick={handleClick}>
         <View onClick={e => e.stopPropagation()}>
           <Box>
             <Title><div>현재 비밀번호</div></Title>
-            <Input onChange={(e) => setPassword(e.target.value)} value={password}></Input>
+            <Input onChange={(e) => setPassword(e.target.value)} value={password} />
           </Box>
           <div>
-            <Desc></Desc>
+            <Desc />
           </div>
           <Box>
             <Title><div>새 배밀번호</div></Title>
-            <Input onChange={(e) => setNewpassword(e.target.value)} onBlur={() => setPwfocus(true)} value={newpassword} ></Input>
+            <Input onChange={(e) => setNewpassword(e.target.value)} onBlur={() => setPwfocus(true)} value={newpassword} />
           </Box>
           <div>
-          {!pwfocus
-            ? <Desc valid={true}></Desc>
-            : validPw(newpassword)
-              ? <Desc valid={true}>사용할 수 있는 비밀번호입니다.</Desc>
-              : <Desc valid={false}>4~20자 여야 합니다.</Desc>}
+            {!pwfocus
+              ? <Desc valid />
+              : validPw(newpassword)
+                ? <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
+                : <Desc valid={false}>4~20자 여야 합니다.</Desc>}
           </div>
           <Box>
             <Title><div>비밀번호 확인</div></Title>
-            <Input onChange={(e) => setRepeat(e.target.value)} onBlur={() => setRpfocus(true)} value={repeat}></Input>
+            <Input onChange={(e) => setRepeat(e.target.value)} onBlur={() => setRpfocus(true)} value={repeat} />
           </Box>
           <div>
-          {!rpfocus
-            ? <Desc valid={true}></Desc>
-            : newpassword === repeat
-              ? <Desc valid={true}>비밀번호가 일치합니다.</Desc>
-              : <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>}
-          <Button onClick={update}> 확인 </Button>
+            {!rpfocus
+              ? <Desc valid />
+              : newpassword === repeat
+                ? <Desc valid>비밀번호가 일치합니다.</Desc>
+                : <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>}
+            <Button onClick={update}> 확인 </Button>
           </div>
         </View>
       </Canvas>
