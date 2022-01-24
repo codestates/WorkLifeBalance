@@ -1,4 +1,4 @@
-const { Task } = require('../../models');
+const { Tasks } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
@@ -9,13 +9,13 @@ module.exports = {
         return res.status(400).send({ message: 'bad request' });
       }
       const { userId } = userInfo;
-      const user = await Task.findOne({
+      const user = await Tasks.findOne({
         where: { userId }
       });
       if (!user) {
         return res.status(401).send({ message: 'not authorized' });
       } else {
-        const Tasks = await Task.findAll();
+        const Tasks = await Tasks.findAll();
         return res.status(200).send({ data: { Tasks }, message: 'ok' });
       }
     } catch (err) {
@@ -23,3 +23,7 @@ module.exports = {
     }
   }
 };
+
+// ! query -> check, time /
+// ! query -> 현재 시간 이전/이후 검색 -> timeout task
+// MYSQL -> UTC_TIMESTAMP(); // time <, > UTC_TIMESTAMP();

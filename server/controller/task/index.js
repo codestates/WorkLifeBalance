@@ -3,5 +3,6 @@ module.exports = {
   update: require('./update'),
   delete: require('./delete'),
   check: require('./check'),
-  list: require('./list')
+  list: require('./list'),
+  info: require('./info')
 };

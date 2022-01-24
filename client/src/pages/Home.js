@@ -76,9 +76,16 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
           {tasks.map((task) => {
             return <Task key={task.id} list={task} />;
           })}
+<<<<<<< HEAD
           </div>
           task들을 하나의 board로 묶어 스크롤 할수있게? (optional) 무한스크롤
           {createForm
+=======
+          task들을 하나의 board로 묶어 스크롤 할수있게?
+          <br />
+          (optional) 무한스크롤 또는 더보기 기능
+          {createForm
+>>>>>>> code/dev
             ? (
               <CreateTask setCreateForm={setCreateForm} />
               )
