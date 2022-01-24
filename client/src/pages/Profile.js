@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DropModal from '../components/DropModal';
 import PasswordModal from '../components/PasswordModal';
+import { Navigate } from 'react-router-dom';
 
 const Container = styled.div`
   background: wheat;
@@ -103,7 +104,7 @@ const Desc = styled.div`
   color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
-function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
+function Profile ({ userInfo, setUserInfo, setIsLogin }) {
   const [userId, setUserId] = useState(userInfo.userId);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
@@ -136,28 +137,27 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
     } catch {
       setCheckId(false);
     }
-    
-  }
+  };
 
   const idfunc = (type, data) => {
     if (userInfo.userId !== userId) {
       checkFromServer(type, data);
-      setShow({...show, id: true});
+      setShow({ ...show, id: true });
     } else {
       setCheckId(true);
-      setShow({...show, id: false});
+      setShow({ ...show, id: false });
     }
-  }
+  };
 
   const emfunc = (type, data) => {
     if (userInfo.email !== email) {
       checkFromServer(type, data);
-      setShow({...show, em: true});
+      setShow({ ...show, em: true });
     } else {
       setCheckEm(true);
-      setShow({...show, em: false});
+      setShow({ ...show, em: false });
     }
-  }
+  };
 
   const sendEditInfo = async () => {
     try {
@@ -168,7 +168,7 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
           email
         }, {
           withCredentials: true
-        })
+        });
       }
       setUserInfo({
         ...userInfo,
@@ -182,30 +182,44 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
     }
   };
 
+  useEffect(async () => {
+    try {
+      console.log('hello');
+      const res = await axios.get('http://localhost:4000/user/info', {
+        withCredentials: true
+      });
+      console.log(res.data.user);
+      setUserInfo({ ...res.data.user });
+    } catch {
+      setIsLogin(false);
+      console.log('err');
+    }
+  }, []);
+
   return (
     <Container>
       <Contents>
         <Box>
           <Title><div>아이디</div></Title>
           <Info>
-            {!editMode 
+            {!editMode
               ? <div>{userInfo.userId}</div>
               : <input onChange={(e) => setUserId(e.target.value)} onBlur={() => idfunc('userId', userId)} value={userId} />}
           </Info>
         </Box>
         {!editMode
           ? <></>
-          : !show.id 
-            ? <></>
-            : validId(userId) && checkId
-              ? <Desc valid>사용할 수 있는 아이디입니다.</Desc>
-              : !checkId
-                ? <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
-                : <Desc valid={false}>5~15자 영문 대 소문자, 숫자만 사용 가능합니다.</Desc>}
+          : !show.id
+              ? <></>
+              : validId(userId) && checkId
+                ? <Desc valid>사용할 수 있는 아이디입니다.</Desc>
+                : !checkId
+                    ? <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
+                    : <Desc valid={false}>5~15자 영문 대 소문자, 숫자만 사용 가능합니다.</Desc>}
         <Box>
           <Title><div>이름</div></Title>
           <Info>
-            {!editMode 
+            {!editMode
               ? <div>{userInfo.name}</div>
               : <input onChange={(e) => setName(e.target.value)} value={name} />}
           </Info>
@@ -220,13 +234,13 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
         </Box>
         {!editMode
           ? <></>
-          : !show.em 
-            ? <></>
-            : validEmail(email) && checkEm
-              ? <Desc valid>사용할 수 있는 이메일.</Desc>
-              : !checkEm 
-                ? <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
-                : <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>}
+          : !show.em
+              ? <></>
+              : validEmail(email) && checkEm
+                ? <Desc valid>사용할 수 있는 이메일.</Desc>
+                : !checkEm
+                    ? <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
+                    : <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>}
       </Contents>
       <Edit>
         {!editMode
@@ -243,7 +257,7 @@ function Profile ({ userInfo, setUserInfo, isLogin, setIsLogin }) {
         ? <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
         : <></>}
       {editPw
-        ? <PasswordModal show={editPw} setShow={setEditPw}></PasswordModal>
+        ? <PasswordModal show={editPw} setShow={setEditPw} />
         : <></>}
     </Container>
   );
