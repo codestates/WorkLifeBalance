@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+import url from "../urlSetup";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -42,7 +43,7 @@ const Canvas = styled.div`
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: 'dialog'
+  role: "dialog",
 }))`
   border-radius: 5px;
   background-color: #fff;
@@ -67,12 +68,12 @@ const View = styled.div.attrs((props) => ({
   }
 `;
 
-function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
+function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
   const [loginInfo, setLoginInfo] = useState({
-    userId: '',
-    password: ''
+    userId: "",
+    password: "",
   });
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
 
   const handleInputValue = (key) => (e) => {
@@ -84,52 +85,52 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
   };
   const handleGotoSignup = () => {
     setShowLogin(false);
-    navigate('./signup');
+    navigate("./signup");
   };
   const handleLogin = () => {
     const { userId, password } = loginInfo;
     if (userId && password) {
       //! 테스트가 끝나면 다음 코드를 삭제해주세요
-      if (userId === 'test' && password === 'test') {
-        setShowLogin(false);
-        setIsLogin(true);
-        navigate('/');
-      }
+      // if (userId === 'test' && password === 'test') {
+      //   setShowLogin(false);
+      //   setIsLogin(true);
+      //   navigate('/');
+      // }
       //! --------------------------------------------//
       axios
         .post(
-          'http://localhost:4000/user/login',
+          `${url}/user/login`,
           {
             userId,
-            password
+            password,
           },
           //! 올바르지 않은 withCredentials 사용
           {
-            withCredentials: true
+            withCredentials: true,
           }
         )
         .then((res) => {
           // 로그인 확인
           axios
-            .get('https://localhost:4000/user/info', { withCredentials: true })
+            .get(`${url}/user/info`, { withCredentials: true })
             .then((res) => {
               // 유저 정보 저장 핸들러 함수 필요 (state)
               setIsLogin(true);
               setShowLogin(false);
-              navigate('/');
+              navigate("/");
             });
         })
         .catch((err) => {
-          setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');
+          setErrMsg("아이디 혹은 비밀번호가 잘못되었습니다");
           setTimeout(() => {
-            setErrMsg('');
+            setErrMsg("");
           }, 3000);
         });
     } else {
       // 에러박스에 메시지 출력
-      setErrMsg('아이디와 비밀번호를 모두 입력해주세요');
+      setErrMsg("아이디와 비밀번호를 모두 입력해주세요");
       setTimeout(() => {
-        setErrMsg('');
+        setErrMsg("");
       }, 3000);
     }
   };
@@ -147,18 +148,18 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
           <form onSubmit={(e) => e.preventDefault()}>
             <div>
               아이디
-              <Input type='text' onChange={handleInputValue('userId')} />
+              <Input type="text" onChange={handleInputValue("userId")} />
             </div>
             <br />
             <div>
               비밀번호
-              <Input type='password' onChange={handleInputValue('password')} />
+              <Input type="password" onChange={handleInputValue("password")} />
             </div>
-            <div className='alert-box'>{errMsg}</div>
-            <div className='yet' onClick={handleGotoSignup}>
+            <div className="alert-box">{errMsg}</div>
+            <div className="yet" onClick={handleGotoSignup}>
               아직 아이디가 없으신가요?
             </div>
-            <Button type='submit' onClick={handleLogin}>
+            <Button type="submit" onClick={handleLogin}>
               로그인
             </Button>
           </form>
