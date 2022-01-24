@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LoginModal } from './';
 import { useNavigate } from 'react-router';
+import url from '../urlSetup';
 
 // require("dotenv").config();
 
@@ -55,17 +56,19 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
   };
 
   const handleLogout = () => {
-    //! test 진행 후 삭제할 것
+    // //! test 진행 후 삭제할 것
 
-    setIsLogin(false);
-    navigate('/');
+    // setIsLogin(false);
+    // navigate('/');
 
-    //! --------------------------->
-    axios.post('http://localhost:4000/user/logout').then((res) => {
-      // 유저 정보 핸들링 함수
-      setIsLogin(false);
-      navigate('/');
-    });
+    // //! --------------------------->
+    axios
+      .post(`${url}/user/logout`, {}, { withCredentials: true })
+      .then((res) => {
+        // 유저 정보 핸들링 함수
+        setIsLogin(false);
+        navigate('/');
+      });
   };
 
   return (

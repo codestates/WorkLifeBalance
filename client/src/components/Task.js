@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import url from '../urlSetup';
 
 const Container = styled.div`
   min-width: 500px;
@@ -104,11 +105,13 @@ function Task ({ list }) {
     // # check 상태 변경 코드
     setInputValue({ ...inputValue, check: e.target.checked });
     // # check 서버 요청
+    console.log('check sending...');
     const { id, check } = obj;
+    // ! 더미데이터로 요청테스트 해보아야함
     axios
-      .post('http://localhost:4000/task/check', { id, check }, { Cookie: '' })
-      .then()
-      .catch();
+      .post(`${url}/task/check`, { id, check }, { withCredentials: true })
+      .then((res) => console.log('체크 전송완료됨!'))
+      .catch((err) => console.log(err));
 
     // console.log(e);
   };
@@ -118,12 +121,16 @@ function Task ({ list }) {
     const { id, task, tag, deadline } = list;
     if (key === 'ok') {
       axios
-        .post('https://localhost:4000/task/update', {
-          id,
-          task,
-          tag,
-          deadline
-        })
+        .post(
+          `${url}/task/update`,
+          {
+            id,
+            task,
+            tag,
+            deadline
+          },
+          { withCredentials: true }
+        )
         .then(() => {
           setModify(false);
         })
