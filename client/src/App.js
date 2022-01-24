@@ -29,6 +29,11 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isWrong, setIsWrong] = useState({ on: false, msg: "" });
+  const [userInfo, setUserInfo] = useState({
+    userId: 'WorkLifeBalance',
+    name: 'WLB',
+    email: 'WLB@WLB.com'
+  });
   useEffect(() => {
     // setIsLogin(true); //! 로그인 유지: 요청 정상 작동 확인 후 삭제필요
     setIsLoading(true);
@@ -75,11 +80,25 @@ function App() {
                   />
                 }
               />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+              {isLogin
+              ? <Route path='/dashboard' element={<Dashboard />} />
+              : <Route path='/dashboard' element={<Navigate to='/' />} />}
+            <Route path='/dashboard' element={<Dashboard />} />
+            {isLogin
+              ? <Route
+                  path='/profile' element={
+                    <Profile
+                      userInfo={userInfo}
+                      setUserInfo={setUserInfo}
+                      isLogin={isLogin}
+                      setIsLogin={setIsLogin}
+                    />
+                  }
+                />
+              : <Route path='/profile' element={<Navigate to='/' />} />}
+            <Route path='/signup' element={<Signup />} />
+            <Route path='*' element={<Navigate to='/' />} />
+          </Routes>
           </div>
         </div>
       )}
