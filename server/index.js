@@ -4,11 +4,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
+const feedbackRouter = require('./routes/feedback');
 const models = require('./models');
 const cookieParser = require('cookie-parser');
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: ['https://localhost:3000'],
@@ -25,6 +26,8 @@ app.get('/', (req, res) => {
 });
 app.use('/user', userRouter);
 app.use('/task', taskRouter);
+app.use('/feedback', feedbackRouter);
+app.use(cookieParser());
 models.sequelize.sync({ force: false });
 
 let server;
