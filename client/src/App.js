@@ -28,7 +28,6 @@ function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isWrong, setIsWrong] = useState({ on: false, msg: '' });
   const [userInfo, setUserInfo] = useState({
     userId: 'WorkLifeBalance',
     name: 'WLB',
@@ -36,7 +35,9 @@ function App () {
   });
   useEffect(() => {
     // setIsLogin(true); //! 로그인 유지: 요청 정상 작동 확인 후 삭제필요
-    setIsLoading(true);
+    if (isLogin) {
+      setIsLoading(true);
+    }
     // const {userId, name, eamil} = res.data.user
     axios
       .get(`${url}/user/info`, { withCredentials: true })
@@ -48,10 +49,8 @@ function App () {
       })
       .catch((err) => {
         console.log(err.stack);
-        console.log('에러끗');
-        setIsWrong({ on: true, msg: err.stack });
       });
-  }, []);
+  }, [isLogin]);
 
   return (
     <Router>
@@ -61,11 +60,7 @@ function App () {
         isLogin={isLogin}
         setIsLogin={setIsLogin}
       />
-      {isWrong.on
-        ? (
-          <Error>{isWrong.msg}</Error>
-          )
-        : isLoading
+      {isLoading
           ? (
             <Loading>로딩즁</Loading>
             )
