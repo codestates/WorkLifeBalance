@@ -51,7 +51,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const lastRef2 = useRef(null);
   const lastRef3 = useRef(null);
   const [complete, setComplete] = useState([]);
-  const [uncomplete, setUncomplete] = useState([]); 
+  const [uncomplete, setUncomplete] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [idx1, setIdx1] = useState(0);
   const [idx2, setIdx2] = useState(0);
@@ -111,8 +111,8 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       setTasks([...tasks].concat(add));
       setIdx1(idx1 + 5);
       observer.unobserve(lastRef1.current);
-    } 
-  }
+    }
+  };
 
   const handleTarget2 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
@@ -124,8 +124,8 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       setComplete([...complete].concat(add));
       setIdx2(idx2 + 5);
       observer.unobserve(lastRef2.current);
-    } 
-  }
+    }
+  };
 
   const handleTarget3 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
@@ -137,28 +137,27 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       setUncomplete([...uncomplete].concat(add));
       setIdx3(idx3 + 5);
       observer.unobserve(lastRef3.current);
-    } 
-  }
+    }
+  };
 
   useEffect(async () => {
-    const observer1 = new IntersectionObserver(handleTarget1, { root: taskRef.current, threshold: 1.0});
-    
+    const observer1 = new IntersectionObserver(handleTarget1, { root: taskRef.current, threshold: 1.0 });
+
     if (lastRef1.current) {
       observer1.observe(lastRef1.current);
     }
   }, [tasks]);
 
   useEffect(async () => {
-    const observer2 = new IntersectionObserver(handleTarget2, { root: completeRef.current, threshold: 1.0});
-    
+    const observer2 = new IntersectionObserver(handleTarget2, { root: completeRef.current, threshold: 1.0 });
+
     if (lastRef2.current) {
       observer2.observe(lastRef2.current);
     }
-    
   }, [complete]);
 
   useEffect(async () => {
-    let observer3 = new IntersectionObserver(handleTarget3, { root: uncompleteRef.current, threshold: 1.0});
+    const observer3 = new IntersectionObserver(handleTarget3, { root: uncompleteRef.current, threshold: 1.0 });
 
     if (lastRef3.current) {
       observer3.observe(lastRef3.current);
@@ -170,11 +169,11 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       {isLogin ? (
         <Container>
           <Subject>할 일 목록임</Subject>
-          <Box ref={taskRef} >
+          <Box ref={taskRef}>
             {tasks.map((task, idx) => {
               return <Task key={idx} list={task} />;
             })}
-            <Div ref={lastRef1}></Div>
+            <Div ref={lastRef1} />
           </Box>
           task들을 하나의 board로 묶어 스크롤 할수있게? (optional) 무한스크롤
           {createForm
@@ -189,17 +188,17 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
           <Box ref={completeRef}>
             {/* <Task list={tasks} /> */}
             {complete.map((task, idx) => {
-                return <Task key={idx} list={task} />;
-              })}
-            <Div ref={lastRef2}></Div>
+              return <Task key={idx} list={task} />;
+            })}
+            <Div ref={lastRef2} />
           </Box>
           <Subject>시간초과임ㅅㄱ</Subject>
           <Box ref={uncompleteRef}>
-          {/* <Task list={tasks} /> */}
+            {/* <Task list={tasks} /> */}
             {uncomplete.map((task, idx) => {
-              return <Task key={idx} list={task} />
+              return <Task key={idx} list={task} />;
             })}
-            <Div ref={lastRef3}></Div>
+            <Div ref={lastRef3} />
           </Box>
         </Container>
       ) : (

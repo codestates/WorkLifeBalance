@@ -61,56 +61,56 @@ function App () {
         setIsLogin={setIsLogin}
       />
       {isLoading
-          ? (
-            <Loading>로딩즁</Loading>
-            )
-          : (
-            <div className='base-wrapper'>
-              {isLogin ? <Nav /> : null}
-              <div className='route-wrapper'>
-                <Routes>
-                  <Route
-                    exact
-                    path='/'
-                    element={
-                      <Home
-                        showLogin={showLogin}
-                        setShowLogin={setShowLogin}
-                        isLogin={isLogin}
-                      />
+        ? (
+          <Loading>로딩즁</Loading>
+          )
+        : (
+          <div className='base-wrapper'>
+            {isLogin ? <Nav /> : null}
+            <div className='route-wrapper'>
+              <Routes>
+                <Route
+                  exact
+                  path='/'
+                  element={
+                    <Home
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      isLogin={isLogin}
+                    />
                 }
-                  />
-                  {isLogin
-                    ? (
-                      <Route path='/dashboard' element={<Dashboard />} />
-                      )
-                    : (
-                      <Route path='/dashboard' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/dashboard' element={<Dashboard />} />
-                  {isLogin
-                    ? (
-                      <Route
-                        path='/profile'
-                        element={
-                          <Profile
-                  userInfo={userInfo}
-                  setUserInfo={setUserInfo}
-                  isLogin={isLogin}
-                  setIsLogin={setIsLogin}
                 />
+                {isLogin
+                  ? (
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    )
+                  : (
+                    <Route path='/dashboard' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/dashboard' element={<Dashboard />} />
+                {isLogin
+                  ? (
+                    <Route
+                      path='/profile'
+                      element={
+                        <Profile
+                          userInfo={userInfo}
+                          setUserInfo={setUserInfo}
+                          isLogin={isLogin}
+                          setIsLogin={setIsLogin}
+                        />
                   }
-                      />
-                      )
-                    : (
-                      <Route path='/profile' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/signup' element={<Signup />} />
-                  <Route path='*' element={<Navigate to='/' />} />
-                </Routes>
-              </div>
+                    />
+                    )
+                  : (
+                    <Route path='/profile' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/signup' element={<Signup />} />
+                <Route path='*' element={<Navigate to='/' />} />
+              </Routes>
             </div>
-            )}
+          </div>
+          )}
 
       <Footer />
     </Router>
