@@ -1,5 +1,4 @@
-const { Tasks } = require('../../models');
-const { Users } = require('../../models');
+const { Tasks, Users } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {

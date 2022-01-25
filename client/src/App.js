@@ -37,7 +37,9 @@ function App () {
 
   useEffect(() => {
     // setIsLogin(true); //! 로그인 유지: 요청 정상 작동 확인 후 삭제필요
-    setIsLoading(true);
+    if (isLogin) {
+      setIsLoading(true);
+    }
     // const {userId, name, eamil} = res.data.user
     axios
       .get(`${url}/user/info`, { withCredentials: true })
@@ -49,9 +51,6 @@ function App () {
       })
       .catch((err) => {
         console.log(err.stack);
-        console.log('에러끗');
-        // setIsWrong({ on: true, msg: err.stack });
-        //! 에러처리 바꿔야함 -> 없어도됨
       });
   }, [isLogin]);
 

@@ -101,7 +101,6 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
           </Link>
         </Title>
         {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
-
         {isLogin
           ? (
             <ControlBox>
