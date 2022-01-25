@@ -15,14 +15,14 @@ import axios from 'axios';
 import url from './urlSetup';
 import styled from 'styled-components';
 
-const Error = styled.div`
-  text-align: center;
-  font-size: 25px;
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
 `;
 
-const Loading = styled.div`
-  text-align: center;
-`;
+const Loading = styled.div``;
 
 function App () {
   const [showLogin, setShowLogin] = useState(false);
@@ -33,6 +33,8 @@ function App () {
     name: 'WLB',
     email: 'WLB@WLB.com'
   });
+  const [navOn, setNavOn] = useState(true);
+
   useEffect(() => {
     // setIsLogin(true); //! 로그인 유지: 요청 정상 작동 확인 후 삭제필요
     if (isLogin) {
@@ -53,67 +55,72 @@ function App () {
   }, [isLogin]);
 
   return (
-    <Router>
-      <Header
-        showLogin={showLogin}
-        setShowLogin={setShowLogin}
-        isLogin={isLogin}
-        setIsLogin={setIsLogin}
-      />
-      {isLoading
-        ? (
-          <Loading>로딩즁</Loading>
-          )
-        : (
-          <div className='base-wrapper'>
-            {isLogin ? <Nav /> : null}
-            <div className='route-wrapper'>
-              <Routes>
-                <Route
-                  exact
-                  path='/'
-                  element={
-                    <Home
-                      showLogin={showLogin}
-                      setShowLogin={setShowLogin}
-                      isLogin={isLogin}
-                    />
-                }
-                />
-                {isLogin
-                  ? (
-                    <Route path='/dashboard' element={<Dashboard />} />
-                    )
-                  : (
-                    <Route path='/dashboard' element={<Navigate to='/' />} />
-                    )}
-                <Route path='/dashboard' element={<Dashboard />} />
-                {isLogin
-                  ? (
-                    <Route
-                      path='/profile'
-                      element={
-                        <Profile
-                          userInfo={userInfo}
-                          setUserInfo={setUserInfo}
-                          isLogin={isLogin}
-                          setIsLogin={setIsLogin}
-                        />
+    <div className='container'>
+      <Router>
+        <Header
+          showLogin={showLogin}
+          setShowLogin={setShowLogin}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        />
+        {isLoading
+          ? (
+            <LoadingContainer>
+              <Loading>
+                <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
+              </Loading>
+            </LoadingContainer>
+            )
+          : (
+            <div className='base-wrapper'>
+              {isLogin ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
+              <div className='route-wrapper'>
+                <Routes>
+                  <Route
+                    exact
+                    path='/'
+                    element={
+                      <Home
+                        showLogin={showLogin}
+                        setShowLogin={setShowLogin}
+                        isLogin={isLogin}
+                      />
                   }
-                    />
-                    )
-                  : (
-                    <Route path='/profile' element={<Navigate to='/' />} />
-                    )}
-                <Route path='/signup' element={<Signup />} />
-                <Route path='*' element={<Navigate to='/' />} />
-              </Routes>
+                  />
+                  {isLogin
+                    ? (
+                      <Route path='/dashboard' element={<Dashboard />} />
+                      )
+                    : (
+                      <Route path='/dashboard' element={<Navigate to='/' />} />
+                      )}
+                  <Route path='/dashboard' element={<Dashboard />} />
+                  {isLogin
+                    ? (
+                      <Route
+                        path='/profile'
+                        element={
+                          <Profile
+                  userInfo={userInfo}
+                  setUserInfo={setUserInfo}
+                  isLogin={isLogin}
+                  setIsLogin={setIsLogin}
+                />
+                    }
+                      />
+                      )
+                    : (
+                      <Route path='/profile' element={<Navigate to='/' />} />
+                      )}
+                  <Route path='/signup' element={<Signup />} />
+                  <Route path='*' element={<Navigate to='/' />} />
+                </Routes>
+                <Footer />
+              </div>
             </div>
-          </div>
-          )}
-
-      <Footer />
-    </Router>
+            )}
+      </Router>
+    </div>
   );
 }
 
