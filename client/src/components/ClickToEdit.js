@@ -4,19 +4,52 @@ import styled from 'styled-components';
 import url from '../urlSetup';
 
 const Container = styled.div`
+  margin: 0px 5px 5px 5px;
   display: flex;
   flex-direction: column;
+  font-size: 1.5rem;
+  min-width: 400px;
+  min-height: 280px;
+  border-radius: 10px;
+  border: ${(props) => (props.edit ? 'none' : '1px dashed black')};
+  align-items: flex-end;
+  cursor: ${(props) => (props.edit ? 'inherit' : 'pointer')};
+  :hover {
+    background-color: ${(props) => (props.edit ? 'inherit' : '#eee')};
+  }
 `;
 
 const Content = styled.div`
-  cursor: pointer;
+  margin: 12px;
 `;
 
-const ContentInput = styled.textarea``;
+const ContentInput = styled.textarea`
+  padding: 10px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  width: 380px;
+  height: 260px;
+`;
 
 const Confirm = styled.button`
-  width: 100px;
-  align-self: right;
+  margin: 10px;
+  padding: 6px;
+  width: 180px;
+  flex: 1 0 0;
+  background-color: seagreen;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  /* align-self: right; */
+  :hover {
+    background-color: #62b270;
+    /* color: grey; */
+  }
+  :active {
+    background-color: #0a634a;
+    box-shadow: none;
+    color: white;
+  }
 `;
 
 function ClickToEdit ({ day, setDay }) {
@@ -31,7 +64,11 @@ function ClickToEdit ({ day, setDay }) {
 
   const handleConfirm = () => {
     if (content.trim() !== '') {
-      axios.post(`${url}/feedback/update`, {}, { withCredentials: true });
+      axios.post(
+        `${url}/feedback/update`,
+        { day, content },
+        { withCredentials: true }
+      );
       setEdit(false);
     }
     contentInput.current.focus();
@@ -43,7 +80,10 @@ function ClickToEdit ({ day, setDay }) {
   };
 
   const handleInputValue = (key) => (e) => {
-    if (key === 'content') setContent(e.target.value);
+    if (key === 'content') {
+      setContent(e.target.value);
+      console.log('입력');
+    }
   };
 
   useEffect(() => {
@@ -60,7 +100,7 @@ function ClickToEdit ({ day, setDay }) {
     <>
       {edit
         ? (
-          <Container>
+          <Container edit={edit}>
             <ContentInput
               ref={contentInput}
               onChange={handleInputValue('content')}
@@ -71,8 +111,8 @@ function ClickToEdit ({ day, setDay }) {
           </Container>
           )
         : (
-          <Container>
-            <Content onClick={handleEdit}>{content}</Content>
+          <Container edit={edit} onClick={handleEdit}>
+            <Content>{content}</Content>
           </Container>
           )}
     </>

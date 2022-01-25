@@ -5,17 +5,35 @@ import { ClickToEdit as CTE } from '.';
 import url from '../urlSetup';
 
 const Container = styled.div`
-  border: 1px solid green; // 테스트용 테두리
+  /* border: 1px solid green; // 테스트용 테두리 */
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  min-height: 350px;
   div {
     align-self: center;
   }
 `;
 
 const Filter = styled.input`
+  margin: 7px;
+  padding: 4px 4px 4px 10px;
   width: 130px;
+  height: 22px;
+  /* outline: none; */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  background-color: seagreen;
+  ::-webkit-calendar-picker-indicator {
+    background-color: #62b270;
+    border-radius: 3px;
+    cursor: pointer;
+    :hover {
+      background-color: #acd8a7;
+    }
+  }
 `;
 
 const today = new Date();
@@ -33,6 +51,7 @@ function Feedback () {
   };
 
   const handleChangeDate = async (e) => {
+    if (e.target.value === '') return;
     await setDay(e.target.value);
     axios.get(`${url}/feedback/info?d=${day}`, { withCredentials: true });
   };
@@ -40,7 +59,6 @@ function Feedback () {
   return (
     <Container>
       <span>
-        Filter:{' '}
         <Filter
           type='date'
           onChange={handleChangeDate}
