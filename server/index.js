@@ -20,8 +20,6 @@ app.use(
   })
 );
 
-
-
 app.get('/', (req, res) => {
   res.send('<h1> Server running test </h1>');
 });
@@ -30,8 +28,6 @@ app.use('/task', taskRouter);
 app.use('/feedback', feedbackRouter);
 app.use(cookieParser());
 models.sequelize.sync({ force: false });
-
-
 
 app.listen(PORT, () => {
   console.log(`HTTP server listen on ${PORT}`);
