@@ -51,7 +51,7 @@ function App () {
         console.log('에러끗');
         setIsWrong({ on: true, msg: err.stack });
       });
-  }, []);
+  }, [isLogin]);
 
   return (
     <Router>
