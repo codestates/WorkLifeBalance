@@ -18,7 +18,6 @@ module.exports = {
       return res.status(409).send({ message: 'email exists' });
     }
     const jwt = generateAccessToken(userInfo.dataValues);
-    console.log(userInfo);
     delete userInfo.dataValues.password;
     sendAccessToken(res, jwt);
     return res.status(201).send(userInfo.dataValues);

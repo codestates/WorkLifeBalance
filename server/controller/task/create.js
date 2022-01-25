@@ -1,5 +1,4 @@
-const { Tasks } = require('../../models');
-const { Users } = require('../../models');
+const { Tasks, Users } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
@@ -12,6 +11,7 @@ module.exports = {
     } else {
       const { userId } = userInfo;
       const user = await Users.findOne({
+        attributes: ['id', 'userId', 'email', 'name', 'createdAt', 'updatedAt'],
         where: { userId }
       });
 

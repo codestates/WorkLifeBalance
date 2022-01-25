@@ -23,13 +23,13 @@ module.exports = {
         if (!created) {
           Feedbacks.update({ content }, { where: { day } });
           return res.status(200).send({ message: 'update' });
-        }else{
-        const find = await Feedbacks.findOne({
-          where : { content }
-        })
-        console.log(find.day)
-        const resDay = find.day
-        return res.status(200).send({data:{day:resDay},message:"ok"});
+        } else {
+          const find = await Feedbacks.findOne({
+            where: { content }
+          });
+          console.log(find.day);
+          const resDay = find.day;
+          return res.status(200).send({ data: { day: resDay }, message: 'ok' });
         }
       }
     }
