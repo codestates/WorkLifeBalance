@@ -8,6 +8,7 @@ module.exports = {
     const hashPassword = crypto.createHash('sha512').update(password).digest('hex');
 
     Users.findOne({
+      attributes: ['id', 'userId', 'email', 'name', 'createdAt', 'updatedAt'],
       where: {
         userId,
         password: hashPassword
@@ -20,7 +21,6 @@ module.exports = {
         delete data.dataValues.password;
         const jwt = generateAccessToken(data.dataValues);
         sendAccessToken(res, jwt);
-        console.log(res);
         return res.status(200).send(data.dataValues);
       });
   }
