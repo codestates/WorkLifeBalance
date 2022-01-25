@@ -101,11 +101,11 @@ function App () {
                         path='/profile'
                         element={
                           <Profile
-                  userInfo={userInfo}
-                  setUserInfo={setUserInfo}
-                  isLogin={isLogin}
-                  setIsLogin={setIsLogin}
-                />
+                            userInfo={userInfo}
+                            setUserInfo={setUserInfo}
+                            isLogin={isLogin}
+                            setIsLogin={setIsLogin}
+                          />
                     }
                       />
                       )

@@ -63,10 +63,12 @@ function ClickToEdit ({ day, setDay }) {
   };
 
   const handleConfirm = () => {
+    const modified = day.split('-').join('.');
+    console.log(modified);
     if (content.trim() !== '') {
       axios.post(
         `${url}/feedback/update`,
-        { day, content },
+        { day: modified, content },
         { withCredentials: true }
       );
       setEdit(false);
@@ -87,8 +89,9 @@ function ClickToEdit ({ day, setDay }) {
   };
 
   useEffect(() => {
+    const modified = day.split('-').join('.');
     axios
-      .get(`${url}/feedback/info?d=${day}`, { withCredentials: true })
+      .get(`${url}/feedback/info?d=${modified}`, { withCredentials: true })
       .then((res) => {
         // res.data.content
         // res.data.day

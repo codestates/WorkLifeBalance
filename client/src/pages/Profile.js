@@ -168,7 +168,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
     try {
       if (validId(userId) && validEmail(email)) {
         const result = await axios.post(
-          `${url}/user/update`,
+          `${url}/user/update/info`,
           {
             userId,
             name,

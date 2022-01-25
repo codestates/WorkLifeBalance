@@ -44,6 +44,7 @@ function Feedback () {
     `${today.getFullYear()}-${
       month.toString().length === 1 ? `0${month}` : `${month}`
     }-${today.getDate()}`
+    // 2022-02-22
   );
 
   const handleClick = (e) => {
@@ -53,7 +54,14 @@ function Feedback () {
   const handleChangeDate = async (e) => {
     if (e.target.value === '') return;
     await setDay(e.target.value);
-    axios.get(`${url}/feedback/info?d=${day}`, { withCredentials: true });
+    // ? day state가 변경되지 않고 넘어가는 문제 -> Blur처리 또는 setTimeout
+  };
+
+  const handleBlur = async () => {
+    const modified = day.split('-').join('.');
+    await axios.get(`${url}/feedback/info?d=${modified}`, {
+      withCredentials: true
+    });
   };
 
   return (
@@ -62,6 +70,7 @@ function Feedback () {
         <Filter
           type='date'
           onChange={handleChangeDate}
+          onBlur={handleBlur}
           value={day}
           onClick={handleClick}
           defaultValue={day}

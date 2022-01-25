@@ -83,7 +83,7 @@ function Dashboard () {
     axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
       //! something for informations
 
-      setRateInfo(res.data);
+      setRateInfo(res.data.data);
       // res.data.
     });
   }, []);
