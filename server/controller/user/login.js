@@ -22,7 +22,10 @@ module.exports = {
           delete data.dataValues.password;
           const jwt = generateAccessToken(data.dataValues);
           sendAccessToken(res, jwt);
-          return res.status(200).send(data.dataValues);
+          return res.status(200).send({
+            token: jwt,
+            info: data.dataValues
+          });
         });
     } catch (err) {
       res.status(500).send({ message: 'server error' });

@@ -37,7 +37,7 @@ module.exports = {
       });
 
       let mailOptions = {
-        from: 'worklifebalanceauth@gmail.com',
+        from: process.env.NODEMAILER_USER,
         to: email,
         subject: 'Work Life Balance 가입을 환영합니다!',
         html: 
