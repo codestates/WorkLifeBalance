@@ -96,10 +96,13 @@ function Dashboard() {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
-      setRateInfo(res.data.data);
-      setIsLoading(false);
-    });
+    const token = localStorage.getItem("token");
+    axios
+      .post(`${url}/task/info`, { token }, { withCredentials: true })
+      .then((res) => {
+        setRateInfo(res.data.data);
+        setIsLoading(false);
+      });
   }, []);
 
   const { work, life, check, timeout } = rateInfo;

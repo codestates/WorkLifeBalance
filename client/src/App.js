@@ -37,8 +37,9 @@ function App() {
       setIsLoading(true);
     }
     // const {userId, name, eamil} = res.data.user
+    const token = localStorage.getItem("token");
     axios
-      .get(`${url}/user/info`, { withCredentials: true })
+      .post(`${url}/user/info`, { token })
       .then((res) => {
         // 유저 정보 저장 핸들러 함수 필요 (state)
         setIsLogin(true);
@@ -47,6 +48,12 @@ function App() {
       })
       .catch((err) => {
         console.log(err.stack);
+        console.log("인증정보없음");
+        setIsLogin(false);
+        setIsLoading(false);
+        setNavOn(false);
+        localStorage.removeItem("token");
+        localStorage.removeItem("isLogin");
       });
   }, [isLogin]);
 
@@ -111,7 +118,8 @@ function App() {
               {/* </Body> */}
               <Footer />
             </div>
-            )}
+          </div>
+        )}
       </Router>
     </div>
   );
