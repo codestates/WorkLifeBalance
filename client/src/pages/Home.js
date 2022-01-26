@@ -55,7 +55,7 @@ const Head = styled.h2`
 // const Temp = styled.div``;
 
 const Loading = styled.div`
-  height: 50rem;
+  min-height: 25rem;
   background-color: wheat;
 `;
 
@@ -128,7 +128,8 @@ function Home({ showLogin, setShowLogin, isLogin }) {
         withCredentials: true
       });
       console.log(res1.data.data.tasks);
-      setIdx1(idx1 + 5);
+      if (res1.data.data.tasks.length > 0)
+        setIdx1(idx1 + res1.data.data.tasks.length);
       setTasks([...tasks].concat([...res1.data.data.tasks]));
       // setTasks([...tasks].concat(add));
       observer.unobserve(lastRef1.current);
@@ -141,7 +142,8 @@ function Home({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
         withCredentials: true
       });
-      setIdx2(idx2 + 5);
+      if (res1.data.data.tasks.length > 0)
+        setIdx2(idx2 + res1.data.data.tasks.length);
       setComplete([...complete].concat([...res1.data.data.tasks]));
       // setComplete([...complete].concat(add));
       observer.unobserve(lastRef2.current);
@@ -154,15 +156,34 @@ function Home({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
         withCredentials: true
       });
-      setIdx3(idx3 + 5);
-      if (res1.data.data.tasks.length === 0) {
-        console.log('empty');
-      }
+      if (res1.data.data.tasks.length > 0)
+        setIdx3(idx3 + res1.data.data.tasks.length);
       setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
       // setUncomplete([...uncomplete].concat(add));
       observer.unobserve(lastRef3.current);
     }
   };
+
+  useEffect(async () => {
+    const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, { token }, {
+      withCredentials: true
+    });
+    if (res1.data.data.tasks.length > 0)
+      setIdx3(idx1 + res1.data.data.tasks.length);
+    setTasks([...tasks].concat([...res1.data.data.tasks]));
+    const res2 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
+      withCredentials: true
+    });
+    if (res2.data.data.tasks.length > 0)
+      setIdx3(idx2 + res2.data.data.tasks.length);
+    setComplete([...complete].concat([...res2.data.data.tasks]));
+    const res3 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
+      withCredentials: true
+    });
+    if (res3.data.data.tasks.length > 0)
+      setIdx3(idx3 + res3.data.data.tasks.length);
+    setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
+  }, []);
 
   useEffect(async () => {
     const observer1 = new IntersectionObserver(handleTarget1, {
@@ -212,16 +233,15 @@ function Home({ showLogin, setShowLogin, isLogin }) {
           <Head>{timer}</Head>
           <Subject>Task List</Subject>
           <Box ref={taskRef}>
-            {tasks.length > 0 
-              ? tasks.map((task, idx) => {
-                  return <Task key={idx} list={task} />;
-                })
-              : <Loading>1</Loading>
-            }
+            <Loading>
+              {tasks.map((task, idx) => {
+                return <Task key={idx} list={task} />;
+              })}
+            </Loading>
             <Div ref={lastRef1} />
           </Box>
           {createForm ? (
-            <CreateTask setCreateForm={setCreateForm} />
+            <CreateTask setCreateForm={setCreateForm} setTasks={setTasks} setIdx1={setIdx1} />
           ) : (
             <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
           )}
@@ -229,24 +249,22 @@ function Home({ showLogin, setShowLogin, isLogin }) {
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
             {/* <Task list={tasks} /> */}
-            {complete.length > 0 
-              ? complete.map((task, idx) => {
+            <Loading>
+            {complete.map((task, idx) => {
                   return <Task key={idx} list={task} />;
-                  })
-              : <Loading>1</Loading>
-            }
+            })}
+            </Loading>
             <Div ref={lastRef2} />
           </Box>
           <Bar />
           <Subject>Missing List</Subject>
           <Box ref={uncompleteRef}>
             {/* <Task list={tasks} /> */}
-            {uncomplete.length > 0 
-              ? uncomplete.map((task, idx) => {
-                  return <Task key={idx} list={task} />;
-                })
-              : <Loading>1</Loading>
-            }
+            <Loading>
+            {uncomplete.map((task, idx) => {
+              return <Task key={idx} list={task} />;
+            })}
+            </Loading>
             <Div ref={lastRef3} />
           </Box>
         </Container>
