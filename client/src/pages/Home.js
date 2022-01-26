@@ -118,7 +118,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget1 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
+      const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, {token : localStorage.getItem('token')}, {
         withCredentials: true
       });
       console.log(res1.data.data);

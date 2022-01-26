@@ -206,6 +206,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             userId,
             name,
             email,
+            token: localStorage.getItem('token')
           },
           {
             withCredentials: true,
@@ -226,7 +227,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
 
   useEffect(async () => {
     try {
-      const res = await axios.get(`${url}/user/info`, {
+      const res = await axios.post(`${url}/user/info`, {token: localStorage.getItem('token')}, {
         withCredentials: true,
       });
       setUserInfo({ ...res.data.user });
