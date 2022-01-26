@@ -123,7 +123,7 @@ function PasswordModal ({ show, setShow }) {
   };
   return (
     <Container>
-      <Canvas >
+      <Canvas>
         <View onClick={(e) => e.stopPropagation()}>
           <Box>
             <Title>
@@ -131,7 +131,7 @@ function PasswordModal ({ show, setShow }) {
             </Title>
             <Input
               onChange={(e) => setPassword(e.target.value)}
-              type={'password'}
+              type='password'
               value={password}
             />
           </Box>
@@ -145,7 +145,7 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setNewpassword(e.target.value)}
               onBlur={() => setPwfocus(true)}
-              type={'password'}
+              type='password'
               value={newPassword}
             />
           </Box>
@@ -169,7 +169,7 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setRepeat(e.target.value)}
               onBlur={() => setRpfocus(true)}
-              type={'password'}
+              type='password'
               value={repeat}
             />
           </Box>
@@ -188,7 +188,7 @@ function PasswordModal ({ show, setShow }) {
           </div>
           <Div>
             <Button onClick={update}> 확인 </Button>
-            <Button onClick={handleClick} > 취소 </Button>
+            <Button onClick={handleClick}> 취소 </Button>
           </Div>
         </View>
       </Canvas>

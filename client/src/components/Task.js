@@ -188,7 +188,7 @@ function Task ({ list }) {
   // const [dateInfo, timeInfo] = list.deadline.split('T');
   const [dateInfo, setDateInfo] = useState(list.time.split('T')[0]);
   const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1]);
-  
+
   // const [timeInfo, setTimeInfo] = useState(Date.parse(Date.now()));
   // console.log(x.toLocaleTimeString().slice(3, 8));
 
@@ -237,12 +237,12 @@ function Task ({ list }) {
             <TaskDiv check={inputValue.check}>{list.task}</TaskDiv>
           </InfoWrapper>
           <InfoWrapper className='right'>
-            
+
             <DateDiv align='right'>
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
-            <Modify onClick={handleModify('mod')} >
-              <i className="fas fa-edit"></i>
+            <Modify onClick={handleModify('mod')}>
+              <i className='fas fa-edit' />
             </Modify>
           </InfoWrapper>
         </Container>

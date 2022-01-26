@@ -175,7 +175,7 @@ function Signup () {
   const idChange = (e) => {
     setUserId(e.target.value);
     setCheckId(false);
-  }
+  };
 
   return (
     <Container>
@@ -194,7 +194,7 @@ function Signup () {
           <Title>아이디</Title>
           <InputBox>
             <Input onChange={(e) => idChange(e)} value={userId} ref={userIdRef} />
-            <Button check={checkId} onClick={() => checkFromServer(userId, 'userId')} ref={checkIdRef} >중복확인</Button>
+            <Button check={checkId} onClick={() => checkFromServer(userId, 'userId')} ref={checkIdRef}>중복확인</Button>
           </InputBox>
           {validId(userId)
             ? <Desc valid>사용할 수 있는 아이디입니다.</Desc>
@@ -231,7 +231,7 @@ function Signup () {
           <Title>이메일</Title>
           <InputBox>
             <Input onChange={(e) => setEmail(e.target.value)} value={email} ref={emailRef} />
-            <Button check={checkEm} onClick={() => checkFromServer(email, 'email')} ref={checkEmRef} >중복확인</Button>
+            <Button check={checkEm} onClick={() => checkFromServer(email, 'email')} ref={checkEmRef}>중복확인</Button>
           </InputBox>
           {validEmail(email)
             ? <Desc valid>사용할 수 있는 email입니다.</Desc>

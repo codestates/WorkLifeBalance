@@ -49,7 +49,7 @@ const Bar = styled.div`
 
 const Head = styled.h2`
   display: flex;
-`
+`;
 // const Temp = styled.div``;
 
 function Home ({ showLogin, setShowLogin, isLogin }) {
@@ -67,7 +67,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const [idx1, setIdx1] = useState(0);
   const [idx2, setIdx2] = useState(0);
   const [idx3, setIdx3] = useState(0);
-  let x = new Date();
+  const x = new Date();
   const [timer, setTimer] = useState(x.toLocaleTimeString());
 
   const add = [
@@ -213,7 +213,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
             })}
             <Div ref={lastRef2} />
           </Box>
-          <Bar></Bar>
+          <Bar />
           <Subject>Missing List</Subject>
           <Box ref={uncompleteRef}>
             {/* <Task list={tasks} /> */}
