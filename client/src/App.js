@@ -37,8 +37,9 @@ function App() {
       setIsLoading(true);
     }
     // const {userId, name, eamil} = res.data.user
+    const token = localStorage.getItem("token");
     axios
-      .get(`${url}/user/info`, { withCredentials: true })
+      .post(`${url}/user/info`, { token })
       .then((res) => {
         // 유저 정보 저장 핸들러 함수 필요 (state)
         setIsLogin(true);

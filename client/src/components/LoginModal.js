@@ -164,15 +164,17 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
         )
         .then((res) => {
           // 로그인 확인
-          axios
-            .get(`${url}/user/info`, { withCredentials: true })
-            .then((res) => {
-              // 유저 정보 저장 핸들러 함수 필요 (state)
-              setIsLogin(true);
-              setShowLogin(false);
-              navigate("/");
-              localStorage.setItem("isLogin", "1");
-            });
+
+          localStorage.setItem("token", res.data.token);
+          //
+          const token = localStorage.getItem("token");
+          axios.post(`${url}/user/info`, { token }).then((res) => {
+            // 유저 정보 저장 핸들러 함수 필요 (state)
+            setIsLogin(true);
+            setShowLogin(false);
+            navigate("/");
+            localStorage.setItem("isLogin", "1");
+          });
         })
         .catch(() => {
           setErrMsg("아이디 혹은 비밀번호가 잘못되었습니다");
