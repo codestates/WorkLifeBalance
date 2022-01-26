@@ -48,6 +48,12 @@ function App() {
       })
       .catch((err) => {
         console.log(err.stack);
+        console.log("인증정보없음");
+        setIsLogin(false);
+        setIsLoading(false);
+        setNavOn(false);
+        localStorage.removeItem("token");
+        localStorage.removeItem("isLogin");
       });
   }, [isLogin]);
 
