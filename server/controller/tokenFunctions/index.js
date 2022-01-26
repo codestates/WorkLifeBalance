@@ -13,7 +13,8 @@ module.exports = {
     });
   },
   isAuthorized: (req) => {
-    const cookie = req.headers.cookie;
+    // const cookie = req.headers.cookie;
+    const cookie = req.body.token;
     if (!cookie || !cookie.includes('jwt')) {
       return null;
     }
