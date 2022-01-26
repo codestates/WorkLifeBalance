@@ -19,7 +19,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  res.send('<h1> Server running test </h1>');
+  res.send('<h1> Wasdasd </h1>');
 });
 app.use('/user', userRouter);
 app.use('/task', taskRouter);
