@@ -72,11 +72,6 @@ const Bar = styled.progress`
 `;
 
 const IsNothing = styled.div`
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
   width: 400px;
   height: 40px;
   padding-top: 10px;

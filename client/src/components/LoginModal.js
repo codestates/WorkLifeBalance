@@ -33,17 +33,15 @@ const Button = styled.button`
   font-size: 1.2rem;
   border: none;
   border-radius: 10px;
-  background-color: ${color.green02};
-  box-shadow: 0 0 2px 2px ${color.green02};
+  background-color: white;
+  box-shadow: 0 0 2px 2px ${color.black01} inset;
   cursor: pointer;
   :hover {
-    background-color: ${color.green03};
-    box-shadow: 0 0 2px 2px ${color.green03};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
   }
   :active {
-    color: white;
-    background-color: ${color.green01};
-    box-shadow: 0 0 2px 2px ${color.green01};
+    color: ${color.green01};
+    box-shadow: 0 0 2px 2px ${color.black02} inset;
   }
 `;
 
@@ -63,10 +61,12 @@ const View = styled.div.attrs((props) => ({
   role: "dialog",
 }))`
   display: flex;
+  flex-direction: column;
   border-radius: 5px;
   background-color: #fff;
   width: 420px;
   height: 220px;
+  align-items: center;
   text-align: right;
   font-size: 1.2rem;
   padding: 50px;
@@ -86,11 +86,12 @@ const View = styled.div.attrs((props) => ({
     text-align: right;
   }
   .yet:hover {
-    color: blue;
+    color: ${color.blue01};
     cursor: pointer;
   }
   form {
     display: flex;
+    flex: 2 0 auto;
     flex-direction: column;
     width: 100%;
     align-items: center;
@@ -102,6 +103,21 @@ const InputWrapper = styled.div`
   align-items: center;
   span {
     width: 75px;
+  }
+`;
+
+const ExitButton = styled.div`
+  flex: 1 0 25px;
+  margin-top: 10px;
+  padding: 0 1px 2px 1px;
+  min-width: 25px;
+  height: 25px;
+  text-align: center;
+  font-size: 1.6rem;
+  /* background: coral; */
+  cursor: pointer;
+  :hover {
+    color: ${color.black05};
   }
 `;
 
@@ -154,8 +170,8 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
               // 유저 정보 저장 핸들러 함수 필요 (state)
               setIsLogin(true);
               setShowLogin(false);
-              navigate('/');
-              localStorage.setItem('isLogin', '1');
+              navigate("/");
+              localStorage.setItem("isLogin", "1");
             });
         })
         .catch(() => {
@@ -180,9 +196,6 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
     <Container>
       <Canvas onClick={handleCanvasClick}>
         <View onClick={(e) => e.stopPropagation()}>
-          <br />
-          <br />
-          <br />
           <form onSubmit={(e) => e.preventDefault()}>
             <InputWrapper>
               <span>아이디</span>
@@ -201,6 +214,7 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
               로그인
             </Button>
           </form>
+          <ExitButton onClick={handleCanvasClick}>&times;</ExitButton>
         </View>
       </Canvas>
     </Container>
