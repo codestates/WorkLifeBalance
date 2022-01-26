@@ -103,19 +103,19 @@ function App () {
                             setIsLogin={setIsLogin}
                           />
                     }
-                    />
-                    )
-                  : (
-                    <Route path='/profile' element={<Navigate to='/' />} />
-                    )}
-                <Route path='/signup' element={<Signup />} />
-                <Route path='*' element={<Navigate to='/' />} />
-              </Routes>
-              {/* </Body> */}
-              <Footer />
+                      />
+                      )
+                    : (
+                      <Route path='/profile' element={<Navigate to='/' />} />
+                      )}
+                  <Route path='/signup' element={<Signup />} />
+                  <Route path='*' element={<Navigate to='/' />} />
+                </Routes>
+                {/* </Body> */}
+                <Footer />
+              </div>
             </div>
-          </div>
-        )}
+            )}
       </Router>
     </div>
   );

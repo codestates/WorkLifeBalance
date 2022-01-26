@@ -203,23 +203,25 @@ function Task ({ list }) {
               checked={inputValue.check}
               deactive
             />
+            <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
+              {inputValue.tag}
+            </TagInput>
+            {/* deadline 형식: 2022-22-22T22:22 */}
+          </InfoWrapper>
+          <InfoWrapper className='center'>
             <TaskInput
               onChange={handleInputValue('task')}
               value={inputValue.task || ''}
             />
+            {/* 적용 눌렀을 때 변경하는 코드 작성 */}
+          </InfoWrapper>
+          <InfoWrapper className='right'>
             <DateInput
               type='datetime-local'
               onChange={handleInputValue('deadline')}
               value={inputValue.deadline || ''}
             />
-            {/* deadline 형식: 2022-22-22T22:22 */}
-          </InfoWrapper>
-          <InfoWrapper>
-            <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
-              {inputValue.tag}
-            </TagInput>
             <Modify onClick={handleModify('ok')}>적용</Modify>
-            {/* 적용 눌렀을 때 변경하는 코드 작성 */}
           </InfoWrapper>
         </Container>
       ) : (
