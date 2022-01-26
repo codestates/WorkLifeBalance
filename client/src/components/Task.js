@@ -2,11 +2,15 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import url from '../urlSetup';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 const Container = styled.div`
-  min-width: 500px;
-  min-height: 70px;
+  /* min-width: 500px;
+  min-height: 70px; */
+  height: 4rem;
+  width: 44rem;
   margin-bottom: 5px;
+  display: flex;
 `;
 
 const Checkbox = styled.input`
@@ -39,9 +43,32 @@ const Checkbox = styled.input`
 `;
 
 const InfoWrapper = styled.div`
+  box-sizing: border-box;
   background-color: #ccc;
-  height: 30px;
+  height: 3.5rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &.left {
+    align-items: center;
+    border: solid 0.1rem rgb(80, 91, 239);
+    border-radius: 10px 0 0 10px;
+    flex: 1;
+  }
+
+  &.center {
+    padding: 0.2rem;
+    border: solid 0.1rem #ccc; 
+    flex: 4;
+  }
+
+  &.right {
+    align-items: right;
+    border: solid 0.1rem #ccc;
+    border-radius: 0 10px 10px 0;
+    flex: 1.7;
+  }
 `;
 
 const TaskDiv = styled.div`
@@ -53,7 +80,8 @@ const TaskDiv = styled.div`
 `;
 
 const DateDiv = styled.div`
-  float: right;
+  display: flex;
+  justify-content: right;
   margin: 5px;
 `;
 
@@ -67,7 +95,8 @@ const TagDiv = styled.div`
 // const Deadline = styled.input``;
 
 const Modify = styled.div`
-  float: right;
+  display: flex;
+  justify-content: right;
   max-width: auto;
   margin-right: 30px;
 
@@ -156,13 +185,18 @@ function Task ({ list }) {
   // console.log(task);
   // useEffect(() => {}, [inputValue]);
 
-  const [dateInfo, timeInfo] = list.deadline.split('T');
+  // const [dateInfo, timeInfo] = list.deadline.split('T');
+  const [dateInfo, setDateInfo] = useState(list.time.split('T')[0]);
+  const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1]);
+
+  // const [timeInfo, setTimeInfo] = useState(Date.parse(Date.now()));
+  // console.log(x.toLocaleTimeString().slice(3, 8));
 
   return (
     <>
       {modify ? (
         <Container>
-          <InfoWrapper>
+          <InfoWrapper className='left'>
             <Checkbox
               type='checkbox'
               // onChange={handleInputValue("check")}
@@ -190,21 +224,26 @@ function Task ({ list }) {
         </Container>
       ) : (
         <Container>
-          <InfoWrapper>
+          <InfoWrapper className='left'>
             <Checkbox
               type='checkbox'
               onChange={(e) =>
                 handleChangeCheck(e, { id: list.id, check: list.check })}
               checked={inputValue.check}
             />
+            <TagDiv tag={list.tag}>{list.tag}</TagDiv>
+          </InfoWrapper>
+          <InfoWrapper className='center'>
             <TaskDiv check={inputValue.check}>{list.task}</TaskDiv>
+          </InfoWrapper>
+          <InfoWrapper className='right'>
+
             <DateDiv align='right'>
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
-          </InfoWrapper>
-          <InfoWrapper>
-            <TagDiv tag={list.tag}>{list.tag}</TagDiv>
-            <Modify onClick={handleModify('mod')}>수정(img)</Modify>
+            <Modify onClick={handleModify('mod')}>
+              <i className='fas fa-edit' />
+            </Modify>
           </InfoWrapper>
         </Container>
       )}
