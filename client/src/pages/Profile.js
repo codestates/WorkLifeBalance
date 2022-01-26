@@ -7,13 +7,14 @@ import { Navigate } from 'react-router-dom';
 import url from './../urlSetup';
 
 const Container = styled.div`
-  background: wheat;
+  /* background: wheat; */
   display: flex;
   flex: 1 0 0;
   flex-direction: column;
   justify-content: left;
   align-items: center;
   height: 100%;
+  min-height: 70vh;
 `;
 
 const Contents = styled.div`

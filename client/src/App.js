@@ -1,7 +1,7 @@
 import './App.css';
 
-import { Header, Nav, Footer, LoginModal } from './components';
-import { Home, Signup, Profile, Dashboard, NotFound } from './pages';
+import { Header, Nav, Footer } from './components';
+import { Home, Signup, Profile, Dashboard } from './pages';
 
 import {
   Navigate,
@@ -103,18 +103,19 @@ function App () {
                             setIsLogin={setIsLogin}
                           />
                     }
-                      />
-                      )
-                    : (
-                      <Route path='/profile' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/signup' element={<Signup />} />
-                  <Route path='*' element={<Navigate to='/' />} />
-                </Routes>
-                <Footer />
-              </div>
+                    />
+                    )
+                  : (
+                    <Route path='/profile' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/signup' element={<Signup />} />
+                <Route path='*' element={<Navigate to='/' />} />
+              </Routes>
+              {/* </Body> */}
+              <Footer />
             </div>
-            )}
+          </div>
+        )}
       </Router>
     </div>
   );

@@ -10,6 +10,7 @@ import url from '../urlSetup';
 const Border = styled.hr`
   margin: 0px;
   height: 5px;
+  width: 100vw;
   border: 0;
   box-shadow: 0 5px 5px -5px #555 inset;
 `;
@@ -22,7 +23,7 @@ const Container = styled.div`
   text-decoration: none;
   margin-top: 5px;
   overflow: hidden;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
 const Title = styled.h1`
@@ -31,7 +32,7 @@ const Title = styled.h1`
   font-size: 3.5em;
   padding-left: 20px;
   color: violet;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   img {
     margin-right: 20px;
   }

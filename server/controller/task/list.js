@@ -17,7 +17,7 @@ module.exports = {
       if (!user) {
         return res.status(401).send({ message: 'not authorized' });
       } else {
-        const [check, time] = [req.query.check, req.query.time];
+        const [check, time, index] = [req.query.check, req.query.time, Number(req.query.index)];
         const tasks = await Tasks.findAll({
           where: {
             userId: userId,
@@ -27,7 +27,8 @@ module.exports = {
               : { [Op.lt]: new Date() }
           }
         });
-        return res.status(200).send({ data: { tasks }, message: 'ok' });
+        const list = tasks.slice(index, index + 5);
+        return res.status(200).send({ data: { tasks: list }, message: 'ok' });
       }
     } catch (err) {
       res.status(500).send({ message: 'server error' });

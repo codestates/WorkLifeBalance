@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
 import url from '../urlSetup';
 
 const Container = styled.div`
@@ -120,7 +119,7 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
               localStorage.setItem('isLogin', '1');
             });
         })
-        .catch((err) => {
+        .catch(() => {
           setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');
           setTimeout(() => {
             setErrMsg('');

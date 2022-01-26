@@ -4,6 +4,7 @@ const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
   post: async (req, res) => {
+    try{
     const { content, day } = req.body;
     const userInfo = isAuthorized(req);
     if (!userInfo) {
@@ -27,11 +28,14 @@ module.exports = {
           const find = await Feedbacks.findOne({
             where: { content }
           });
-          console.log(find.day);
           const resDay = find.day;
           return res.status(200).send({ data: { day: resDay }, message: 'ok' });
         }
       }
     }
+  } catch(err){
+    console.log(err)
+    return res.status(500).send({message:"server error"})
+  }
   }
 };
