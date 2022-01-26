@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import DropModal from '../components/DropModal';
-import PasswordModal from '../components/PasswordModal';
-import { Navigate } from 'react-router-dom';
-import url from './../urlSetup';
+import styled from "styled-components";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import DropModal from "../components/DropModal";
+import PasswordModal from "../components/PasswordModal";
+import { Navigate } from "react-router-dom";
+import url from "./../urlSetup";
+import color from "../colorSetup";
 
 const Container = styled.div`
   /* background: wheat; */
@@ -13,49 +14,74 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: left;
   align-items: center;
-  height: 100%;
+  /* height: 130%; */
   min-height: 70vh;
 `;
 
 const Contents = styled.div`
   display: flex;
+  flex: 2 0 auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  width: 80%;
+`;
+
+const Edit = styled.div`
+  flex: 2 0 auto;
+  margin-bottom: 8rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 80%;
+  /* height: 100%; */
+`;
+
+const DropWrapper = styled.div`
+  flex: 1 0 auto;
+  display: flex;
+  color: red;
+  justify-content: right;
+  width: 100%;
+  height: 2rem;
 `;
 
 const Box = styled.div`
-  background: wheat;
+  /* background: wheat; */
   text-align: center;
   display: flex;
   justify-content: left;
   align-items: center;
-  border: 0.1rem solid blue;
-  margin-top: 1rem;
-  flex: 1;
-  width: 40rem;
+  /* border: 0.1rem solid blue; */
+  margin: 24px 0 6px 0;
+
+  flex: 1 0 auto;
+  width: 100%;
 `;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(166, 167, 243);
+  /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
   width: 6rem;
-  border: solid 0.1rem black;
+  /* border: solid 0.1rem black; */
 `;
 
 const Info = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.3rem;
   background: white;
   height: 3rem;
   width: 34rem;
-  border: solid 0.1rem black;
+  border-radius: 8px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  /* border: solid 0.1rem black; */
 `;
 
 const Input = styled.input`
@@ -75,38 +101,44 @@ const GrayDiv = styled.div`
   height: 1.5rem;
 `;
 
-const Edit = styled.div`
-  margin-bottom: 10rem;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const DropWrapper = styled.div`
-  display: flex;
-  color: red;
-  justify-content: right;
-  width: 100%;
-  height: 2rem;
-`;
-
 const Button = styled.button`
   margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+  width: 120px;
+  height: 30px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.black04};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const DropButton = styled.button`
   color: red;
+  margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 0.9rem;
+  width: 100px;
+  height: 25px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.red01};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const Desc = styled.div`
   font-size: 0.5rem;
   text-align: left;
-  color: ${(props) => (props.valid ? 'green' : 'red')};
+  color: ${(props) => (props.valid ? "green" : "red")};
 `;
 
-function Profile ({ userInfo, setUserInfo, setIsLogin }) {
+function Profile({ userInfo, setUserInfo, setIsLogin }) {
   const [userId, setUserId] = useState(userInfo.userId);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
@@ -114,7 +146,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
   const [checkEm, setCheckEm] = useState(true);
   const [show, setShow] = useState({
     id: false,
-    em: false
+    em: false,
   });
   const [editMode, setEditMode] = useState(false);
   const [editPw, setEditPw] = useState(false);
@@ -135,7 +167,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
     try {
       const res = await axios.post(`${url}/user/check`, {
         type,
-        value: data
+        value: data,
       });
       if (res.status === 200) {
         setCheckId(true);
@@ -173,10 +205,10 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
           {
             userId,
             name,
-            email
+            email,
           },
           {
-            withCredentials: true
+            withCredentials: true,
           }
         );
       }
@@ -184,7 +216,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
         ...userInfo,
         userId,
         name,
-        email
+        email,
       });
       setEditMode(false);
     } catch {
@@ -195,7 +227,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
   useEffect(async () => {
     try {
       const res = await axios.get(`${url}/user/info`, {
-        withCredentials: true
+        withCredentials: true,
       });
       setUserInfo({ ...res.data.user });
       setIsLogin(true);
@@ -212,52 +244,40 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
             <div>아이디</div>
           </Title>
           <Info>
-            {!editMode
-              ? (
-                <div>{userInfo.userId}</div>
-                )
-              : (
-                <input
-                  onChange={(e) => setUserId(e.target.value)}
-                  onBlur={() => idfunc('userId', userId)}
-                  value={userId}
-                />
-                )}
+            {!editMode ? (
+              <div>{userInfo.userId}</div>
+            ) : (
+              <input
+                onChange={(e) => setUserId(e.target.value)}
+                onBlur={() => idfunc("userId", userId)}
+                value={userId}
+              />
+            )}
           </Info>
         </Box>
-        {!editMode
-          ? (
-            <></>
-            )
-          : !show.id
-              ? (
-                <></>
-                )
-              : validId(userId) && checkId
-                ? (
-                  <Desc valid>사용할 수 있는 아이디입니다.</Desc>
-                  )
-                : !checkId
-                    ? (
-                      <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
-                      )
-                    : (
-                      <Desc valid={false}>
-                        5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
-                      </Desc>
-                      )}
+        {!editMode ? (
+          <></>
+        ) : !show.id ? (
+          <></>
+        ) : validId(userId) && checkId ? (
+          <Desc valid>사용할 수 있는 아이디입니다.</Desc>
+        ) : !checkId ? (
+          <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
+        ) : (
+          <Desc valid={false}>
+            5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
+          </Desc>
+        )}
         <Box>
           <Title>
             <div>이름</div>
           </Title>
           <Info>
-            {!editMode
-              ? (
-                <div>{userInfo.name}</div>
-                )
-              : (
-                <input onChange={(e) => setName(e.target.value)} value={name} />
-                )}
+            {!editMode ? (
+              <div>{userInfo.name}</div>
+            ) : (
+              <input onChange={(e) => setName(e.target.value)} value={name} />
+            )}
           </Info>
         </Box>
         <Box>
@@ -265,59 +285,45 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
             <div>이메일</div>
           </Title>
           <Info>
-            {!editMode
-              ? (
-                <div>{userInfo.email}</div>
-                )
-              : (
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => emfunc('email', email)}
-                  value={email}
-                />
-                )}
+            {!editMode ? (
+              <div>{userInfo.email}</div>
+            ) : (
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => emfunc("email", email)}
+                value={email}
+              />
+            )}
           </Info>
         </Box>
-        {!editMode
-          ? (
-            <></>
-            )
-          : !show.em
-              ? (
-                <></>
-                )
-              : validEmail(email) && checkEm
-                ? (
-                  <Desc valid>사용할 수 있는 이메일.</Desc>
-                  )
-                : !checkEm
-                    ? (
-                      <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
-                      )
-                    : (
-                      <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>
-                      )}
+        {!editMode ? (
+          <></>
+        ) : !show.em ? (
+          <></>
+        ) : validEmail(email) && checkEm ? (
+          <Desc valid>사용할 수 있는 이메일.</Desc>
+        ) : !checkEm ? (
+          <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
+        ) : (
+          <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>
+        )}
       </Contents>
       <Edit>
-        {!editMode
-          ? (
-            <Button onClick={() => setEditMode(true)}>정보 수정</Button>
-            )
-          : (
-            <Button onClick={sendEditInfo}>정보 수정 완료</Button>
-            )}
+        {!editMode ? (
+          <Button onClick={() => setEditMode(true)}>정보 수정</Button>
+        ) : (
+          <Button onClick={sendEditInfo}>정보 수정 완료</Button>
+        )}
         <Button onClick={() => setEditPw(true)}>비밀번호 변경</Button>
       </Edit>
       <DropWrapper>
         <DropButton onClick={() => setDrop(true)}>계정 삭제</DropButton>
       </DropWrapper>
-      {drop
-        ? (
-          <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
-          )
-        : (
-          <></>
-          )}
+      {drop ? (
+        <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
+      ) : (
+        <></>
+      )}
       {editPw ? <PasswordModal show={editPw} setShow={setEditPw} /> : <></>}
     </Container>
   );
