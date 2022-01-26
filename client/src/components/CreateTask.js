@@ -97,7 +97,7 @@ const ButtonDiv = styled.div`
 `;
 
 function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [inputValue, setInputValue] = useState({
     tag: 'Work',
     task: '',

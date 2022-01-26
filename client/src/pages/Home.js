@@ -8,7 +8,7 @@ import axios from 'axios';
 const Container = styled.div`
   flex: 1 0 auto;
   padding: 15px;
-  align-items: ${(props) => (props.center ? "center" : "none")};
+  align-items: ${(props) => (props.center ? 'center' : 'none')};
   width: 45rem;
   min-height: 70vh;
   hr {
@@ -59,7 +59,7 @@ const Loading = styled.div`
   background-color: wheat;
 `;
 
-function Home({ showLogin, setShowLogin, isLogin }) {
+function Home ({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
   const [current, setCurrent] = useState(Date.now());
   const taskRef = useRef(null);
@@ -76,48 +76,48 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const [idx3, setIdx3] = useState(0);
   const x = new Date();
   const [timer, setTimer] = useState(x.toLocaleTimeString());
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const add = [
     {
       id: 1,
-      tag: "Work",
-      task: "일해야됨",
-      time: "2022-02-22T22:22",
-      check: false,
+      tag: 'Work',
+      task: '일해야됨',
+      time: '2022-02-22T22:22',
+      check: false
     },
     {
       id: 2,
-      tag: "Life",
-      task: "쉬어야됨",
-      time: "2022-02-22T22:22",
-      check: true,
+      tag: 'Life',
+      task: '쉬어야됨',
+      time: '2022-02-22T22:22',
+      check: true
     },
     {
       id: 3,
-      tag: "Life",
-      task: "쉬어야됨",
-      time: "2022-02-22T22:22",
-      check: true,
+      tag: 'Life',
+      task: '쉬어야됨',
+      time: '2022-02-22T22:22',
+      check: true
     },
     {
       id: 4,
-      tag: "Life",
-      task: "쉬어야됨",
-      time: "2022-02-22T22:22",
-      check: true,
+      tag: 'Life',
+      task: '쉬어야됨',
+      time: '2022-02-22T22:22',
+      check: true
     },
     {
       id: 5,
-      tag: "Life",
-      task: "쉬어야됨",
-      time: "2022-02-22T22:22",
-      check: true,
-    },
+      tag: 'Life',
+      task: '쉬어야됨',
+      time: '2022-02-22T22:22',
+      check: true
+    }
   ];
 
   const handleCreateTask = () => {
-    console.log("새거 만들거임");
+    console.log('새거 만들거임');
     setCreateForm(true);
   };
 
@@ -128,8 +128,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
         withCredentials: true
       });
       console.log(res1.data.data.tasks);
-      if (res1.data.data.tasks.length > 0)
-        setIdx1(idx1 + res1.data.data.tasks.length);
+      if (res1.data.data.tasks.length > 0) { setIdx1(idx1 + res1.data.data.tasks.length); }
       setTasks([...tasks].concat([...res1.data.data.tasks]));
       // setTasks([...tasks].concat(add));
       observer.unobserve(lastRef1.current);
@@ -142,8 +141,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
         withCredentials: true
       });
-      if (res1.data.data.tasks.length > 0)
-        setIdx2(idx2 + res1.data.data.tasks.length);
+      if (res1.data.data.tasks.length > 0) { setIdx2(idx2 + res1.data.data.tasks.length); }
       setComplete([...complete].concat([...res1.data.data.tasks]));
       // setComplete([...complete].concat(add));
       observer.unobserve(lastRef2.current);
@@ -156,8 +154,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
         withCredentials: true
       });
-      if (res1.data.data.tasks.length > 0)
-        setIdx3(idx3 + res1.data.data.tasks.length);
+      if (res1.data.data.tasks.length > 0) { setIdx3(idx3 + res1.data.data.tasks.length); }
       setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
       // setUncomplete([...uncomplete].concat(add));
       observer.unobserve(lastRef3.current);
@@ -168,27 +165,24 @@ function Home({ showLogin, setShowLogin, isLogin }) {
     const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, { token }, {
       withCredentials: true
     });
-    if (res1.data.data.tasks.length > 0)
-      setIdx3(idx1 + res1.data.data.tasks.length);
+    if (res1.data.data.tasks.length > 0) { setIdx3(idx1 + res1.data.data.tasks.length); }
     setTasks([...tasks].concat([...res1.data.data.tasks]));
     const res2 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
       withCredentials: true
     });
-    if (res2.data.data.tasks.length > 0)
-      setIdx3(idx2 + res2.data.data.tasks.length);
+    if (res2.data.data.tasks.length > 0) { setIdx3(idx2 + res2.data.data.tasks.length); }
     setComplete([...complete].concat([...res2.data.data.tasks]));
     const res3 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
       withCredentials: true
     });
-    if (res3.data.data.tasks.length > 0)
-      setIdx3(idx3 + res3.data.data.tasks.length);
+    if (res3.data.data.tasks.length > 0) { setIdx3(idx3 + res3.data.data.tasks.length); }
     setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
   }, []);
 
   useEffect(async () => {
     const observer1 = new IntersectionObserver(handleTarget1, {
       root: taskRef.current,
-      threshold: 1.0,
+      threshold: 1.0
     });
     console.log(idx1);
     if (lastRef1.current) {
@@ -199,7 +193,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer2 = new IntersectionObserver(handleTarget2, {
       root: completeRef.current,
-      threshold: 1.0,
+      threshold: 1.0
     });
 
     if (lastRef2.current) {
@@ -210,7 +204,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer3 = new IntersectionObserver(handleTarget3, {
       root: uncompleteRef.current,
-      threshold: 1.0,
+      threshold: 1.0
     });
 
     if (lastRef3.current) {
@@ -240,19 +234,21 @@ function Home({ showLogin, setShowLogin, isLogin }) {
             </Loading>
             <Div ref={lastRef1} />
           </Box>
-          {createForm ? (
-            <CreateTask setCreateForm={setCreateForm} setTasks={setTasks} setIdx1={setIdx1} />
-          ) : (
-            <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
-          )}
+          {createForm
+            ? (
+              <CreateTask setCreateForm={setCreateForm} setTasks={setTasks} setIdx1={setIdx1} />
+              )
+            : (
+              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+              )}
           <hr />
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
             {/* <Task list={tasks} /> */}
             <Loading>
-            {complete.map((task, idx) => {
-                  return <Task key={idx} list={task} />;
-            })}
+              {complete.map((task, idx) => {
+                return <Task key={idx} list={task} />;
+              })}
             </Loading>
             <Div ref={lastRef2} />
           </Box>
@@ -261,9 +257,9 @@ function Home({ showLogin, setShowLogin, isLogin }) {
           <Box ref={uncompleteRef}>
             {/* <Task list={tasks} /> */}
             <Loading>
-            {uncomplete.map((task, idx) => {
-              return <Task key={idx} list={task} />;
-            })}
+              {uncomplete.map((task, idx) => {
+                return <Task key={idx} list={task} />;
+              })}
             </Loading>
             <Div ref={lastRef3} />
           </Box>

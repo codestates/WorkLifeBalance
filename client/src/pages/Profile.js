@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import DropModal from "../components/DropModal";
-import PasswordModal from "../components/PasswordModal";
-import { Navigate } from "react-router-dom";
-import url from "./../urlSetup";
-import color from "../colorSetup";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import DropModal from '../components/DropModal';
+import PasswordModal from '../components/PasswordModal';
+import { Navigate } from 'react-router-dom';
+import url from './../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   /* background: wheat; */
@@ -138,11 +138,10 @@ const DropButton = styled.button`
 const Desc = styled.div`
   font-size: 0.5rem;
   text-align: left;
-  color: ${(props) => (props.valid ? "green" : "red")};
+  color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
-
-function Profile({ userInfo, setUserInfo, setIsLogin }) {
+function Profile ({ userInfo, setUserInfo, setIsLogin }) {
   const [userId, setUserId] = useState(userInfo.userId);
   const [name, setName] = useState(userInfo.name);
   const [email, setEmail] = useState(userInfo.email);
@@ -150,7 +149,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
   const [checkEm, setCheckEm] = useState(true);
   const [show, setShow] = useState({
     id: false,
-    em: false,
+    em: false
   });
   const [editMode, setEditMode] = useState(false);
   const [editPw, setEditPw] = useState(false);
@@ -171,7 +170,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
     try {
       const res = await axios.post(`${url}/user/check`, {
         type,
-        value: data,
+        value: data
       });
       if (res.status === 200) {
         setCheckId(true);
@@ -204,17 +203,17 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
   const sendEditInfo = async () => {
     try {
       if (validId(userId) && validEmail(email)) {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         const result = await axios.post(
           `${url}/user/update/info`,
           {
             userId,
             name,
             email,
-            token,
+            token
           },
           {
-            withCredentials: true,
+            withCredentials: true
           }
         );
       }
@@ -222,7 +221,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
         ...userInfo,
         userId,
         name,
-        email,
+        email
       });
       setEditMode(false);
     } catch {
@@ -232,7 +231,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
 
   useEffect(async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       const res = await axios.post(`${url}/user/info`, { token });
       setUserInfo({ ...res.data.user });
       setIsLogin(true);
@@ -249,40 +248,52 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             <div>아이디</div>
           </Title>
           <Info>
-            {!editMode ? (
-              <div>{userInfo.userId}</div>
-            ) : (
-              <Input
-                onChange={(e) => setUserId(e.target.value)}
-                onBlur={() => idfunc("userId", userId)}
-                value={userId}
-              />
-            )}
+            {!editMode
+              ? (
+                <div>{userInfo.userId}</div>
+                )
+              : (
+                <Input
+                  onChange={(e) => setUserId(e.target.value)}
+                  onBlur={() => idfunc('userId', userId)}
+                  value={userId}
+                />
+                )}
           </Info>
         </Box>
-        {!editMode ? (
-          <></>
-        ) : !show.id ? (
-          <></>
-        ) : validId(userId) && checkId ? (
-          <Desc valid>사용할 수 있는 아이디입니다.</Desc>
-        ) : !checkId ? (
-          <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
-        ) : (
-          <Desc valid={false}>
-            5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
-          </Desc>
-        )}
+        {!editMode
+          ? (
+            <></>
+            )
+          : !show.id
+              ? (
+                <></>
+                )
+              : validId(userId) && checkId
+                ? (
+                  <Desc valid>사용할 수 있는 아이디입니다.</Desc>
+                  )
+                : !checkId
+                    ? (
+                      <Desc valid={false}>이미 사용중인 아이디입니다.</Desc>
+                      )
+                    : (
+                      <Desc valid={false}>
+                        5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
+                      </Desc>
+                      )}
         <Box>
           <Title>
             <div>이름</div>
           </Title>
           <Info>
-            {!editMode ? (
-              <div>{userInfo.name}</div>
-            ) : (
-              <Input onChange={(e) => setName(e.target.value)} value={name} />
-            )}
+            {!editMode
+              ? (
+                <div>{userInfo.name}</div>
+                )
+              : (
+                <Input onChange={(e) => setName(e.target.value)} value={name} />
+                )}
           </Info>
         </Box>
         <Box>
@@ -290,45 +301,59 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             <div>이메일</div>
           </Title>
           <Info>
-            {!editMode ? (
-              <div>{userInfo.email}</div>
-            ) : (
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={() => emfunc("email", email)}
-                value={email}
-              />
-            )}
+            {!editMode
+              ? (
+                <div>{userInfo.email}</div>
+                )
+              : (
+                <Input
+                  onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => emfunc('email', email)}
+                  value={email}
+                />
+                )}
           </Info>
         </Box>
-        {!editMode ? (
-          <></>
-        ) : !show.em ? (
-          <></>
-        ) : validEmail(email) && checkEm ? (
-          <Desc valid>사용할 수 있는 이메일.</Desc>
-        ) : !checkEm ? (
-          <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
-        ) : (
-          <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>
-        )}
+        {!editMode
+          ? (
+            <></>
+            )
+          : !show.em
+              ? (
+                <></>
+                )
+              : validEmail(email) && checkEm
+                ? (
+                  <Desc valid>사용할 수 있는 이메일.</Desc>
+                  )
+                : !checkEm
+                    ? (
+                      <Desc valid={false}>사용중인 이메일을 입니다.</Desc>
+                      )
+                    : (
+                      <Desc valid={false}>올바른 이메일을 입력해야 합니다.</Desc>
+                      )}
       </Contents>
       <Edit>
-        {!editMode ? (
-          <Button onClick={() => setEditMode(true)}>정보 수정</Button>
-        ) : (
-          <Button onClick={sendEditInfo}>정보 수정 완료</Button>
-        )}
+        {!editMode
+          ? (
+            <Button onClick={() => setEditMode(true)}>정보 수정</Button>
+            )
+          : (
+            <Button onClick={sendEditInfo}>정보 수정 완료</Button>
+            )}
         <Button onClick={() => setEditPw(true)}>비밀번호 변경</Button>
       </Edit>
       <DropWrapper>
         <DropButton onClick={() => setDrop(true)}>계정 삭제</DropButton>
       </DropWrapper>
-      {drop ? (
-        <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
-      ) : (
-        <></>
-      )}
+      {drop
+        ? (
+          <DropModal show={drop} setShow={setDrop} setIsLogin={setIsLogin} />
+          )
+        : (
+          <></>
+          )}
       {editPw ? <PasswordModal show={editPw} setShow={setEditPw} /> : <></>}
     </Container>
   );

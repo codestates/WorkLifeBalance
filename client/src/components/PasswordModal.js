@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
 import url from '../urlSetup';
-import color from "../colorSetup";
+import color from '../colorSetup';
 
 const Container = styled.div`
   position: fixed;

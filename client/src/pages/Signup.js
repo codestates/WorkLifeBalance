@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import color from "../colorSetup";
-import ErrModal from "../components/ErrModal";
-import url from "../urlSetup";
+import axios from 'axios';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import color from '../colorSetup';
+import ErrModal from '../components/ErrModal';
+import url from '../urlSetup';
 
 const Container = styled.div`
   /* background: wheat; */
@@ -65,13 +65,13 @@ const Input = styled.input`
 const Desc = styled.div`
   font-size: 0.8rem;
   text-align: left;
-  color: ${(props) => (props.valid ? "green" : "red")};
+  color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
 const ValidCheckButton = styled.button`
   margin-left: 3px;
   background: white;
-  color: ${(props) => (props.check ? "green" : color.black01)};
+  color: ${(props) => (props.check ? 'green' : color.black01)};
   border: none;
   box-shadow: 0 0 2px 2px ${color.black02} inset;
 
@@ -106,13 +106,13 @@ const SubmitButton = styled.button`
   }
 `;
 
-function Signup() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeat, setRepeat] = useState("");
-  const [name, setName] = useState("");
+function Signup () {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeat, setRepeat] = useState('');
+  const [name, setName] = useState('');
   // const [userInfo, setUserInfo] = useState({ userId: '', password: '', repeat: '', name: '', email: '' });
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [checkId, setCheckId] = useState(false);
   const [checkEm, setCheckEm] = useState(false);
   const [showId, setShowId] = useState(false);
@@ -144,14 +144,14 @@ function Signup() {
 
   const checkFromServer = async (data, type) => {
     switch (type) {
-      case "userId":
+      case 'userId':
         if (validId(data)) {
           try {
             const res = await axios.post(`${url}/user/check`, {
               type,
-              value: data,
+              value: data
             });
-            if (res.data.message === "valid userId") {
+            if (res.data.message === 'valid userId') {
               setCheckId(true);
             }
             setShowId(true);
@@ -161,14 +161,14 @@ function Signup() {
           }
         }
         break;
-      case "email":
+      case 'email':
         if (validEmail(data)) {
           try {
             const res = await axios.post(`${url}/user/check`, {
               type,
-              value: data,
+              value: data
             });
-            if (res.data.message === "valid email") {
+            if (res.data.message === 'valid email') {
               setCheckEm(true);
             }
             setShowEm(true);
@@ -204,13 +204,13 @@ function Signup() {
           userId,
           password,
           name,
-          email,
+          email
         });
         if (res.data) {
-          navigate("/");
+          navigate('/');
         }
       } catch {
-        console.log("err");
+        console.log('err');
       }
     }
   };
@@ -223,40 +223,48 @@ function Signup() {
   return (
     <Container>
       <Contents>
-        {showId ? (
-          checkId ? (
-            <ErrModal
-              message="사용 가능한 아이디입니다."
-              show={showId}
-              setShow={setShowId}
-            />
-          ) : (
-            <ErrModal
-              message="이미 사용중인 아이디입니다."
-              show={showId}
-              setShow={setShowId}
-            />
-          )
-        ) : (
-          <></>
-        )}
-        {showEm ? (
-          checkEm ? (
-            <ErrModal
-              message="사용 가능한 이메일입니다."
-              show={showEm}
-              setShow={setShowEm}
-            />
-          ) : (
-            <ErrModal
-              message="이미 사용중인 이메일입니다."
-              show={showEm}
-              setShow={setShowEm}
-            />
-          )
-        ) : (
-          <></>
-        )}
+        {showId
+          ? (
+              checkId
+                ? (
+                  <ErrModal
+                    message='사용 가능한 아이디입니다.'
+                    show={showId}
+                    setShow={setShowId}
+                  />
+                  )
+                : (
+                  <ErrModal
+                    message='이미 사용중인 아이디입니다.'
+                    show={showId}
+                    setShow={setShowId}
+                  />
+                  )
+            )
+          : (
+            <></>
+            )}
+        {showEm
+          ? (
+              checkEm
+                ? (
+                  <ErrModal
+                    message='사용 가능한 이메일입니다.'
+                    show={showEm}
+                    setShow={setShowEm}
+                  />
+                  )
+                : (
+                  <ErrModal
+                    message='이미 사용중인 이메일입니다.'
+                    show={showEm}
+                    setShow={setShowEm}
+                  />
+                  )
+            )
+          : (
+            <></>
+            )}
         <Box>
           <Title>아이디</Title>
           <InputBox>
@@ -267,55 +275,63 @@ function Signup() {
             />
             <ValidCheckButton
               check={checkId}
-              onClick={() => checkFromServer(userId, "userId")}
+              onClick={() => checkFromServer(userId, 'userId')}
               ref={checkIdRef}
             >
               중복확인
             </ValidCheckButton>
           </InputBox>
-          {validId(userId) ? (
-            <Desc valid>사용할 수 있는 아이디입니다.</Desc>
-          ) : (
-            <Desc valid={false}>
-              5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
-            </Desc>
-          )}
+          {validId(userId)
+            ? (
+              <Desc valid>사용할 수 있는 아이디입니다.</Desc>
+              )
+            : (
+              <Desc valid={false}>
+                5~15자 영문 대 소문자, 숫자만 사용 가능합니다.
+              </Desc>
+              )}
         </Box>
         <Box>
           <Title>비밀번호</Title>
           <InputBox>
             <Input
-              type="password"
+              type='password'
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               ref={passwordRef}
             />
           </InputBox>
-          {validPw(password) ? (
-            <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
-          ) : (
-            <Desc valid={false}>4~20자 여야 합니다.</Desc>
-          )}
+          {validPw(password)
+            ? (
+              <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
+              )
+            : (
+              <Desc valid={false}>4~20자 여야 합니다.</Desc>
+              )}
         </Box>
         <Box>
           <Title>비밀번호 확인</Title>
           <InputBox>
             <Input
-              type="password"
+              type='password'
               onChange={(e) => setRepeat(e.target.value)}
               value={repeat}
               ref={repeatRef}
             />
           </InputBox>
-          {password ? (
-            password === repeat ? (
-              <Desc valid>checked!</Desc>
-            ) : (
-              <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
-            )
-          ) : (
-            <></>
-          )}
+          {password
+            ? (
+                password === repeat
+                  ? (
+                    <Desc valid>checked!</Desc>
+                    )
+                  : (
+                    <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
+                    )
+              )
+            : (
+              <></>
+              )}
         </Box>
         <Box>
           <Title>이름</Title>
@@ -337,17 +353,19 @@ function Signup() {
             />
             <ValidCheckButton
               check={checkEm}
-              onClick={() => checkFromServer(email, "email")}
+              onClick={() => checkFromServer(email, 'email')}
               ref={checkEmRef}
             >
               중복확인
             </ValidCheckButton>
           </InputBox>
-          {validEmail(email) ? (
-            <Desc valid>사용할 수 있는 email입니다.</Desc>
-          ) : (
-            <Desc valid={false}>올바른 email을 입력하세요.</Desc>
-          )}
+          {validEmail(email)
+            ? (
+              <Desc valid>사용할 수 있는 email입니다.</Desc>
+              )
+            : (
+              <Desc valid={false}>올바른 email을 입력하세요.</Desc>
+              )}
         </Box>
       </Contents>
       <SubmitButton onClick={sendToServer}>가입하기</SubmitButton>
