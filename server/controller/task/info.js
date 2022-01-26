@@ -7,11 +7,9 @@ module.exports = {
     try {
       const now = new Date();
       const userInfo = isAuthorized(req);
-      console.log(userInfo);
       if (!userInfo) {
         return res.status(400).send({ message: 'bad request' });
       } else {
-        console.log('1');
         const { userId } = userInfo;
         const user = await Tasks.findOne({
           where: { userId }
@@ -22,14 +20,14 @@ module.exports = {
           const work1 = await Tasks.findAndCountAll({
             where: {
               tag: {
-                [Op.eq]: 'W'
+                [Op.eq]: 'Work'
               }
             }
           });
           const life1 = await Tasks.findAndCountAll({
             where: {
               tag: {
-                [Op.eq]: 'L'
+                [Op.eq]: 'Life'
               }
             }
           });
@@ -54,9 +52,6 @@ module.exports = {
           const life = life1.count;
           const check = check1.count;
           const timeout = time1.count;
-          console.log(time1);
-          // console.log(life1.rows[1].dataValues,'123123123')
-          console.log(work, life, check, timeout);
           return res.status(200).send({ data: { work, life, check, timeout: timeout }, message: 'ok' });
         }
       }
