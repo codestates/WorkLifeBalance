@@ -10,33 +10,27 @@
   align-items: center;
 }
 
-footer {
-  border-top: 1px solid black;
-  color: #ccc;
-  text-align: right;
-}
-
 .base-wrapper {
   display: flex;
   width: 100vw;
   min-height: 88vh;
   justify-content: center;
-  border: 1px solid blue;
 }
 
 .route-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-  /* text-align: center; */
   align-items: center;
-  max-height: 80vh;
+  height: 90vh;
   width: 100vw;
-  /* min-width: 500px;
-  max-width: 65vw; */
+  overflow-x: hidden;
   overflow-y: auto;
-  border: 1px solid green;
 }
+
+/* .route-wrapper :first-child(1) {
+  min-height: 70vh;
+} */
 
 /* .App-logo {
   height: 40vmin;

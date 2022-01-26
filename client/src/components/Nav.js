@@ -106,15 +106,10 @@ const List = styled.li`
 `;
 
 function Nav ({ navOn, setNavOn }) {
-  const [mouseOn, setMouseOn] = useState(false);
-
   const handleButtonClick = () => {
     setNavOn(!navOn);
   };
-  const handleMouseOver = (key) => (e) => {
-    if (key === 'up') setMouseOn(true);
-    if (key === 'out') setMouseOn(false);
-  };
+
   return (
     <>
       <Button navOn={navOn} onClick={handleButtonClick}>

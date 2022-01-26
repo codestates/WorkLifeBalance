@@ -21,6 +21,7 @@ const Container = styled.div`
 
 const Content = styled.div`
   margin: 12px;
+  white-space: pre;
 `;
 
 const ContentInput = styled.textarea`
@@ -52,10 +53,10 @@ const Confirm = styled.button`
   }
 `;
 
-function ClickToEdit ({ day, setDay }) {
+function ClickToEdit ({ day, setDay, content, setContent }) {
   const contentInput = useRef(null);
   const [edit, setEdit] = useState(false);
-  const [content, setContent] = useState('샘플메시지입니다.');
+  // const [content, setContent] = useState("샘플메시지입니다.");
 
   const handleEdit = async () => {
     await setEdit(true);
@@ -88,17 +89,22 @@ function ClickToEdit ({ day, setDay }) {
     }
   };
 
-  useEffect(() => {
+  const getInfoByDay = () => {
     const modified = day.split('-').join('.');
     axios
       .get(`${url}/feedback/info?d=${modified}`, { withCredentials: true })
       .then((res) => {
         // res.data.content
         // res.data.day
-        setContent(res.data.content);
-        setDay(res.data.day);
+        setContent(res.data.data.content);
+        // setDay(res.data.data.day);
       });
+  };
+
+  useEffect(() => {
+    getInfoByDay();
   }, []);
+
   return (
     <>
       {edit
