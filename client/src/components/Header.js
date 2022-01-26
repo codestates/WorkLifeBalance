@@ -84,12 +84,14 @@ function Header({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
   };
 
   const handleLogout = () => {
+    const token = localStorage.getItem("token");
     axios
-      .post(`${url}/user/logout`, {}, { withCredentials: true })
+      .post(`${url}/user/logout`, { token }, { withCredentials: true })
       .then((res) => {
         setIsLogin(false);
         setNavOn(false);
         localStorage.removeItem("isLogin");
+        localStorage.removeItem("token");
         navigate("/");
       });
   };

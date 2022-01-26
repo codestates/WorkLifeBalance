@@ -33,11 +33,15 @@ module.exports = {
             time: time || date,
             check: false
           };
-          const created = await Tasks.create(newTask);
+          if(!tag || !task){
+            return res.status(400).send({ message: "bad request" })
+          }else {
+            const created = await Tasks.create(newTask);
           return res.status(201).send({
             data: created,
             message: 'successfully created'
           });
+          }
         }
       }
     } catch (err) {

@@ -200,13 +200,14 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
   const sendEditInfo = async () => {
     try {
       if (validId(userId) && validEmail(email)) {
+        const token = localStorage.getItem("token");
         const result = await axios.post(
           `${url}/user/update/info`,
           {
             userId,
             name,
             email,
-            token: localStorage.getItem('token')
+            token,
           },
           {
             withCredentials: true,
@@ -227,9 +228,8 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
 
   useEffect(async () => {
     try {
-      const res = await axios.post(`${url}/user/info`, {token: localStorage.getItem('token')}, {
-        withCredentials: true,
-      });
+      const token = localStorage.getItem("token");
+      const res = await axios.post(`${url}/user/info`, { token });
       setUserInfo({ ...res.data.user });
       setIsLogin(true);
     } catch {
