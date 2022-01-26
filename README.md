@@ -1,5 +1,4 @@
 # :briefcase: Work Life Balance :coffee:
-### LOGO
 <img src="https://user-images.githubusercontent.com/86960007/150037957-9830ed6d-45fc-40ff-b63d-9540590916b6.png" width="300" height="300">
 
 ### :balance_scale: 여러분만의 워라벨을 맞춰보세요! :balance_scale:
