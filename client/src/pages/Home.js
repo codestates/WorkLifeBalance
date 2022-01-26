@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { Task, CreateTask } from '../components';
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { Task, CreateTask } from "../components";
 
 const Container = styled.div`
   padding: 15px;
-  align-items: ${(props) => (props.center ? 'center' : 'none')};
+  align-items: ${(props) => (props.center ? "center" : "none")};
   max-width: 500px;
+  min-height: 70vh;
   hr {
     margin: 30px 0px;
   }
@@ -40,7 +41,7 @@ const Div = styled.div`
 
 // const Temp = styled.div``;
 
-function Home ({ showLogin, setShowLogin, isLogin }) {
+function Home({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
   const [current, setCurrent] = useState(Date.now());
   const taskRef = useRef(null);
@@ -59,44 +60,44 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const add = [
     {
       id: 1,
-      tag: 'Work',
-      task: '일해야됨',
-      deadline: '2022-02-22T22:22',
-      check: false
+      tag: "Work",
+      task: "일해야됨",
+      deadline: "2022-02-22T22:22",
+      check: false,
     },
     {
       id: 2,
-      tag: 'Life',
-      task: '쉬어야됨',
-      deadline: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      deadline: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 3,
-      tag: 'Life',
-      task: '쉬어야됨',
-      deadline: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      deadline: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 4,
-      tag: 'Life',
-      task: '쉬어야됨',
-      deadline: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      deadline: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 5,
-      tag: 'Life',
-      task: '쉬어야됨',
-      deadline: '2022-02-22T22:22',
-      check: true
-    }
+      tag: "Life",
+      task: "쉬어야됨",
+      deadline: "2022-02-22T22:22",
+      check: true,
+    },
   ];
   //! 서버에 요청하기 전에 create 폼을 완성한 후 보내야함
   //! create 폼은 state로 구성해서 휘발될 수 있도록
   const handleCreateTask = () => {
-    console.log('새거 만들거임');
+    console.log("새거 만들거임");
     setCreateForm(true);
   };
 
@@ -142,7 +143,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer1 = new IntersectionObserver(handleTarget1, {
       root: taskRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef1.current) {
@@ -153,7 +154,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer2 = new IntersectionObserver(handleTarget2, {
       root: completeRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef2.current) {
@@ -164,7 +165,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer3 = new IntersectionObserver(handleTarget3, {
       root: uncompleteRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef3.current) {
@@ -184,13 +185,11 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
             <Div ref={lastRef1} />
           </Box>
           task들을 하나의 board로 묶어 스크롤 할수있게? (optional) 무한스크롤
-          {createForm
-            ? (
-              <CreateTask setCreateForm={setCreateForm} />
-              )
-            : (
-              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
-              )}
+          {createForm ? (
+            <CreateTask setCreateForm={setCreateForm} />
+          ) : (
+            <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+          )}
           <hr />
           <Subject>한 일 목록임</Subject>
           <Box ref={completeRef}>

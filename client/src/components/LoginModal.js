@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-import axios from 'axios';
-import url from '../urlSetup';
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import axios from "axios";
+import url from "../urlSetup";
+import color from "../colorSetup";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -26,7 +27,24 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  margin: 5px;
+  margin-top: 12px;
+  width: 240px;
+  height: 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: ${color.green02};
+  box-shadow: 0 0 2px 2px ${color.green02};
+  cursor: pointer;
+  :hover {
+    background-color: ${color.green03};
+    box-shadow: 0 0 2px 2px ${color.green03};
+  }
+  :active {
+    color: white;
+    background-color: ${color.green01};
+    box-shadow: 0 0 2px 2px ${color.green01};
+  }
 `;
 
 const Canvas = styled.div`
@@ -42,36 +60,57 @@ const Canvas = styled.div`
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: 'dialog'
+  role: "dialog",
 }))`
+  display: flex;
   border-radius: 5px;
   background-color: #fff;
-  width: 500px;
-  height: 300px;
+  width: 420px;
+  height: 220px;
   text-align: right;
   font-size: 1.2rem;
-  padding: 100px;
+  padding: 50px;
   .alert-box {
     font-size: 1rem;
     height: 25px;
     color: red;
+    /* transition: all ease 1s 0s; */
     /* text-align: right; */
   }
   div {
     width: auto;
   }
+  .yet {
+    width: 100%;
+    font-size: 1rem;
+    text-align: right;
+  }
   .yet:hover {
     color: blue;
     cursor: pointer;
   }
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
 `;
 
-function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    width: 75px;
+  }
+`;
+
+function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
   const [loginInfo, setLoginInfo] = useState({
-    userId: '',
-    password: ''
+    userId: "",
+    password: "",
   });
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState(" ");
   const navigate = useNavigate();
 
   const handleInputValue = (key) => (e) => {
@@ -83,7 +122,7 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
   };
   const handleGotoSignup = () => {
     setShowLogin(false);
-    navigate('./signup');
+    navigate("./signup");
   };
   const handleLogin = () => {
     const { userId, password } = loginInfo;
@@ -100,11 +139,11 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
           `${url}/user/login`,
           {
             userId,
-            password
+            password,
           },
           //! 올바르지 않은 withCredentials 사용
           {
-            withCredentials: true
+            withCredentials: true,
           }
         )
         .then((res) => {
@@ -115,20 +154,20 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
               // 유저 정보 저장 핸들러 함수 필요 (state)
               setIsLogin(true);
               setShowLogin(false);
-              navigate('/');
+              navigate("/");
             });
         })
         .catch(() => {
-          setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');
+          setErrMsg("아이디 혹은 비밀번호가 잘못되었습니다");
           setTimeout(() => {
-            setErrMsg('');
+            setErrMsg(" ");
           }, 3000);
         });
     } else {
       // 에러박스에 메시지 출력
-      setErrMsg('아이디와 비밀번호를 모두 입력해주세요');
+      setErrMsg("아이디와 비밀번호를 모두 입력해주세요");
       setTimeout(() => {
-        setErrMsg('');
+        setErrMsg(" ");
       }, 3000);
     }
   };
@@ -144,20 +183,20 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
           <br />
           <br />
           <form onSubmit={(e) => e.preventDefault()}>
-            <div>
-              아이디
-              <Input type='text' onChange={handleInputValue('userId')} />
-            </div>
+            <InputWrapper>
+              <span>아이디</span>
+              <Input type="text" onChange={handleInputValue("userId")} />
+            </InputWrapper>
             <br />
-            <div>
-              비밀번호
-              <Input type='password' onChange={handleInputValue('password')} />
-            </div>
-            <div className='alert-box'>{errMsg}</div>
-            <div className='yet' onClick={handleGotoSignup}>
+            <InputWrapper>
+              <span>비밀번호</span>
+              <Input type="password" onChange={handleInputValue("password")} />
+            </InputWrapper>
+            <div className="alert-box">{errMsg}</div>
+            <div className="yet" onClick={handleGotoSignup}>
               아직 아이디가 없으신가요?
             </div>
-            <Button type='submit' onClick={handleLogin}>
+            <Button type="submit" onClick={handleLogin}>
               로그인
             </Button>
           </form>
