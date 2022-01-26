@@ -28,11 +28,7 @@ function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userId: 'WorkLifeBalance',
-    name: 'WLB',
-    email: 'WLB@WLB.com'
-  });
+  const [userInfo, setUserInfo] = useState({});
   const [navOn, setNavOn] = useState(true);
 
   useEffect(() => {
@@ -63,48 +59,49 @@ function App () {
           isLogin={isLogin}
           setIsLogin={setIsLogin}
         />
-        {isLoading ? (
-          <LoadingContainer>
-            <Loading>
-              <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
-            </Loading>
-          </LoadingContainer>
-        ) : (
-          <div className='base-wrapper'>
-            {isLogin ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
-            <div className='route-wrapper'>
-              {/* <Body> */}
-              <Routes>
-                <Route
-                  exact
-                  path='/'
-                  element={
-                    <Home
-                      showLogin={showLogin}
-                      setShowLogin={setShowLogin}
-                      isLogin={isLogin}
-                    />
+        {isLoading
+          ? (
+            <LoadingContainer>
+              <Loading>
+                <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
+              </Loading>
+            </LoadingContainer>
+            )
+          : (
+            <div className='base-wrapper'>
+              {localStorage.getItem('isLogin') ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
+              <div className='route-wrapper'>
+                <Routes>
+                  <Route
+                    exact
+                    path='/'
+                    element={
+                      <Home
+                        showLogin={showLogin}
+                        setShowLogin={setShowLogin}
+                        isLogin={isLogin}
+                      />
                   }
-                />
-                {isLogin
-                  ? (
-                    <Route path='/dashboard' element={<Dashboard />} />
-                    )
-                  : (
-                    <Route path='/dashboard' element={<Navigate to='/' />} />
-                    )}
-                <Route path='/dashboard' element={<Dashboard />} />
-                {isLogin
-                  ? (
-                    <Route
-                      path='/profile'
-                      element={
-                        <Profile
-                          userInfo={userInfo}
-                          setUserInfo={setUserInfo}
-                          isLogin={isLogin}
-                          setIsLogin={setIsLogin}
-                        />
+                  />
+                  {localStorage.getItem('isLogin')
+                    ? (
+                      <Route path='/dashboard' element={<Dashboard />} />
+                      )
+                    : (
+                      <Route path='/dashboard' element={<Navigate to='/' />} />
+                      )}
+                  <Route path='/dashboard' element={<Dashboard />} />
+                  {localStorage.getItem('isLogin')
+                    ? (
+                      <Route
+                        path='/profile'
+                        element={
+                          <Profile
+                            userInfo={userInfo}
+                            setUserInfo={setUserInfo}
+                            isLogin={isLogin}
+                            setIsLogin={setIsLogin}
+                          />
                     }
                     />
                     )

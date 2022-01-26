@@ -84,6 +84,13 @@ const Desc = styled.div`
   color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
+const Div = styled.div`
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  width: 25rem;
+`;
+
 function PasswordModal ({ show, setShow }) {
   const [password, setPassword] = useState('');
   const [newPassword, setNewpassword] = useState('');
@@ -116,7 +123,7 @@ function PasswordModal ({ show, setShow }) {
   };
   return (
     <Container>
-      <Canvas onClick={handleClick}>
+      <Canvas>
         <View onClick={(e) => e.stopPropagation()}>
           <Box>
             <Title>
@@ -124,6 +131,7 @@ function PasswordModal ({ show, setShow }) {
             </Title>
             <Input
               onChange={(e) => setPassword(e.target.value)}
+              type='password'
               value={password}
             />
           </Box>
@@ -137,6 +145,7 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setNewpassword(e.target.value)}
               onBlur={() => setPwfocus(true)}
+              type='password'
               value={newPassword}
             />
           </Box>
@@ -160,6 +169,7 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setRepeat(e.target.value)}
               onBlur={() => setRpfocus(true)}
+              type='password'
               value={repeat}
             />
           </Box>
@@ -175,8 +185,11 @@ function PasswordModal ({ show, setShow }) {
                 : (
                   <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
                   )}
-            <Button onClick={update}> 확인 </Button>
           </div>
+          <Div>
+            <Button onClick={update}> 확인 </Button>
+            <Button onClick={handleClick}> 취소 </Button>
+          </Div>
         </View>
       </Canvas>
     </Container>
