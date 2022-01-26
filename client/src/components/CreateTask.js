@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import url from '../urlSetup';
 
 const Container = styled.div`
-  min-width: 500px;
-  min-height: 70px;
+  /* min-width: 500px;
+  min-height: 70px; */
+  height: 4rem;
+  width: 44rem;
   margin-bottom: 5px;
+  display: flex;
 `;
 
 const Checkbox = styled.input`
@@ -39,9 +42,34 @@ const Checkbox = styled.input`
 `;
 
 const InfoWrapper = styled.div`
+  box-sizing: border-box;
   background-color: #ccc;
-  height: 30px;
+  height: 3.5rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &.left {
+    align-items: center;
+    justify-content: center;
+    border: solid 0.1rem rgb(80, 91, 239);
+    border-radius: 10px 0 0 10px;
+    flex: 1;
+  }
+
+  &.center {
+    padding: 0.2rem;
+    border: solid 0.1rem #ccc; 
+    flex: 4;
+  }
+
+  &.right {
+    align-items: right;
+    justify-content: space-evenly;
+    border: solid 0.1rem #ccc;
+    border-radius: 0 10px 10px 0;
+    flex: 1.7;
+  }
 `;
 
 const TaskInput = styled.input``;
@@ -72,7 +100,7 @@ function CreateTask ({ setCreateForm }) {
   const [inputValue, setInputValue] = useState({
     tag: 'Work',
     task: '',
-    deadline: '',
+    time: '',
     check: false
   });
 
@@ -88,7 +116,7 @@ function CreateTask ({ setCreateForm }) {
 
   const handleConfirm = () => {
     // 요청 바디는 task, tag, deadline, 해더에 cookie
-    const { task, tag, deadline } = inputValue;
+    const { task, tag, time } = inputValue;
 
     axios
       .post(
@@ -96,7 +124,7 @@ function CreateTask ({ setCreateForm }) {
         {
           task,
           tag,
-          deadline
+          time
         },
         { withCredentials: true }
       )
@@ -109,7 +137,7 @@ function CreateTask ({ setCreateForm }) {
         setInputValue({
           tag: 'Work',
           task: '',
-          deadline: '',
+          time: '',
           check: false
         });
       })
@@ -120,31 +148,36 @@ function CreateTask ({ setCreateForm }) {
   };
   return (
     <Container>
-      <InfoWrapper>
-        <Checkbox
+      <InfoWrapper className='left'>
+        {/* <Checkbox
           type='checkbox'
           // onChange={handleInputValue("check")}
           checked={inputValue.check}
           deactive
-        />
+        /> */}
+        <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
+          {inputValue.tag}
+        </TagInput>
+
+        {/* deadline 형식: 2022-22-22T22:22 */}
+      </InfoWrapper>
+      <InfoWrapper className='center'>
         <TaskInput
           onChange={handleInputValue('task')}
           value={inputValue.task || ''}
         />
+        {/* 작성완료 눌렀을 때 서버로 요청하는 코드 작성 */}
+      </InfoWrapper>
+      <InfoWrapper className='right'>
         <DateInput
           type='datetime-local'
-          onChange={handleInputValue('deadline')}
+          onChange={handleInputValue('time')}
           value={inputValue.deadline || ''}
         />
-        {/* deadline 형식: 2022-22-22T22:22 */}
-      </InfoWrapper>
-      <InfoWrapper>
-        <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
-          {inputValue.tag}
-        </TagInput>
-        <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
-        <ButtonDiv onClick={handleConfirm}>작성완료</ButtonDiv>
-        {/* 작성완료 눌렀을 때 서버로 요청하는 코드 작성 */}
+        <div>
+          <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
+          <ButtonDiv onClick={handleConfirm}>작성완료</ButtonDiv>
+        </div>
       </InfoWrapper>
     </Container>
   );

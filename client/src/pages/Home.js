@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { Task, CreateTask } from "../components";
-import url from "../urlSetup";
-import "@fortawesome/fontawesome-free/js/all.js";
+import { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { Task, CreateTask } from '../components';
+import url from '../urlSetup';
+import '@fortawesome/fontawesome-free/js/all.js';
+import axios from 'axios';
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -19,7 +20,7 @@ const Subject = styled.h2`
 `;
 
 const NewTask = styled.div`
-  opacity: 0;
+  opacity: 0.4;
   /* margin-left: 10px; */
   margin: 3px;
   border: 1px dashed grey;
@@ -41,9 +42,11 @@ const Box = styled.div`
 const Div = styled.div``;
 
 const Bar = styled.div`
+  display: block;
   background-color: black;
   height: 0.1rem;
-  margin-bottom: 2rem;
+  width: 45rem;
+  margin: 1rem 0 1rem 0;
 `;
 
 const Head = styled.h2`
@@ -115,12 +118,13 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget1 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      // const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
-      //   withCredentials: true
-      // });
-      // setTasks([...tasks].concat([...res1.data]));
+      const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
+        withCredentials: true
+      });
+      console.log(res1.data.data);
       setIdx1(idx1 + 5);
-      setTasks([...tasks].concat(add));
+      setTasks([...tasks].concat([...res1.data.data]));
+      // setTasks([...tasks].concat(add));
       observer.unobserve(lastRef1.current);
     }
   };
@@ -128,12 +132,12 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget2 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      // const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
-      //   withCredentials: true
-      // });
-      // setComplete([...complete].concat([...res1.data]));
+      const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
+        withCredentials: true
+      });
       setIdx2(idx2 + 5);
-      setComplete([...complete].concat(add));
+      setComplete([...complete].concat([...res1.data.data]));
+      // setComplete([...complete].concat(add));
       observer.unobserve(lastRef2.current);
     }
   };
@@ -141,12 +145,12 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget3 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      // const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
-      //   withCredentials: true
-      // });
-      // setUncomplete([...uncomplete].concat([...res1.data]));
+      const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
+        withCredentials: true
+      });
       setIdx3(idx3 + 5);
-      setUncomplete([...uncomplete].concat(add));
+      setUncomplete([...uncomplete].concat([...res1.data.data]));
+      // setUncomplete([...uncomplete].concat(add));
       observer.unobserve(lastRef3.current);
     }
   };

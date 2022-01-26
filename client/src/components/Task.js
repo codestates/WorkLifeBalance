@@ -223,7 +223,7 @@ function Task({ list }) {
               onChange={handleInputValue("deadline")}
               value={inputValue.deadline || ""}
             />
-            <Modify onClick={handleModify("ok")}>적용</Modify>
+            <Modify onClick={handleModify("ok")}>적용</Modif
           </InfoWrapper>
         </Container>
       ) : (
