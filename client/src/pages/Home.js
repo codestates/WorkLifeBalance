@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Task, CreateTask } from '../components';
@@ -30,7 +29,7 @@ const NewTask = styled.div`
 const Box = styled.div`
   width: 40rem;
   height: 20rem;
-  overflow-y: scroll; 
+  overflow-y: scroll;
   scroll-behavior: smooth;
 `;
 
@@ -141,7 +140,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
-    const observer1 = new IntersectionObserver(handleTarget1, { root: taskRef.current, threshold: 1.0 });
+    const observer1 = new IntersectionObserver(handleTarget1, {
+      root: taskRef.current,
+      threshold: 1.0
+    });
 
     if (lastRef1.current) {
       observer1.observe(lastRef1.current);
@@ -149,7 +151,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   }, [tasks]);
 
   useEffect(async () => {
-    const observer2 = new IntersectionObserver(handleTarget2, { root: completeRef.current, threshold: 1.0 });
+    const observer2 = new IntersectionObserver(handleTarget2, {
+      root: completeRef.current,
+      threshold: 1.0
+    });
 
     if (lastRef2.current) {
       observer2.observe(lastRef2.current);
@@ -157,7 +162,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   }, [complete]);
 
   useEffect(async () => {
-    const observer3 = new IntersectionObserver(handleTarget3, { root: uncompleteRef.current, threshold: 1.0 });
+    const observer3 = new IntersectionObserver(handleTarget3, {
+      root: uncompleteRef.current,
+      threshold: 1.0
+    });
 
     if (lastRef3.current) {
       observer3.observe(lastRef3.current);
