@@ -7,6 +7,7 @@ const { generateAccessToken, sendAccessToken } = require('../tokenFunctions');
 module.exports = {
   post: async (req, res) => {
     try {
+      console.log(req.headers)
       const { userId, name, password, email } = req.body;
       if (!(name && userId && password && email)) {
         return res.status(400).send({ message: 'bad request' });
@@ -20,36 +21,6 @@ module.exports = {
       if (!created) {
         return res.status(409).send({ message: 'email exists' });
       }
-<<<<<<< HEAD
-      let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      host: 'smtp.gmail.com',
-      port:587,
-      secure:false,
-      requireTLS:true,
-      auth: {
-        user:process.env.NODEMAILER_USER,
-        pass:process.env.NODEMAILER_PASSWORD
-      }
-    })
-    let mailOptions = {
-      from: process.env.NODEMAILER_USER,
-      to: email,
-      subject: 'WLB Singup confirm',
-      text:'WLB Signup confirm',
-      html:`<b>WLB Signup confirm</b>`
-    }
-    await transporter.sendMail(mailOptions, function (error, info){
-      if(error){
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response)
-      }
-    })
-      delete userInfo.dataValues.password;
-      const jwt = generateAccessToken(userInfo.dataValues);
-      sendAccessToken(res, jwt);
-=======
       delete userInfo.dataValues.password;
       const jwt = generateAccessToken(userInfo.dataValues);
       sendAccessToken(res, jwt);
@@ -100,8 +71,6 @@ module.exports = {
           console.log('Email sent: ' + info.response)
         }
       })
-
->>>>>>> 7f4f2fbf8769fc0aba2acd4b0f471837002dfc39
       return res.status(201).send(userInfo.dataValues);
     } catch (err) {
       res.status(500).send({ message: 'server error' });
