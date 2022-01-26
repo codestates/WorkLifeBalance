@@ -74,8 +74,8 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const [idx1, setIdx1] = useState(0);
   const [idx2, setIdx2] = useState(0);
   const [idx3, setIdx3] = useState(0);
+  const [timer, setTimer] = useState('오전 0:00:00');
   const x = new Date();
-  const [timer, setTimer] = useState(x.toLocaleTimeString());
 
   const add = [
     {
@@ -161,21 +161,23 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
-    const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
-      withCredentials: true
-    });
-    if (res1.data.data.tasks.length > 0) { setIdx3(idx1 + res1.data.data.tasks.length); }
-    setTasks([...tasks].concat([...res1.data.data.tasks]));
-    const res2 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
-      withCredentials: true
-    });
-    if (res2.data.data.tasks.length > 0) { setIdx3(idx2 + res2.data.data.tasks.length); }
-    setComplete([...complete].concat([...res2.data.data.tasks]));
-    const res3 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
-      withCredentials: true
-    });
-    if (res3.data.data.tasks.length > 0) { setIdx3(idx3 + res3.data.data.tasks.length); }
-    setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
+    if (isLogin) {
+      const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
+        withCredentials: true
+      });
+      if (res1.data.data.tasks.length > 0) { setIdx3(idx1 + res1.data.data.tasks.length); }
+      setTasks([...tasks].concat([...res1.data.data.tasks]));
+      const res2 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
+        withCredentials: true
+      });
+      if (res2.data.data.tasks.length > 0) { setIdx3(idx2 + res2.data.data.tasks.length); }
+      setComplete([...complete].concat([...res2.data.data.tasks]));
+      const res3 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
+        withCredentials: true
+      });
+      if (res3.data.data.tasks.length > 0) { setIdx3(idx3 + res3.data.data.tasks.length); }
+      setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
+    }
   }, []);
 
   useEffect(async () => {
