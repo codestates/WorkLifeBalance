@@ -1,16 +1,15 @@
-
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { Task, CreateTask } from '../components';
-import url from '../urlSetup';
-import '@fortawesome/fontawesome-free/js/all.js';
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { Task, CreateTask } from "../components";
+import url from "../urlSetup";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 const Container = styled.div`
+  flex: 1 0 auto;
   padding: 15px;
-  align-items: ${(props) => (props.center ? 'center' : 'none')};
+  align-items: ${(props) => (props.center ? "center" : "none")};
   width: 45rem;
   min-height: 70vh;
-  border: solid 0.1rem rgb(80, 91, 239);
   hr {
     margin: 30px 0px;
   }
@@ -22,6 +21,7 @@ const Subject = styled.h2`
 const NewTask = styled.div`
   opacity: 0;
   /* margin-left: 10px; */
+  margin: 3px;
   border: 1px dashed grey;
   text-align: center;
   :hover {
@@ -34,13 +34,11 @@ const NewTask = styled.div`
 const Box = styled.div`
   width: 45rem;
   height: 20rem;
-  overflow-y: scroll; 
-  border: solid 0.1rem rgb(80, 91, 239);
+  overflow-y: scroll;
   scroll-behavior: smooth;
 `;
 
-const Div = styled.div`
-`;
+const Div = styled.div``;
 
 const Bar = styled.div`
   background-color: black;
@@ -74,42 +72,41 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const add = [
     {
       id: 1,
-      tag: 'Work',
-      task: '일해야됨',
-      time: '2022-02-22T22:22',
-      check: false
+      tag: "Work",
+      task: "일해야됨",
+      time: "2022-02-22T22:22",
+      check: false,
     },
     {
       id: 2,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 3,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 4,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 5,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
-    }
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
+    },
   ];
-  //! 서버에 요청하기 전에 create 폼을 완성한 후 보내야함
-  //! create 폼은 state로 구성해서 휘발될 수 있도록
+
   const handleCreateTask = () => {
     console.log("새거 만들거임");
     setCreateForm(true);
@@ -155,7 +152,10 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
-    const observer1 = new IntersectionObserver(handleTarget1, { root: taskRef.current, threshold: 1.0 });
+    const observer1 = new IntersectionObserver(handleTarget1, {
+      root: taskRef.current,
+      threshold: 1.0,
+    });
     console.log(idx1);
     if (lastRef1.current) {
       observer1.observe(lastRef1.current);
@@ -204,13 +204,11 @@ function Home({ showLogin, setShowLogin, isLogin }) {
             })}
             <Div ref={lastRef1} />
           </Box>
-          {createForm
-            ? (
-              <CreateTask setCreateForm={setCreateForm} />
-              )
-            : (
-              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
-              )}
+          {createForm ? (
+            <CreateTask setCreateForm={setCreateForm} />
+          ) : (
+            <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+          )}
           <hr />
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
