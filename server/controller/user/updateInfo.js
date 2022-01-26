@@ -36,7 +36,8 @@ module.exports = {
           const jwt = generateAccessToken(data.dataValues);
           sendAccessToken(res, jwt);
           return res.status(200).send({
-            data: data.dataValues,
+            token:jwt,
+            info: data.dataValues,
             message: 'user info successfully modified'
           });
         }
