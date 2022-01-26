@@ -58,11 +58,9 @@ function Feedback () {
 
   const handleBlur = async () => {
     const modified = day.split('-').join('.');
-    const token = localStorage.getItem('token');
     await axios
-      .post(
+      .get(
         `${url}/feedback/info?d=${modified}`,
-        { token },
         {
           withCredentials: true
         }

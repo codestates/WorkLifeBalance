@@ -51,10 +51,9 @@ function DropModal ({ show, setShow, setIsLogin }) {
   const drop = async () => {
     try {
       if (input === 'delete') {
-        const token = localStorage.getItem('token');
         const res = await axios.post(
           `${url}/user/delete`,
-          { token },
+          {},
           {
             withCredentials: true
           }
@@ -62,7 +61,6 @@ function DropModal ({ show, setShow, setIsLogin }) {
         if (res.data) {
           handleClick();
           setIsLogin(false);
-          localStorage.removeItem('token');
           localStorage.removeItem('isLogin');
           navigate('/');
         }

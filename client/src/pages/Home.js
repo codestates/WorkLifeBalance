@@ -76,7 +76,6 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const [idx3, setIdx3] = useState(0);
   const x = new Date();
   const [timer, setTimer] = useState(x.toLocaleTimeString());
-  const token = localStorage.getItem('token');
 
   const add = [
     {
@@ -124,7 +123,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const handleTarget1 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, { token }, {
+      const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
         withCredentials: true
       });
       console.log(res1.data.data.tasks);
@@ -138,7 +137,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const handleTarget2 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
+      const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
         withCredentials: true
       });
       if (res1.data.data.tasks.length > 0) { setIdx2(idx2 + res1.data.data.tasks.length); }
@@ -151,7 +150,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const handleTarget3 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
+      const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
         withCredentials: true
       });
       if (res1.data.data.tasks.length > 0) { setIdx3(idx3 + res1.data.data.tasks.length); }
@@ -162,17 +161,17 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
-    const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, { token }, {
+    const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
       withCredentials: true
     });
     if (res1.data.data.tasks.length > 0) { setIdx3(idx1 + res1.data.data.tasks.length); }
     setTasks([...tasks].concat([...res1.data.data.tasks]));
-    const res2 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
+    const res2 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
       withCredentials: true
     });
     if (res2.data.data.tasks.length > 0) { setIdx3(idx2 + res2.data.data.tasks.length); }
     setComplete([...complete].concat([...res2.data.data.tasks]));
-    const res3 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
+    const res3 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
       withCredentials: true
     });
     if (res3.data.data.tasks.length > 0) { setIdx3(idx3 + res3.data.data.tasks.length); }

@@ -164,11 +164,8 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
         )
         .then((res) => {
           // 로그인 확인
-
-          localStorage.setItem('token', res.data.token);
           //
-          const token = localStorage.getItem('token');
-          axios.post(`${url}/user/info`, { token }).then((res) => {
+          axios.get(`${url}/user/info`, { withCredentials: true }).then((res) => {
             // 유저 정보 저장 핸들러 함수 필요 (state)
             setIsLogin(true);
             setShowLogin(false);

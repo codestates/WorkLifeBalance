@@ -37,9 +37,8 @@ function App () {
       setIsLoading(true);
     }
     // const {userId, name, eamil} = res.data.user
-    const token = localStorage.getItem('token');
     axios
-      .post(`${url}/user/info`, { token })
+      .get(`${url}/user/info`, { withCredentials: true })
       .then((res) => {
         // 유저 정보 저장 핸들러 함수 필요 (state)
         setIsLogin(true);
@@ -52,7 +51,6 @@ function App () {
         setIsLogin(false);
         setIsLoading(false);
         setNavOn(false);
-        localStorage.removeItem('token');
         localStorage.removeItem('isLogin');
       });
   }, [isLogin]);

@@ -43,6 +43,8 @@ const Canvas = styled.div`
 const View = styled.div.attrs((props) => ({
   role: 'dialog'
 }))`
+  position: fixed;
+  top: 100px;
   border-radius: 5px;
   background-color: #fff;
   display: flex;

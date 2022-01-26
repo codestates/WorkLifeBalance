@@ -97,7 +97,6 @@ const ButtonDiv = styled.div`
 `;
 
 function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
-  const token = localStorage.getItem('token');
   const [inputValue, setInputValue] = useState({
     tag: 'Work',
     task: '',
@@ -125,14 +124,13 @@ function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
         {
           task,
           tag,
-          time,
-          token
+          time
         },
         { withCredentials: true }
       )
       .then(() => {
         axios
-          .post(`${url}/task/list?check=0&time=1&index=${0}`, { token }, {
+          .get(`${url}/task/list?check=0&time=1&index=${0}`, {
             withCredentials: true
           })
           .then((res) => {
