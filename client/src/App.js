@@ -28,11 +28,7 @@ function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userId: 'WorkLifeBalance',
-    name: 'WLB',
-    email: 'WLB@WLB.com'
-  });
+  const [userInfo, setUserInfo] = useState({});
   const [navOn, setNavOn] = useState(true);
 
   useEffect(() => {
@@ -73,7 +69,7 @@ function App () {
             )
           : (
             <div className='base-wrapper'>
-              {isLogin ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
+              {localStorage.getItem('isLogin') ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
               <div className='route-wrapper'>
                 <Routes>
                   <Route
@@ -87,7 +83,7 @@ function App () {
                       />
                   }
                   />
-                  {isLogin
+                  {localStorage.getItem('isLogin')
                     ? (
                       <Route path='/dashboard' element={<Dashboard />} />
                       )
@@ -95,7 +91,7 @@ function App () {
                       <Route path='/dashboard' element={<Navigate to='/' />} />
                       )}
                   <Route path='/dashboard' element={<Dashboard />} />
-                  {isLogin
+                  {localStorage.getItem('isLogin')
                     ? (
                       <Route
                         path='/profile'

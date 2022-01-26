@@ -118,9 +118,9 @@ function Nav ({ navOn, setNavOn }) {
   return (
     <>
       <Button navOn={navOn} onClick={handleButtonClick}>
-        <span class='__line __line-left' />
-        <span class='__line' />
-        <span class='__line __line-right' />
+        <span className='__line __line-left' />
+        <span className='__line' />
+        <span className='__line __line-right' />
       </Button>
       {navOn
         ? (

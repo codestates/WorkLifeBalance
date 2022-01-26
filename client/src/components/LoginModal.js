@@ -117,6 +117,7 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
               setIsLogin(true);
               setShowLogin(false);
               navigate('/');
+              localStorage.setItem('isLogin', '1');
             });
         })
         .catch((err) => {
