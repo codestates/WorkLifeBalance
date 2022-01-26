@@ -19,23 +19,7 @@ module.exports = {
       if (!created) {
         return res.status(409).send({ message: 'email exists' });
       }
-      delete userInfo.dataValues.password;
-      const jwt = generateAccessToken(userInfo.dataValues);
-      sendAccessToken(res, jwt);
-      return res.status(201).send(userInfo.dataValues);
-    } catch (err) {
-      res.status(500).send({ message: 'server error' });
-    }
-    const hashPassword = crypto.createHash('sha512').update(password).digest('hex');
-    const [userInfo, created] = await Users.findOrCreate({
-      where: { email },
-      defaults: { email, userId, password: hashPassword, name },
-      raw: true
-    });
-    if (!created) {
-      return res.status(409).send({ message: 'email exists' });
-    }
-    let transporter = nodemailer.createTransport({
+      let transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
       port:587,
@@ -48,7 +32,7 @@ module.exports = {
     })
     let mailOptions = {
       from: process.env.NODEMAILER_USER,
-      to: 'tkddls1611@naver.com',
+      to: email,
       subject: 'WLB Singup confirm',
       text:'WLB Signup confirm',
       html:`<b>WLB Signup confirm</b>`
@@ -60,17 +44,12 @@ module.exports = {
         console.log('Email sent: ' + info.response)
       }
     })
-    console.log('여기냐?12312312123123123123123123')
-    // let info = await transporter.sendMail({
-    //   from:`"WLB Team" <${process.env.NODEMALIER_USER}>`,
-    //   to: 'tkddls1611@naver.com',
-    //   subject: 'WLB Signup Message',
-    //   text: 'genereatedAuthNumber',
-    //   html: `<b>${genereatedAuthNumber}</b>`,
-    // });
-    const jwt = generateAccessToken(userInfo.dataValues);
-    delete userInfo.dataValues.password;
-    sendAccessToken(res, jwt);
-    return res.status(201).send(userInfo.dataValues);
+      delete userInfo.dataValues.password;
+      const jwt = generateAccessToken(userInfo.dataValues);
+      sendAccessToken(res, jwt);
+      return res.status(201).send(userInfo.dataValues);
+    } catch (err) {
+      res.status(500).send({ message: 'server error' });
+    }
   }
 };
