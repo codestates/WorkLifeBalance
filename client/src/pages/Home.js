@@ -54,6 +54,11 @@ const Head = styled.h2`
 `;
 // const Temp = styled.div``;
 
+const Loading = styled.div`
+  height: 50rem;
+  background-color: wheat;
+`;
+
 function Home({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
   const [current, setCurrent] = useState(Date.now());
@@ -71,6 +76,7 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const [idx3, setIdx3] = useState(0);
   const x = new Date();
   const [timer, setTimer] = useState(x.toLocaleTimeString());
+  const token = localStorage.getItem("token");
 
   const add = [
     {
@@ -118,12 +124,12 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget1 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, {token : localStorage.getItem('token')}, {
+      const res1 = await axios.post(`${url}/task/list?check=0&time=1&index=${idx1}`, { token }, {
         withCredentials: true
       });
-      console.log(res1.data.data);
+      console.log(res1.data.data.tasks);
       setIdx1(idx1 + 5);
-      setTasks([...tasks].concat([...res1.data.data]));
+      setTasks([...tasks].concat([...res1.data.data.tasks]));
       // setTasks([...tasks].concat(add));
       observer.unobserve(lastRef1.current);
     }
@@ -132,11 +138,11 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget2 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
+      const res1 = await axios.post(`${url}/task/list?check=1&time=0&index=${idx2}`, { token }, {
         withCredentials: true
       });
       setIdx2(idx2 + 5);
-      setComplete([...complete].concat([...res1.data.data]));
+      setComplete([...complete].concat([...res1.data.data.tasks]));
       // setComplete([...complete].concat(add));
       observer.unobserve(lastRef2.current);
     }
@@ -145,11 +151,14 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   const handleTarget3 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
+      const res1 = await axios.post(`${url}/task/list?check=0&time=0&index=${idx3}`, { token }, {
         withCredentials: true
       });
       setIdx3(idx3 + 5);
-      setUncomplete([...uncomplete].concat([...res1.data.data]));
+      if (res1.data.data.tasks.length === 0) {
+        console.log('empty');
+      }
+      setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
       // setUncomplete([...uncomplete].concat(add));
       observer.unobserve(lastRef3.current);
     }
@@ -203,9 +212,12 @@ function Home({ showLogin, setShowLogin, isLogin }) {
           <Head>{timer}</Head>
           <Subject>Task List</Subject>
           <Box ref={taskRef}>
-            {tasks.map((task, idx) => {
-              return <Task key={idx} list={task} />;
-            })}
+            {tasks.length > 0 
+              ? tasks.map((task, idx) => {
+                  return <Task key={idx} list={task} />;
+                })
+              : <Loading>1</Loading>
+            }
             <Div ref={lastRef1} />
           </Box>
           {createForm ? (
@@ -217,18 +229,24 @@ function Home({ showLogin, setShowLogin, isLogin }) {
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
             {/* <Task list={tasks} /> */}
-            {complete.map((task, idx) => {
-              return <Task key={idx} list={task} />;
-            })}
+            {complete.length > 0 
+              ? complete.map((task, idx) => {
+                  return <Task key={idx} list={task} />;
+                  })
+              : <Loading>1</Loading>
+            }
             <Div ref={lastRef2} />
           </Box>
           <Bar />
           <Subject>Missing List</Subject>
           <Box ref={uncompleteRef}>
             {/* <Task list={tasks} /> */}
-            {uncomplete.map((task, idx) => {
-              return <Task key={idx} list={task} />;
-            })}
+            {uncomplete.length > 0 
+              ? uncomplete.map((task, idx) => {
+                  return <Task key={idx} list={task} />;
+                })
+              : <Loading>1</Loading>
+            }
             <Div ref={lastRef3} />
           </Box>
         </Container>

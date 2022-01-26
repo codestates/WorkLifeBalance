@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
 import url from '../urlSetup';
+import color from "../colorSetup";
 
 const Container = styled.div`
   position: fixed;
@@ -11,7 +12,18 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  margin: 5px;
+  margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+  width: 80px;
+  height: 30px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.black04};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const Canvas = styled.div`
@@ -42,34 +54,39 @@ const View = styled.div.attrs((props) => ({
 `;
 
 const Box = styled.div`
-  background: white;
+  /* background: wheat; */
   text-align: center;
   display: flex;
   justify-content: left;
   align-items: center;
-  border: 0.1rem solid blue;
-  margin-top: 1rem;
-  flex: 1;
-  width: 25rem;
+  /* border: 0.1rem solid blue; */
+  margin: 24px 0 6px 0;
+
+  flex: 1 0 auto;
+  width: 100%;
 `;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
   width: 6rem;
-  border: solid 0.1rem black;
+  /* border: solid 0.1rem black; */
 `;
 
 const Input = styled.input`
-  background: wheat;
+  background-color: #eee;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  padding: 0 1rem 0 1rem;
   margin: 0.5rem;
-  height: 3rem;
+  height: 2rem;
   width: 20rem;
   border: none;
+  border-bottom: 1px solid black;
   :focus {
     outline: none;
   }

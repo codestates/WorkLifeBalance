@@ -85,12 +85,15 @@ const Info = styled.div`
 `;
 
 const Input = styled.input`
-  background: wheat;
+  background-color: #eee;
+  border-radius: 1rem;
+  font-size: 1.3rem;
+  padding: 0 1rem 0 1rem;
   margin: 0.5rem;
   height: 2rem;
+  width: 20rem;
   border: none;
   :focus {
-    background: wheat;
     outline: none;
   }
 `;
@@ -137,6 +140,7 @@ const Desc = styled.div`
   text-align: left;
   color: ${(props) => (props.valid ? "green" : "red")};
 `;
+
 
 function Profile({ userInfo, setUserInfo, setIsLogin }) {
   const [userId, setUserId] = useState(userInfo.userId);
@@ -248,7 +252,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             {!editMode ? (
               <div>{userInfo.userId}</div>
             ) : (
-              <input
+              <Input
                 onChange={(e) => setUserId(e.target.value)}
                 onBlur={() => idfunc("userId", userId)}
                 value={userId}
@@ -277,7 +281,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             {!editMode ? (
               <div>{userInfo.name}</div>
             ) : (
-              <input onChange={(e) => setName(e.target.value)} value={name} />
+              <Input onChange={(e) => setName(e.target.value)} value={name} />
             )}
           </Info>
         </Box>
@@ -289,7 +293,7 @@ function Profile({ userInfo, setUserInfo, setIsLogin }) {
             {!editMode ? (
               <div>{userInfo.email}</div>
             ) : (
-              <input
+              <Input
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => emfunc("email", email)}
                 value={email}

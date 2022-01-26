@@ -172,7 +172,7 @@ function CreateTask ({ setCreateForm }) {
         <DateInput
           type='datetime-local'
           onChange={handleInputValue('time')}
-          value={inputValue.deadline || ''}
+          value={inputValue.time || ''}
         />
         <div>
           <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
