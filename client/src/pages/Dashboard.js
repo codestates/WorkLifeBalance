@@ -67,8 +67,26 @@ const Bar = styled.progress`
   ::-webkit-progress-value {
     background-color: #ff6767;
     border-radius: 5px 0 0 5px;
-    /* border-right: 1px solid white; */
     box-shadow: 1px 0 2px 2px white, 1px 0 1px 1px white inset;
+  }
+`;
+
+const IsNothing = styled.div`
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 400px;
+  height: 40px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  background-color: #ddd;
+  align-self: center;
+  img {
+    width: 40px;
   }
 `;
 
@@ -79,12 +97,13 @@ function Dashboard () {
     check: 5,
     timeout: 1
   });
-  useEffect(() => {
-    axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
-      //! something for informations
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
       setRateInfo(res.data.data);
-      // res.data.
+      setIsLoading(false);
     });
   }, []);
 
@@ -94,22 +113,48 @@ function Dashboard () {
       {/* 날씨에 따른 일일 메시지 출력? */}
       <hr />
       <Title>Work Life Balance</Title>
-      <Bar
-        value={work}
-        max={work + life}
-        data-label={`${Math.floor((life / (work + life)) * 100)}%`}
-        data-label2={`${Math.floor((work / (work + life)) * 100)}%`}
-      />
+      {isLoading
+        ? (
+          <IsNothing>
+            <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
+          </IsNothing>
+          )
+        : life === 0 || work === 0
+          ? (
+            <IsNothing>Not enough information!</IsNothing>
+            )
+          : (
+            <Bar
+              value={work}
+              max={work + life}
+              data-label={`${Math.floor((life / (work + life)) * 100)}%`}
+              data-label2={`${Math.floor((work / (work + life)) * 100)}%`}
+            />
+            )}
+
       <div className='info'>
         Work: {work} / Life: {life}
       </div>
       <Title>Done / Time Out Rate</Title>
-      <Bar
-        value={timeout}
-        max={check + timeout}
-        data-label={`${Math.floor((check / (check + timeout)) * 100)}%`}
-        data-label2={`${Math.floor((timeout / (check + timeout)) * 100)}%`}
-      />
+      {isLoading
+        ? (
+          <IsNothing>
+            <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
+          </IsNothing>
+          )
+        : check === 0 || timeout === 0
+          ? (
+            <IsNothing>Not enough information!</IsNothing>
+            )
+          : (
+            <Bar
+              value={timeout}
+              max={check + timeout}
+              data-label={`${Math.floor((check / (check + timeout)) * 100)}%`}
+              data-label2={`${Math.floor((timeout / (check + timeout)) * 100)}%`}
+            />
+            )}
+
       <div className='info'>
         Done: {check} / Timeout: {timeout}
       </div>

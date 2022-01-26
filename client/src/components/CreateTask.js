@@ -89,7 +89,7 @@ function CreateTask ({ setCreateForm }) {
   const handleConfirm = () => {
     // 요청 바디는 task, tag, deadline, 해더에 cookie
     const { task, tag, deadline } = inputValue;
-    const url = 'https://localhost:4000/task/';
+
     axios
       .post(
         `${url}/task/create`,

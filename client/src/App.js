@@ -1,7 +1,7 @@
 import './App.css';
 
-import { Header, Nav, Footer, LoginModal } from './components';
-import { Home, Signup, Profile, Dashboard, NotFound } from './pages';
+import { Header, Nav, Footer } from './components';
+import { Home, Signup, Profile, Dashboard } from './pages';
 
 import {
   Navigate,
@@ -63,62 +63,62 @@ function App () {
           isLogin={isLogin}
           setIsLogin={setIsLogin}
         />
-        {isLoading
-          ? (
-            <LoadingContainer>
-              <Loading>
-                <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
-              </Loading>
-            </LoadingContainer>
-            )
-          : (
-            <div className='base-wrapper'>
-              {isLogin ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
-              <div className='route-wrapper'>
-                <Routes>
-                  <Route
-                    exact
-                    path='/'
-                    element={
-                      <Home
-                        showLogin={showLogin}
-                        setShowLogin={setShowLogin}
-                        isLogin={isLogin}
-                      />
+        {isLoading ? (
+          <LoadingContainer>
+            <Loading>
+              <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
+            </Loading>
+          </LoadingContainer>
+        ) : (
+          <div className='base-wrapper'>
+            {isLogin ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
+            <div className='route-wrapper'>
+              {/* <Body> */}
+              <Routes>
+                <Route
+                  exact
+                  path='/'
+                  element={
+                    <Home
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      isLogin={isLogin}
+                    />
                   }
-                  />
-                  {isLogin
-                    ? (
-                      <Route path='/dashboard' element={<Dashboard />} />
-                      )
-                    : (
-                      <Route path='/dashboard' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/dashboard' element={<Dashboard />} />
-                  {isLogin
-                    ? (
-                      <Route
-                        path='/profile'
-                        element={
-                          <Profile
-                            userInfo={userInfo}
-                            setUserInfo={setUserInfo}
-                            isLogin={isLogin}
-                            setIsLogin={setIsLogin}
-                          />
+                />
+                {isLogin
+                  ? (
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    )
+                  : (
+                    <Route path='/dashboard' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/dashboard' element={<Dashboard />} />
+                {isLogin
+                  ? (
+                    <Route
+                      path='/profile'
+                      element={
+                        <Profile
+                          userInfo={userInfo}
+                          setUserInfo={setUserInfo}
+                          isLogin={isLogin}
+                          setIsLogin={setIsLogin}
+                        />
                     }
-                      />
-                      )
-                    : (
-                      <Route path='/profile' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/signup' element={<Signup />} />
-                  <Route path='*' element={<Navigate to='/' />} />
-                </Routes>
-                <Footer />
-              </div>
+                    />
+                    )
+                  : (
+                    <Route path='/profile' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/signup' element={<Signup />} />
+                <Route path='*' element={<Navigate to='/' />} />
+              </Routes>
+              {/* </Body> */}
+              <Footer />
             </div>
-            )}
+          </div>
+        )}
       </Router>
     </div>
   );
