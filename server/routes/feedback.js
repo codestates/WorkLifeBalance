@@ -3,6 +3,6 @@ const router = express.Router();
 const { feedbackController } = require('../controller');
 
 router.post('/update', feedbackController.update.post);
-router.post('/info', feedbackController.info.post);
+router.get('/info', feedbackController.info.get);
 
 module.exports = router;

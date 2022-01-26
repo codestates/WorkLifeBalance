@@ -6,7 +6,7 @@ router.post('/create', taskController.create.post);
 router.post('/update', taskController.update.post);
 router.post('/delete', taskController.delete.post);
 router.post('/check', taskController.check.post);
-router.post('/list', taskController.list.post);
-router.post('/info', taskController.info.post);
+router.get('/list', taskController.list.get);
+router.get('/info', taskController.info.get);
 
 module.exports = router;
