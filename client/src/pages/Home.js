@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Task, CreateTask } from '../components';
@@ -8,6 +9,7 @@ const Container = styled.div`
   padding: 15px;
   align-items: ${(props) => (props.center ? 'center' : 'none')};
   width: 45rem;
+  min-height: 70vh;
   border: solid 0.1rem rgb(80, 91, 239);
   hr {
     margin: 30px 0px;
@@ -51,7 +53,7 @@ const Head = styled.h2`
 `;
 // const Temp = styled.div``;
 
-function Home ({ showLogin, setShowLogin, isLogin }) {
+function Home({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
   const [current, setCurrent] = useState(Date.now());
   const taskRef = useRef(null);
@@ -109,7 +111,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   //! 서버에 요청하기 전에 create 폼을 완성한 후 보내야함
   //! create 폼은 state로 구성해서 휘발될 수 있도록
   const handleCreateTask = () => {
-    console.log('새거 만들거임');
+    console.log("새거 만들거임");
     setCreateForm(true);
   };
 
@@ -163,7 +165,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer2 = new IntersectionObserver(handleTarget2, {
       root: completeRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef2.current) {
@@ -174,7 +176,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer3 = new IntersectionObserver(handleTarget3, {
       root: uncompleteRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef3.current) {
