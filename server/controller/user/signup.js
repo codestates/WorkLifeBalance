@@ -71,7 +71,6 @@ module.exports = {
           console.log('Email sent: ' + info.response)
         }
       })
-
       return res.status(201).send(userInfo.dataValues);
     } catch (err) {
       res.status(500).send({ message: 'server error' });
