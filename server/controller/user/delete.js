@@ -14,7 +14,6 @@ module.exports = {
         const user = await Users.findOne({
           where: { userId }
         });
-
         if (!user) { return res.status(401).send({ message: 'not authorized' }); } else {
           // 인증 후 Users, Tasks 모델에서 해당 userId 관련 데이터 삭제
           await Tasks.destroy({ where: { userId } });

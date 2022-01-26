@@ -1,8 +1,8 @@
-import axios from "axios";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import url from "../urlSetup";
-import { Feedback } from "../components";
+import axios from 'axios';
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import url from '../urlSetup';
+import { Feedback } from '../components';
 
 const Container = styled.div`
   display: flex;
@@ -85,21 +85,23 @@ const IsNothing = styled.div`
   }
 `;
 
-function Dashboard() {
+function Dashboard () {
   const [rateInfo, setRateInfo] = useState({
     work: 2,
     life: 1,
     check: 5,
-    timeout: 1,
+    timeout: 1
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
-      setRateInfo(res.data.data);
-      setIsLoading(false);
-    });
+    axios
+      .get(`${url}/task/info`, { withCredentials: true })
+      .then((res) => {
+        setRateInfo(res.data.data);
+        setIsLoading(false);
+      });
   }, []);
 
   const { work, life, check, timeout } = rateInfo;
@@ -108,41 +110,49 @@ function Dashboard() {
       {/* 날씨에 따른 일일 메시지 출력? */}
       <hr />
       <Title>Work Life Balance</Title>
-      {isLoading ? (
-        <IsNothing>
-          <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
-        </IsNothing>
-      ) : life === 0 || work === 0 ? (
-        <IsNothing>Not enough information!</IsNothing>
-      ) : (
-        <Bar
-          value={work}
-          max={work + life}
-          data-label={`${Math.floor((life / (work + life)) * 100)}%`}
-          data-label2={`${Math.floor((work / (work + life)) * 100)}%`}
-        />
-      )}
+      {isLoading
+        ? (
+          <IsNothing>
+            <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
+          </IsNothing>
+          )
+        : life === 0 || work === 0
+          ? (
+            <IsNothing>Not enough information!</IsNothing>
+            )
+          : (
+            <Bar
+              value={work}
+              max={work + life}
+              data-label={`${Math.floor((life / (work + life)) * 100)}%`}
+              data-label2={`${Math.floor((work / (work + life)) * 100)}%`}
+            />
+            )}
 
-      <div className="info">
+      <div className='info'>
         Work: {work} / Life: {life}
       </div>
       <Title>Done / Time Out Rate</Title>
-      {isLoading ? (
-        <IsNothing>
-          <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
-        </IsNothing>
-      ) : check === 0 || timeout === 0 ? (
-        <IsNothing>Not enough information!</IsNothing>
-      ) : (
-        <Bar
-          value={timeout}
-          max={check + timeout}
-          data-label={`${Math.floor((check / (check + timeout)) * 100)}%`}
-          data-label2={`${Math.floor((timeout / (check + timeout)) * 100)}%`}
-        />
-      )}
+      {isLoading
+        ? (
+          <IsNothing>
+            <img src={`${process.env.PUBLIC_URL}/loading-blank.gif`} />
+          </IsNothing>
+          )
+        : check === 0 || timeout === 0
+          ? (
+            <IsNothing>Not enough information!</IsNothing>
+            )
+          : (
+            <Bar
+              value={timeout}
+              max={check + timeout}
+              data-label={`${Math.floor((check / (check + timeout)) * 100)}%`}
+              data-label2={`${Math.floor((timeout / (check + timeout)) * 100)}%`}
+            />
+            )}
 
-      <div className="info">
+      <div className='info'>
         Done: {check} / Timeout: {timeout}
       </div>
       <hr />

@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import axios from "axios";
-import url from "../urlSetup";
-import color from "../colorSetup";
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import axios from 'axios';
+import url from '../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -58,7 +58,7 @@ const Canvas = styled.div`
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: "dialog",
+  role: 'dialog'
 }))`
   display: flex;
   flex-direction: column;
@@ -121,12 +121,12 @@ const ExitButton = styled.div`
   }
 `;
 
-function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
+function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
   const [loginInfo, setLoginInfo] = useState({
-    userId: "",
-    password: "",
+    userId: '',
+    password: ''
   });
-  const [errMsg, setErrMsg] = useState(" ");
+  const [errMsg, setErrMsg] = useState(' ');
   const navigate = useNavigate();
 
   const handleInputValue = (key) => (e) => {
@@ -138,7 +138,7 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
   };
   const handleGotoSignup = () => {
     setShowLogin(false);
-    navigate("./signup");
+    navigate('./signup');
   };
   const handleLogin = () => {
     const { userId, password } = loginInfo;
@@ -155,36 +155,35 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
           `${url}/user/login`,
           {
             userId,
-            password,
+            password
           },
           //! 올바르지 않은 withCredentials 사용
           {
-            withCredentials: true,
+            withCredentials: true
           }
         )
         .then((res) => {
           // 로그인 확인
-          axios
-            .get(`${url}/user/info`, { withCredentials: true })
-            .then((res) => {
-              // 유저 정보 저장 핸들러 함수 필요 (state)
-              setIsLogin(true);
-              setShowLogin(false);
-              navigate("/");
-              localStorage.setItem("isLogin", "1");
-            });
+          //
+          axios.get(`${url}/user/info`, { withCredentials: true }).then((res) => {
+            // 유저 정보 저장 핸들러 함수 필요 (state)
+            setIsLogin(true);
+            setShowLogin(false);
+            navigate('/');
+            localStorage.setItem('isLogin', '1');
+          });
         })
         .catch(() => {
-          setErrMsg("아이디 혹은 비밀번호가 잘못되었습니다");
+          setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');
           setTimeout(() => {
-            setErrMsg(" ");
+            setErrMsg(' ');
           }, 3000);
         });
     } else {
       // 에러박스에 메시지 출력
-      setErrMsg("아이디와 비밀번호를 모두 입력해주세요");
+      setErrMsg('아이디와 비밀번호를 모두 입력해주세요');
       setTimeout(() => {
-        setErrMsg(" ");
+        setErrMsg(' ');
       }, 3000);
     }
   };
@@ -199,18 +198,18 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
           <form onSubmit={(e) => e.preventDefault()}>
             <InputWrapper>
               <span>아이디</span>
-              <Input type="text" onChange={handleInputValue("userId")} />
+              <Input type='text' onChange={handleInputValue('userId')} />
             </InputWrapper>
             <br />
             <InputWrapper>
               <span>비밀번호</span>
-              <Input type="password" onChange={handleInputValue("password")} />
+              <Input type='password' onChange={handleInputValue('password')} />
             </InputWrapper>
-            <div className="alert-box">{errMsg}</div>
-            <div className="yet" onClick={handleGotoSignup}>
+            <div className='alert-box'>{errMsg}</div>
+            <div className='yet' onClick={handleGotoSignup}>
               아직 아이디가 없으신가요?
             </div>
-            <Button type="submit" onClick={handleLogin}>
+            <Button type='submit' onClick={handleLogin}>
               로그인
             </Button>
           </form>

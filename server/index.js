@@ -1,7 +1,10 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 80;
 const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const feedbackRouter = require('./routes/feedback');
@@ -12,14 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS']
   })
 );
 
 app.get('/', (req, res) => {
-  res.send('<h1> Server running test </h1>');
+  res.send('<h1> Wasdasd </h1>');
 });
 app.use('/user', userRouter);
 app.use('/task', taskRouter);
