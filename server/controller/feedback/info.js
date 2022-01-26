@@ -27,11 +27,8 @@ module.exports = {
           if (!value) {
             return res.status(400).send({ message: 'bad request1' });
           } else {
-            // const con = new Date()
-            // console.log(con,'123123')
             const resContent = value.dataValues.content;
             const resDay = value.dataValues.day;
-            // console.log(resDay)
             return res.status(200).send({ data: { content: resContent, day: resDay }, meesage: 'ok' });
           }
         }

@@ -194,15 +194,13 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
 
   useEffect(async () => {
     try {
-      console.log('hello');
       const res = await axios.get(`${url}/user/info`, {
         withCredentials: true
       });
-      console.log(res.data.user);
       setUserInfo({ ...res.data.user });
+      setIsLogin(true);
     } catch {
       setIsLogin(false);
-      console.log('err');
     }
   }, []);
 

@@ -84,6 +84,7 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
         // 유저 정보 핸들링 함수
         setIsLogin(false);
         navigate('/');
+        localStorage.removeItem('isLogin');
       });
   };
 

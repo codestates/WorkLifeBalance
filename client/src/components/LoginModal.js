@@ -154,7 +154,8 @@ function LoginModal({ setShowLogin, isLogin, setIsLogin }) {
               // 유저 정보 저장 핸들러 함수 필요 (state)
               setIsLogin(true);
               setShowLogin(false);
-              navigate("/");
+              navigate('/');
+              localStorage.setItem('isLogin', '1');
             });
         })
         .catch(() => {

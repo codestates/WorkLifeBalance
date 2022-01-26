@@ -6,8 +6,6 @@ const userRouter = require('./routes/user');
 const taskRouter = require('./routes/task');
 const feedbackRouter = require('./routes/feedback');
 const models = require('./models');
-// const fs = require('fs');
-// const https = require('https');
 const cookieParser = require('cookie-parser');
 
 app.use(express.json());

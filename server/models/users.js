@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       models.Users.hasMany(models.Tasks, {
         foreignKey: 'userId'
       });
+      models.Users.hasMany(models.Feedbacks, {
+        foreignKey: 'userId'
+      });
     }
   }
   Users.init({
