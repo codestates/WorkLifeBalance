@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ErrModal from '../components/ErrModal';
+import url from '../urlSetup';
 
 const Container = styled.div`
   background: wheat;
@@ -58,7 +59,11 @@ const Desc = styled.div`
 
 const Button = styled.button`
   background: rgb(85, 26, 139);
-  color: white;
+  color: ${(props) => props.check ? 'green' : 'white'};
+  
+  :focus {
+    border: solid 0.1rem red;
+  }
 `;
 
 const Submit = styled.button`
@@ -86,6 +91,8 @@ function Signup () {
   const nameRef = useRef(null);
   const passwordRef = useRef(null);
   const repeatRef = useRef(null);
+  const checkIdRef = useRef(null);
+  const checkEmRef = useRef(null);
   const navigate = useNavigate();
 
   const validId = (item) => {
@@ -108,7 +115,7 @@ function Signup () {
       case 'userId':
         if (validId(data)) {
           try {
-            const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
+            const res = await axios.post(`${url}/user/check`, { type, value: data });
             if (res.data.message === 'valid userId') {
               setCheckId(true);
             }
@@ -122,7 +129,7 @@ function Signup () {
       case 'email':
         if (validEmail(data)) {
           try {
-            const res = await axios.post('http://localhost:4000/user/check', { type, value: data });
+            const res = await axios.post(`${url}/user/check`, { type, value: data });
             if (res.data.message === 'valid email') {
               setCheckEm(true);
             }
@@ -150,12 +157,12 @@ function Signup () {
     } else if (!email) {
       emailRef.current.focus();
     } else if (!checkId) {
-      userIdRef.current.focus();
+      checkIdRef.current.focus();
     } else if (!checkEm) {
-      emailRef.current.focus();
+      checkEmRef.current.focus();
     } else {
       try {
-        const res = await axios.post('http://localhost:4000/user/signup', { userId, password, name, email });
+        const res = await axios.post(`${url}/user/signup`, { userId, password, name, email });
         if (res.data) {
           navigate('/');
         }
@@ -163,6 +170,11 @@ function Signup () {
         console.log('err');
       }
     }
+  };
+
+  const idChange = (e) => {
+    setUserId(e.target.value);
+    setCheckId(false);
   };
 
   return (
@@ -181,8 +193,8 @@ function Signup () {
         <Box>
           <Title>아이디</Title>
           <InputBox>
-            <Input onChange={(e) => setUserId(e.target.value)} value={userId} ref={userIdRef} />
-            <Button onClick={() => checkFromServer(userId, 'userId')}>중복확인</Button>
+            <Input onChange={(e) => idChange(e)} value={userId} ref={userIdRef} />
+            <Button check={checkId} onClick={() => checkFromServer(userId, 'userId')} ref={checkIdRef}>중복확인</Button>
           </InputBox>
           {validId(userId)
             ? <Desc valid>사용할 수 있는 아이디입니다.</Desc>
@@ -219,7 +231,7 @@ function Signup () {
           <Title>이메일</Title>
           <InputBox>
             <Input onChange={(e) => setEmail(e.target.value)} value={email} ref={emailRef} />
-            <Button onClick={() => checkFromServer(email, 'email')}>중복확인</Button>
+            <Button check={checkEm} onClick={() => checkFromServer(email, 'email')} ref={checkEmRef}>중복확인</Button>
           </InputBox>
           {validEmail(email)
             ? <Desc valid>사용할 수 있는 email입니다.</Desc>

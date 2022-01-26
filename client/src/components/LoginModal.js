@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import url from '../urlSetup';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -51,7 +51,6 @@ const View = styled.div.attrs((props) => ({
   text-align: right;
   font-size: 1.2rem;
   padding: 100px;
-
   .alert-box {
     font-size: 1rem;
     height: 25px;
@@ -90,49 +89,37 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
     const { userId, password } = loginInfo;
     if (userId && password) {
       //! 테스트가 끝나면 다음 코드를 삭제해주세요
-      if (userId === 'test' && password === 'test') {
-        setShowLogin(false);
-        setIsLogin(true);
-        navigate('/');
-      }
+      // if (userId === 'test' && password === 'test') {
+      //   setShowLogin(false);
+      //   setIsLogin(true);
+      //   navigate('/');
+      // }
       //! --------------------------------------------//
       axios
         .post(
-          'http://localhost:4000/user/login',
+          `${url}/user/login`,
           {
             userId,
             password
           },
           //! 올바르지 않은 withCredentials 사용
           {
-<<<<<<< Updated upstream
             withCredentials: true
-=======
-              withCredentials: true
->>>>>>> Stashed changes
           }
         )
         .then((res) => {
           // 로그인 확인
-<<<<<<< Updated upstream
           axios
-            .get('https://localhost:4000/user/info', { withCredentials: true })
+            .get(`${url}/user/info`, { withCredentials: true })
             .then((res) => {
               // 유저 정보 저장 핸들러 함수 필요 (state)
               setIsLogin(true);
               setShowLogin(false);
               navigate('/');
+              localStorage.setItem('isLogin', '1');
             });
-=======
-          axios.get('http://localhost:4000/user/info').then((res) => {
-            // 유저 정보 저장 핸들러 함수 필요 (state)
-            setIsLogin(true);
-            setShowLogin(false);
-            navigate('/');
-          });
->>>>>>> Stashed changes
         })
-        .catch((err) => {
+        .catch(() => {
           setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');
           setTimeout(() => {
             setErrMsg('');

@@ -4,9 +4,9 @@ const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
   post: async (req, res) => {
+    try{
     const { content, day } = req.body;
     const userInfo = isAuthorized(req);
-    console.log(userInfo);
     if (!userInfo) {
       return res.status(400).send({ message: 'Invalid Token' });
     } else {
@@ -23,10 +23,19 @@ module.exports = {
         });
         if (!created) {
           Feedbacks.update({ content }, { where: { day } });
-          return res.status(200).send({ message: 'ok' });
+          return res.status(200).send({ message: 'update' });
+        } else {
+          const find = await Feedbacks.findOne({
+            where: { content }
+          });
+          const resDay = find.day;
+          return res.status(200).send({ data: { day: resDay }, message: 'ok' });
         }
-        return res.status(200).send({ message: 'ok' });
       }
     }
+  } catch(err){
+    console.log(err)
+    return res.status(500).send({message:"server error"})
+  }
   }
 };

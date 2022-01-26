@@ -14,10 +14,10 @@ module.exports = {
   },
   isAuthorized: (req) => {
     const cookie = req.headers.cookie;
-    const token = cookie.split(/[=;]/)[1];
     if (!cookie || !cookie.includes('jwt')) {
       return null;
     }
+    const token = cookie.split(/[=;]/)[1];
     try {
       return verify(token, process.env.ACCESS_SECRET, (err, result) => {
         if (err) return null;

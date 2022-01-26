@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
+import url from '../urlSetup';
 
 const Container = styled.div`
   min-width: 500px;
@@ -88,16 +89,20 @@ function CreateTask ({ setCreateForm }) {
   const handleConfirm = () => {
     // 요청 바디는 task, tag, deadline, 해더에 cookie
     const { task, tag, deadline } = inputValue;
-    const url = 'https://localhost:4000/task/';
+
     axios
-      .post('https://localhost:4000/task/create', {
-        task,
-        tag,
-        deadline
-      })
+      .post(
+        `${url}/task/create`,
+        {
+          task,
+          tag,
+          deadline
+        },
+        { withCredentials: true }
+      )
       .then(() => {
         axios
-          .get('https://localhost:4000/task/list')
+          .get(`${url}/task/list`)
           .then((res) => {})
           .catch();
         setCreateForm(false);

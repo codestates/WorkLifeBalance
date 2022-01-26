@@ -3,40 +3,57 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LoginModal } from './';
 import { useNavigate } from 'react-router';
+import url from '../urlSetup';
 
 // require("dotenv").config();
 
+const Border = styled.hr`
+  margin: 0px;
+  height: 5px;
+  width: 100vw;
+  border: 0;
+  box-shadow: 0 5px 5px -5px #555 inset;
+`;
+
 const Container = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  /* justify-content: flex-end; */
-  /* flex-direction: row; */
-  border-bottom: 1px solid #000;
+  min-height: 75px;
+  height: 8vh;
+  width: 100vw;
   text-decoration: none;
   margin-top: 5px;
-  h1 {
-    margin: 0px;
+  overflow: hidden;
+  /* border: 1px solid red; */
+`;
+
+const Title = styled.h1`
+  flex: 4 0 auto;
+  margin: 0;
+  font-size: 3.5em;
+  padding-left: 20px;
+  color: violet;
+  /* border: 1px solid blue; */
+  img {
+    margin-right: 20px;
   }
   a {
+    display: flex;
     color: black;
     text-decoration: none;
+    span {
+      padding-top: 5px;
+    }
   }
   a:visited {
     color: black;
   }
 `;
-const Title = styled.h1`
-  flex: 3 0 0;
-  font-size: 3.5em;
-  text-align: left;
-  padding-left: 50px;
-  color: violet;
-`;
 
 const ControlBox = styled.div`
   display: flex;
-  flex: 1 0 0;
+  flex: 1 0 auto;
   align-items: center;
+
   .sub {
     margin: 1px;
     background-color: #ccc;
@@ -55,69 +72,68 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
   };
 
   const handleLogout = () => {
-    //! test 진행 후 삭제할 것
+    // //! test 진행 후 삭제할 것
 
-    setIsLogin(false);
-    navigate('/');
+    // setIsLogin(false);
+    // navigate('/');
 
-    //! --------------------------->
-<<<<<<< Updated upstream
-    axios.post('http://localhost:4000/user/logout', {}, {
-      withCredentials: true
-    }).then((res) => {
-=======
-    axios.post('http://localhost:4000/user/logout').then((res) => {
->>>>>>> Stashed changes
-      // 유저 정보 핸들링 함수
-      setIsLogin(false);
-      navigate('/');
-    });
+    // //! --------------------------->
+    axios
+      .post(`${url}/user/logout`, {}, { withCredentials: true })
+      .then((res) => {
+        // 유저 정보 핸들링 함수
+        setIsLogin(false);
+        navigate('/');
+        localStorage.removeItem('isLogin');
+      });
   };
 
   return (
-    <Container>
-      <Title>
-        <Link to='/'>
-          <img
-            className='logo'
-            src={process.env.PUBLIC_URL + '/logo.png'}
-            height='72px'
-            alt='로고'
-          />{' '}
-          Work Life Balance
-        </Link>
-      </Title>
-      {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
+    <>
+      <Container>
+        <Title>
+          <Link to='/'>
+            <img
+              className='logo'
+              src={process.env.PUBLIC_URL + '/logo.png'}
+              height='72px'
+              alt='로고'
+            />
+            <span>Work Life Balance</span>
+          </Link>
+        </Title>
+        {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
+        {isLogin
+          ? (
+            <ControlBox>
+              <div className='sub logout' onClick={handleLogout}>
+                로그아웃
+              </div>
+            </ControlBox>
+            )
+          : (
+            <ControlBox>
+              <div className='sub login' onClick={handleLoginModal}>
+                로그인
+              </div>
+              <div className='sub signup'>
+                <Link to='/signup'>회원가입</Link>
+              </div>
+            </ControlBox>
+            )}
 
-      {isLogin
-        ? (
-          <ControlBox>
-            <div className='sub logout' onClick={handleLogout}>
-              로그아웃
-            </div>
-          </ControlBox>
-          )
-        : (
-          <ControlBox>
-            <div className='sub login' onClick={handleLoginModal}>
-              로그인
-            </div>
-            <div className='sub signup'>
-              <Link to='/signup'>회원가입</Link>
-            </div>
-          </ControlBox>
-          )}
-
-      {showLogin
-        ? (
-          <LoginModal
-            setShowLogin={setShowLogin}
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-          />
-          )
-        : null}
-    </Container>
+        {showLogin
+          ? (
+            <LoginModal
+              setShowLogin={setShowLogin}
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+            />
+            )
+          : null}
+      </Container>
+      <Border />
+    </>
   );
 }
 
