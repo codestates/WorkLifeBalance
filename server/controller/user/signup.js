@@ -7,7 +7,6 @@ const { generateAccessToken, sendAccessToken } = require('../tokenFunctions');
 module.exports = {
   post: async (req, res) => {
     try {
-      console.log(req.headers);
       const { userId, name, password, email } = req.body;
       if (!(name && userId && password && email)) {
         return res.status(400).send({ message: 'bad request' });
