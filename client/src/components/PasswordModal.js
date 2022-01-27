@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { useState } from "react";
-import axios from "axios";
-import url from "../urlSetup";
-import color from "../colorSetup";
+import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import url from '../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   position: fixed;
@@ -41,7 +41,7 @@ const Canvas = styled.div`
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: "dialog",
+  role: 'dialog'
 }))`
   position: fixed;
   top: 25%;
@@ -103,7 +103,7 @@ const Desc = styled.div`
   font-size: 0.5rem;
   width: 20rem;
   height: 1rem;
-  color: ${(props) => (props.valid ? "green" : "red")};
+  color: ${(props) => (props.valid ? 'green' : 'red')};
 `;
 
 const Div = styled.div`
@@ -113,10 +113,10 @@ const Div = styled.div`
   width: 28rem;
 `;
 
-function PasswordModal({ show, setShow }) {
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewpassword] = useState("");
-  const [repeat, setRepeat] = useState("");
+function PasswordModal ({ show, setShow }) {
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewpassword] = useState('');
+  const [repeat, setRepeat] = useState('');
   const [pwfocus, setPwfocus] = useState(false);
   const [rpfocus, setRpfocus] = useState(false);
 
@@ -135,7 +135,7 @@ function PasswordModal({ show, setShow }) {
         `${url}/user/update/password`,
         { password, newPassword },
         {
-          withCredentials: true,
+          withCredentials: true
         }
       );
       if (res.status === 200) handleClick();
@@ -153,7 +153,7 @@ function PasswordModal({ show, setShow }) {
             </Title>
             <Input
               onChange={(e) => setPassword(e.target.value)}
-              type="password"
+              type='password'
               value={password}
             />
           </Box>
@@ -167,18 +167,22 @@ function PasswordModal({ show, setShow }) {
             <Input
               onChange={(e) => setNewpassword(e.target.value)}
               onBlur={() => setPwfocus(true)}
-              type="password"
+              type='password'
               value={newPassword}
             />
           </Box>
           <div>
-            {!pwfocus ? (
-              <Desc valid />
-            ) : validPw(newPassword) ? (
-              <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
-            ) : (
-              <Desc valid={false}>4~20자 여야 합니다.</Desc>
-            )}
+            {!pwfocus
+              ? (
+                <Desc valid />
+                )
+              : validPw(newPassword)
+                ? (
+                  <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
+                  )
+                : (
+                  <Desc valid={false}>4~20자 여야 합니다.</Desc>
+                  )}
           </div>
           <Box>
             <Title>
@@ -187,18 +191,22 @@ function PasswordModal({ show, setShow }) {
             <Input
               onChange={(e) => setRepeat(e.target.value)}
               onBlur={() => setRpfocus(true)}
-              type="password"
+              type='password'
               value={repeat}
             />
           </Box>
           <div>
-            {!rpfocus ? (
-              <Desc valid />
-            ) : newPassword === repeat ? (
-              <Desc valid>비밀번호가 일치합니다.</Desc>
-            ) : (
-              <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
-            )}
+            {!rpfocus
+              ? (
+                <Desc valid />
+                )
+              : newPassword === repeat
+                ? (
+                  <Desc valid>비밀번호가 일치합니다.</Desc>
+                  )
+                : (
+                  <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
+                  )}
           </div>
           <Div>
             <Button onClick={update}> 확인 </Button>
