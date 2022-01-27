@@ -77,8 +77,12 @@ const Title = styled.div`
   /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
-  width: 6rem;
+  width: 7rem;
   /* border: solid 0.1rem black; */
+`;
+
+const Wrap = styled.div`
+  padding: 0 0 0.5rem 0;
 `;
 
 const Input = styled.input`
@@ -153,11 +157,13 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>현재 비밀번호</div>
             </Title>
-            <Input
-              onChange={(e) => setPassword(e.target.value)}
-              type='password'
-              value={password}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type='password'
+                value={password}
+              />
+            </Wrap>
           </Box>
           <div>
             <Desc />
@@ -166,12 +172,14 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>새 비밀번호</div>
             </Title>
-            <Input
-              onChange={(e) => setNewpassword(e.target.value)}
-              onBlur={() => setPwfocus(true)}
-              type='password'
-              value={newPassword}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setNewpassword(e.target.value)}
+                onBlur={() => setPwfocus(true)}
+                type='password'
+                value={newPassword}
+              />
+            </Wrap>
           </Box>
           <div>
             {!pwfocus
@@ -190,12 +198,14 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>비밀번호 확인</div>
             </Title>
-            <Input
-              onChange={(e) => setRepeat(e.target.value)}
-              onBlur={() => setRpfocus(true)}
-              type='password'
-              value={repeat}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setRepeat(e.target.value)}
+                onBlur={() => setRpfocus(true)}
+                type='password'
+                value={repeat}
+              />
+            </Wrap>
           </Box>
           <div>
             {!rpfocus

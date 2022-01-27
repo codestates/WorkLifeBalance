@@ -53,16 +53,20 @@ const Title = styled.h1`
 const ControlBox = styled.div`
   display: flex;
   flex: 1 0 auto;
+  /* justify-content: center; */
   align-items: center;
 
   .sub {
-    display: inline-block;
+    /* display: inline-block; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1px;
     /* background-color: #ccc; */
     text-decoration: none;
     text-align: center;
     vertical-align: middle;
-    height: 25px;
+    height: 30px;
     width: 100px;
     box-shadow: 0 0 2px 2px ${color.black01} inset;
     cursor: pointer;
@@ -75,6 +79,10 @@ const ControlBox = styled.div`
       box-shadow: 0 0 2px 2px ${color.black04} inset;
     }
   }
+`;
+
+const Div = styled.div`
+  
 `;
 
 function Header ({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {

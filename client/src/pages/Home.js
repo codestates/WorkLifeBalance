@@ -38,6 +38,7 @@ const Box = styled.div`
   overflow-y: scroll;
   border-radius: 5px;
   scroll-behavior: smooth;
+  margin-bottom: 1rem;
 `;
 
 const Div = styled.div``;
@@ -63,7 +64,6 @@ const Loading = styled.div`
 
 function Home ({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
-  const [current, setCurrent] = useState(Date.now());
   const taskRef = useRef(null);
   const completeRef = useRef(null);
   const uncompleteRef = useRef(null);
@@ -76,7 +76,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const [idx1, setIdx1] = useState(0);
   const [idx2, setIdx2] = useState(0);
   const [idx3, setIdx3] = useState(0);
-  const [timer, setTimer] = useState('오전 0:00:00');
+  const [timer, setTimer] = useState('Loading...');
   const x = new Date();
 
   const add = [
@@ -131,7 +131,6 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
           withCredentials: true
         }
       );
-      console.log(res1.data.data.tasks);
       if (res1.data.data.tasks.length > 0) {
         setIdx1(idx1 + res1.data.data.tasks.length);
         setTasks([...tasks].concat([...res1.data.data.tasks]));
