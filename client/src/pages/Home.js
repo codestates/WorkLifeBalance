@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { Task, CreateTask } from '../components';
-import url from '../urlSetup';
-import '@fortawesome/fontawesome-free/js/all.js';
-import axios from 'axios';
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { Task, CreateTask } from "../components";
+import url from "../urlSetup";
+import "@fortawesome/fontawesome-free/js/all.js";
+import axios from "axios";
 
 const Container = styled.div`
   flex: 1 0 auto;
   padding: 15px;
-  align-items: ${(props) => (props.center ? 'center' : 'none')};
+  align-items: ${(props) => (props.center ? "center" : "none")};
   width: 45rem;
   min-height: 70vh;
   hr {
@@ -36,6 +36,7 @@ const Box = styled.div`
   width: 45rem;
   height: 20rem;
   overflow-y: scroll;
+  border-radius: 5px;
   scroll-behavior: smooth;
 `;
 
@@ -56,10 +57,11 @@ const Head = styled.h2`
 
 const Loading = styled.div`
   min-height: 25rem;
+  border-radius: 5px;
   background-color: wheat;
 `;
 
-function Home ({ showLogin, setShowLogin, isLogin }) {
+function Home({ showLogin, setShowLogin, isLogin }) {
   const [createForm, setCreateForm] = useState(false);
   const [current, setCurrent] = useState(Date.now());
   const taskRef = useRef(null);
@@ -74,58 +76,61 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const [idx1, setIdx1] = useState(0);
   const [idx2, setIdx2] = useState(0);
   const [idx3, setIdx3] = useState(0);
-  const [timer, setTimer] = useState('오전 0:00:00');
+  const [timer, setTimer] = useState("오전 0:00:00");
   const x = new Date();
 
   const add = [
     {
       id: 1,
-      tag: 'Work',
-      task: '일해야됨',
-      time: '2022-02-22T22:22',
-      check: false
+      tag: "Work",
+      task: "일해야됨",
+      time: "2022-02-22T22:22",
+      check: false,
     },
     {
       id: 2,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 3,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 4,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
     },
     {
       id: 5,
-      tag: 'Life',
-      task: '쉬어야됨',
-      time: '2022-02-22T22:22',
-      check: true
-    }
+      tag: "Life",
+      task: "쉬어야됨",
+      time: "2022-02-22T22:22",
+      check: true,
+    },
   ];
 
   const handleCreateTask = () => {
-    console.log('새거 만들거임');
+    console.log("새거 만들거임");
     setCreateForm(true);
   };
 
   const handleTarget1 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=0&time=1&index=${idx1}`, {
-        withCredentials: true
-      });
+      const res1 = await axios.get(
+        `${url}/task/list?check=0&time=1&index=${idx1}`,
+        {
+          withCredentials: true,
+        }
+      );
       console.log(res1.data.data.tasks);
       if (res1.data.data.tasks.length > 0) {
         setIdx1(idx1 + res1.data.data.tasks.length);
@@ -167,9 +172,47 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
+<<<<<<< HEAD
+=======
+    if (isLogin) {
+      const res1 = await axios.get(
+        `${url}/task/list?check=0&time=1&index=${idx1}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res1.data.data.tasks.length > 0) {
+        setIdx3(idx1 + res1.data.data.tasks.length);
+      }
+      setTasks([...tasks].concat([...res1.data.data.tasks]));
+      const res2 = await axios.get(
+        `${url}/task/list?check=1&time=0&index=${idx2}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res2.data.data.tasks.length > 0) {
+        setIdx3(idx2 + res2.data.data.tasks.length);
+      }
+      setComplete([...complete].concat([...res2.data.data.tasks]));
+      const res3 = await axios.get(
+        `${url}/task/list?check=0&time=0&index=${idx3}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (res3.data.data.tasks.length > 0) {
+        setIdx3(idx3 + res3.data.data.tasks.length);
+      }
+      setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
+    }
+  }, []);
+
+  useEffect(async () => {
+>>>>>>> code/dev
     const observer1 = new IntersectionObserver(handleTarget1, {
       root: taskRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
     console.log(idx1);
     if (lastRef1.current) {
@@ -180,7 +223,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer2 = new IntersectionObserver(handleTarget2, {
       root: completeRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef2.current) {
@@ -191,7 +234,7 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   useEffect(async () => {
     const observer3 = new IntersectionObserver(handleTarget3, {
       root: uncompleteRef.current,
-      threshold: 1.0
+      threshold: 1.0,
     });
 
     if (lastRef3.current) {
@@ -219,13 +262,15 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
             })}
             <Div ref={lastRef1} />
           </Box>
-          {createForm
-            ? (
-              <CreateTask setCreateForm={setCreateForm} setTasks={setTasks} setIdx1={setIdx1} />
-              )
-            : (
-              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
-              )}
+          {createForm ? (
+            <CreateTask
+              setCreateForm={setCreateForm}
+              setTasks={setTasks}
+              setIdx1={setIdx1}
+            />
+          ) : (
+            <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+          )}
           <hr />
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
