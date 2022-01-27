@@ -127,8 +127,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
         withCredentials: true
       });
       console.log(res1.data.data.tasks);
-      if (res1.data.data.tasks.length > 0) { setIdx1(idx1 + res1.data.data.tasks.length); }
-      setTasks([...tasks].concat([...res1.data.data.tasks]));
+      if (res1.data.data.tasks.length > 0) {
+        setIdx1(idx1 + res1.data.data.tasks.length);
+        setTasks([...tasks].concat([...res1.data.data.tasks]));
+      }
       // setTasks([...tasks].concat(add));
       observer.unobserve(lastRef1.current);
     }
@@ -140,8 +142,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
         withCredentials: true
       });
-      if (res1.data.data.tasks.length > 0) { setIdx2(idx2 + res1.data.data.tasks.length); }
-      setComplete([...complete].concat([...res1.data.data.tasks]));
+      if (res1.data.data.tasks.length > 0) {
+        setIdx2(idx2 + res1.data.data.tasks.length);
+        setComplete([...complete].concat([...res1.data.data.tasks]));
+      }
       // setComplete([...complete].concat(add));
       observer.unobserve(lastRef2.current);
     }
@@ -153,8 +157,10 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
       const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
         withCredentials: true
       });
-      if (res1.data.data.tasks.length > 0) { setIdx3(idx3 + res1.data.data.tasks.length); }
-      setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
+      if (res1.data.data.tasks.length > 0) {
+        setIdx3(idx3 + res1.data.data.tasks.length);
+        setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
+      }
       // setUncomplete([...uncomplete].concat(add));
       observer.unobserve(lastRef3.current);
     }
@@ -228,11 +234,9 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
           <Head>{timer}</Head>
           <Subject>Task List</Subject>
           <Box ref={taskRef}>
-            <Loading>
-              {tasks.map((task, idx) => {
-                return <Task key={idx} list={task} />;
-              })}
-            </Loading>
+            {tasks.map((task, idx) => {
+              return <Task key={idx} list={task} />;
+            })}
             <Div ref={lastRef1} />
           </Box>
           {createForm
@@ -246,22 +250,18 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>
             {/* <Task list={tasks} /> */}
-            <Loading>
-              {complete.map((task, idx) => {
-                return <Task key={idx} list={task} />;
-              })}
-            </Loading>
+            {complete.map((task, idx) => {
+              return <Task key={idx} list={task} />;
+            })}
             <Div ref={lastRef2} />
           </Box>
           <Bar />
           <Subject>Missing List</Subject>
           <Box ref={uncompleteRef}>
             {/* <Task list={tasks} /> */}
-            <Loading>
-              {uncomplete.map((task, idx) => {
-                return <Task key={idx} list={task} />;
-              })}
-            </Loading>
+            {uncomplete.map((task, idx) => {
+              return <Task key={idx} list={task} />;
+            })}
             <Div ref={lastRef3} />
           </Box>
         </Container>

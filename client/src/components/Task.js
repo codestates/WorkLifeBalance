@@ -149,7 +149,7 @@ function Task ({ list }) {
 
   const handleModify = (key) => (e) => {
     //! 서버로 변경된 정보를 보내야함
-    const { id, task, tag, deadline } = list;
+    const { id, task, tag, time } = list;
     if (key === 'ok') {
       axios
         .post(
@@ -158,7 +158,7 @@ function Task ({ list }) {
             id,
             task,
             tag,
-            deadline
+            time
           },
           { withCredentials: true }
         )
@@ -189,7 +189,7 @@ function Task ({ list }) {
 
   // const [dateInfo, timeInfo] = list.deadline.split('T');
   const [dateInfo, setDateInfo] = useState(list.time.split('T')[0]);
-  const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1]);
+  const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1].split('.')[0]);
 
   // const [timeInfo, setTimeInfo] = useState(Date.parse(Date.now()));
   // console.log(x.toLocaleTimeString().slice(3, 8));
@@ -245,7 +245,7 @@ function Task ({ list }) {
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
             <Modify onClick={handleModify('mod')}>
-              {/* <i className="fas fa-edit" /> */}수정
+              <i className='fas fa-edit' />
             </Modify>
           </InfoWrapper>
         </Container>
