@@ -45,6 +45,5 @@
   "devDependencies": {
     "dotenv": "^14.2.0",
     "semistandard": "^16.0.1"
-  },
-  "homepage": "."
+  }
 }
