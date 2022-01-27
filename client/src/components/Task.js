@@ -147,7 +147,7 @@ function Task({ list }) {
   const handleModify = (key) => (e) => {
     //! 서버로 변경된 정보를 보내야함
     const { id, task, tag, time } = list;
-    if (key === "ok") {
+    if (key === 'ok') {
       axios
         .post(
           `${url}/task/update`,
@@ -155,7 +155,7 @@ function Task({ list }) {
             id,
             task,
             tag,
-            time,
+            time
           },
           { withCredentials: true }
         )
@@ -185,8 +185,8 @@ function Task({ list }) {
   // useEffect(() => {}, [inputValue]);
 
   // const [dateInfo, timeInfo] = list.deadline.split('T');
-  const [dateInfo, setDateInfo] = useState(list.time.split("T")[0]);
-  const [timeInfo, setTimeInfo] = useState(list.time.split("T")[1]);
+  const [dateInfo, setDateInfo] = useState(list.time.split('T')[0]);
+  const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1].split('.')[0]);
 
   // const [timeInfo, setTimeInfo] = useState(Date.parse(Date.now()));
   // console.log(x.toLocaleTimeString().slice(3, 8));
@@ -251,8 +251,8 @@ function Task({ list }) {
             <DateDiv align="right">
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
-            <Modify onClick={handleModify("mod")}>
-              <i className="fas fa-edit" />
+            <Modify onClick={handleModify('mod')}>
+              <i className='fas fa-edit' />
             </Modify>
           </InfoWrapper>
         </Container>
