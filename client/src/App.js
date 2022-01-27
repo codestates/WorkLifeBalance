@@ -1,19 +1,19 @@
-import "./App.css";
+import './App.css';
 
-import { Header, Nav, Footer } from "./components";
-import { Home, Signup, Profile, Dashboard } from "./pages";
+import { Header, Nav, Footer } from './components';
+import { Home, Signup, Profile, Dashboard } from './pages';
 
 import {
   Navigate,
   Routes,
   Route,
-  BrowserRouter as Router,
-} from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+  BrowserRouter as Router
+} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import url from "./urlSetup";
-import styled from "styled-components";
+import url from './urlSetup';
+import styled from 'styled-components';
 
 const LoadingContainer = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const LoadingContainer = styled.div`
 
 const Loading = styled.div``;
 
-function App() {
+function App () {
   const [showLogin, setShowLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +47,16 @@ function App() {
       })
       .catch((err) => {
         console.log(err.stack);
+        console.log('인증정보없음');
+        setIsLogin(false);
+        setIsLoading(false);
+        setNavOn(false);
+        localStorage.removeItem('isLogin');
       });
   }, [isLogin]);
 
   return (
-    <div className="container">
+    <div className='container'>
       <Router>
         <Header
           showLogin={showLogin}
@@ -67,15 +72,17 @@ function App() {
             </Loading>
           </LoadingContainer>
         ) : (
-          <div className="base-wrapper">
-            {localStorage.getItem("isLogin") ? (
-              <Nav navOn={navOn} setNavOn={setNavOn} />
-            ) : null}
-            <div className="route-wrapper">
+          <div className='base-wrapper'>
+            {localStorage.getItem('isLogin')
+              ? (
+                <Nav navOn={navOn} setNavOn={setNavOn} />
+                )
+              : null}
+            <div className='route-wrapper'>
               <Routes>
                 <Route
                   exact
-                  path="/"
+                  path='/'
                   element={
                     <Home
                       showLogin={showLogin}
@@ -84,29 +91,33 @@ function App() {
                     />
                   }
                 />
-                {localStorage.getItem("isLogin") ? (
-                  <Route path="/dashboard" element={<Dashboard />} />
-                ) : (
-                  <Route path="/dashboard" element={<Navigate to="/" />} />
-                )}
-                <Route path="/dashboard" element={<Dashboard />} />
-                {localStorage.getItem("isLogin") ? (
-                  <Route
-                    path="/profile"
-                    element={
-                      <Profile
-                        userInfo={userInfo}
-                        setUserInfo={setUserInfo}
-                        isLogin={isLogin}
-                        setIsLogin={setIsLogin}
-                      />
+                {localStorage.getItem('isLogin')
+                  ? (
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    )
+                  : (
+                    <Route path='/dashboard' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/dashboard' element={<Dashboard />} />
+                {localStorage.getItem('isLogin')
+                  ? (
+                    <Route
+                      path='/profile'
+                      element={
+                        <Profile
+                          userInfo={userInfo}
+                          setUserInfo={setUserInfo}
+                          isLogin={isLogin}
+                          setIsLogin={setIsLogin}
+                        />
                     }
-                  />
-                ) : (
-                  <Route path="/profile" element={<Navigate to="/" />} />
-                )}
-                <Route path="/signup" element={<Signup />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                    />
+                    )
+                  : (
+                    <Route path='/profile' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/signup' element={<Signup />} />
+                <Route path='*' element={<Navigate to='/' />} />
               </Routes>
               {/* </Body> */}
               <Footer />

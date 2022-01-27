@@ -1,9 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { ClickToEdit as Cte } from ".";
-import url from "../urlSetup";
-import color from "../colorSetup";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { ClickToEdit as Cte } from '.';
+import url from '../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   /* border: 1px solid green; // 테스트용 테두리 */
@@ -40,28 +40,31 @@ const Filter = styled.input`
 const today = new Date();
 const month = today.getMonth() + 1;
 
-function Feedback() {
+function Feedback () {
   const [day, setDay] = useState(
     `${today.getFullYear()}-${
       month.toString().length === 1 ? `0${month}` : `${month}`
     }-${today.getDate()}`
     // 2022-02-22
   );
-  const [content, setContent] = useState("불러오는 중..");
+  const [content, setContent] = useState('불러오는 중..');
 
   const handleChangeDate = async (e) => {
-    if (e.target.value === "") return;
+    if (e.target.value === '') return;
     await setDay(e.target.value);
     // ? day state가 변경되지 않고 넘어가는 문제 -> Blur처리 또는 setTimeout
     // ! useEffect의 활용
   };
 
   const handleBlur = async () => {
-    const modified = day.split("-").join(".");
+    const modified = day.split('-').join('.');
     await axios
-      .get(`${url}/feedback/info?d=${modified}`, {
-        withCredentials: true,
-      })
+      .get(
+        `${url}/feedback/info?d=${modified}`,
+        {
+          withCredentials: true
+        }
+      )
       .then((res) => {
         setContent(res.data.data.content);
       })
@@ -78,7 +81,7 @@ function Feedback() {
     <Container>
       <span>
         <Filter
-          type="date"
+          type='date'
           onChange={handleChangeDate}
           value={day}
           defaultValue={day}
