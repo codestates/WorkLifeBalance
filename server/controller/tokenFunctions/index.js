@@ -13,13 +13,11 @@ module.exports = {
     });
   },
   isAuthorized: (req) => {
-    // const cookie = req.headers.cookie;
-    const cookie = req.body.token;
+    const cookie = req.headers.cookie;
     if (!cookie) {
       return null;
     }
-    const token = req.body.token
-    // const token = cookie.split(/[=;]/)[1];
+    const token = cookie.split('jwt=')[1].split('; ')[0];
     try {
       return verify(token, process.env.ACCESS_SECRET, (err, result) => {
         if (err) return null;

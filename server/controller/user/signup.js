@@ -7,7 +7,6 @@ const { generateAccessToken, sendAccessToken } = require('../tokenFunctions');
 module.exports = {
   post: async (req, res) => {
     try {
-      console.log(req.headers)
       const { userId, name, password, email } = req.body;
       if (!(name && userId && password && email)) {
         return res.status(400).send({ message: 'bad request' });
@@ -25,23 +24,23 @@ module.exports = {
       const jwt = generateAccessToken(userInfo.dataValues);
       sendAccessToken(res, jwt);
 
-      let transporter = nodemailer.createTransport({
+      const transporter = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
-        port:587,
-        secure:false,
-        requireTLS:true,
+        port: 587,
+        secure: false,
+        requireTLS: true,
         auth: {
-          user:process.env.NODEMAILER_USER,
-          pass:process.env.NODEMAILER_PASSWORD
+          user: process.env.NODEMAILER_USER,
+          pass: process.env.NODEMAILER_PASSWORD
         }
       });
 
-      let mailOptions = {
+      const mailOptions = {
         from: process.env.NODEMAILER_USER,
         to: email,
         subject: 'Work Life Balance 가입을 환영합니다!',
-        html: 
+        html:
           `<div style='width: 30%;
             padding: 10px;
             margin: auto;
@@ -64,18 +63,14 @@ module.exports = {
           </div>`
       };
 
-      await transporter.sendMail(mailOptions, function (error, info){
-        if(error){
+      await transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
           console.log(error);
         } else {
-          console.log('Email sent: ' + info.response)
+          console.log('Email sent: ' + info.response);
         }
-      })
-
-      return res.status(201).send({
-        token: jwt,
-        info: userInfo.dataValues
       });
+      return res.status(201).send(userInfo.dataValues);
     } catch (err) {
       res.status(500).send({ message: 'server error' });
     }

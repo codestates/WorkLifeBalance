@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import url from "../urlSetup";
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import url from '../urlSetup';
 
 const Container = styled.div`
   position: fixed;
@@ -28,7 +28,7 @@ const Canvas = styled.div`
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: "dialog",
+  role: 'dialog'
 }))`
   border-radius: 5px;
   background-color: #fff;
@@ -40,8 +40,8 @@ const View = styled.div.attrs((props) => ({
   height: 300px;
 `;
 
-function DropModal({ show, setShow, setIsLogin }) {
-  const [input, setInput] = useState("");
+function DropModal ({ show, setShow, setIsLogin }) {
+  const [input, setInput] = useState('');
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -50,21 +50,19 @@ function DropModal({ show, setShow, setIsLogin }) {
 
   const drop = async () => {
     try {
-      if (input === "delete") {
-        const token = localStorage.getItem("token");
+      if (input === 'delete') {
         const res = await axios.post(
           `${url}/user/delete`,
-          { token },
+          {},
           {
-            withCredentials: true,
+            withCredentials: true
           }
         );
         if (res.data) {
           handleClick();
           setIsLogin(false);
-          localStorage.removeItem("token");
-          localStorage.removeItem("isLogin");
-          navigate("/");
+          localStorage.removeItem('isLogin');
+          navigate('/');
         }
       }
     } catch {

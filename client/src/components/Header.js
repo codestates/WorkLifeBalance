@@ -1,10 +1,10 @@
-import axios from "axios";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { LoginModal } from "./";
-import { useNavigate } from "react-router";
-import url from "../urlSetup";
-import color from "../colorSetup";
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { LoginModal } from './';
+import { useNavigate } from 'react-router';
+import url from '../urlSetup';
+import color from '../colorSetup';
 
 // require("dotenv").config();
 
@@ -77,22 +77,20 @@ const ControlBox = styled.div`
   }
 `;
 
-function Header({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
+function Header ({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
   const navigate = useNavigate();
   const handleLoginModal = () => {
     setShowLogin(true);
   };
 
   const handleLogout = () => {
-    const token = localStorage.getItem("token");
     axios
-      .post(`${url}/user/logout`, { token }, { withCredentials: true })
+      .post(`${url}/user/logout`, {}, { withCredentials: true })
       .then((res) => {
         setIsLogin(false);
         setNavOn(false);
-        localStorage.removeItem("isLogin");
-        localStorage.removeItem("token");
-        navigate("/");
+        localStorage.removeItem('isLogin');
+        navigate('/');
       });
   };
 
@@ -100,12 +98,12 @@ function Header({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
     <>
       <Container>
         <Title>
-          <Link to="/">
+          <Link to='/'>
             <img
-              className="logo"
-              src={process.env.PUBLIC_URL + "/logo.png"}
-              height="72px"
-              alt="로고"
+              className='logo'
+              src={process.env.PUBLIC_URL + '/logo.png'}
+              height='72px'
+              alt='로고'
             />
             <span>Work Life Balance</span>
           </Link>
@@ -113,30 +111,32 @@ function Header({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
         {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
         {isLogin ? (
           <ControlBox>
-            <div className="sub logout" onClick={handleLogout}>
+            <div className='sub logout' onClick={handleLogout}>
               로그아웃
             </div>
           </ControlBox>
         ) : (
           <ControlBox>
-            <div className="sub login" onClick={handleLoginModal}>
+            <div className='sub login' onClick={handleLoginModal}>
               로그인
             </div>
             {/* <div className="sub signup"> */}
-            <Link to="/signup" className="sub signup">
+            <Link to='/signup' className='sub signup'>
               회원가입
             </Link>
             {/* </div> */}
           </ControlBox>
         )}
 
-        {showLogin ? (
-          <LoginModal
-            setShowLogin={setShowLogin}
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-          />
-        ) : null}
+        {showLogin
+          ? (
+            <LoginModal
+              setShowLogin={setShowLogin}
+              isLogin={isLogin}
+              setIsLogin={setIsLogin}
+            />
+            )
+          : null}
       </Container>
       <Border />
     </>

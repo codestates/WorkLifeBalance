@@ -2,11 +2,8 @@ const { Feedbacks } = require('../../models');
 const { isAuthorized } = require('../tokenFunctions');
 
 module.exports = {
-  post: async (req, res) => {
+  get: async (req, res) => {
     const { d } = req.query;
-    // const queryDay = d.split(' ')
-    // const result = queryDay[0]+"T"+queryDay[1]+"Z"
-    // console.log(result)
     try {
       const userInfo = isAuthorized(req);
       if (!userInfo) {

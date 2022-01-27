@@ -3,7 +3,7 @@ const { isAuthorized } = require('../tokenFunctions');
 const { Op } = require('sequelize');
 
 module.exports = {
-  post: async (req, res) => {
+  get: async (req, res) => {
     try {
       const now = new Date();
       const userInfo = isAuthorized(req);

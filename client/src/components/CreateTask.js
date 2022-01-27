@@ -96,7 +96,7 @@ const ButtonDiv = styled.div`
   }
 `;
 
-function CreateTask ({ setCreateForm }) {
+function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
   const [inputValue, setInputValue] = useState({
     tag: 'Work',
     task: '',
@@ -130,8 +130,13 @@ function CreateTask ({ setCreateForm }) {
       )
       .then(() => {
         axios
-          .get(`${url}/task/list`)
-          .then((res) => {})
+          .get(`${url}/task/list?check=0&time=1&index=${0}`, {
+            withCredentials: true
+          })
+          .then((res) => {
+            setIdx1(0);
+            setTasks([...res.data.data.tasks]);
+          })
           .catch();
         setCreateForm(false);
         setInputValue({
@@ -172,7 +177,7 @@ function CreateTask ({ setCreateForm }) {
         <DateInput
           type='datetime-local'
           onChange={handleInputValue('time')}
-          value={inputValue.deadline || ''}
+          value={inputValue.time || ''}
         />
         <div>
           <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
