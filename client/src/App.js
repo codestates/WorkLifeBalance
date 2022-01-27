@@ -47,6 +47,11 @@ function App () {
       })
       .catch((err) => {
         console.log(err.stack);
+        console.log('인증정보없음');
+        setIsLogin(false);
+        setIsLoading(false);
+        setNavOn(false);
+        localStorage.removeItem('isLogin');
       });
   }, [isLogin]);
 
@@ -58,50 +63,53 @@ function App () {
           setShowLogin={setShowLogin}
           isLogin={isLogin}
           setIsLogin={setIsLogin}
+          setNavOn={setNavOn}
         />
-        {isLoading
-          ? (
-            <LoadingContainer>
-              <Loading>
-                <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
-              </Loading>
-            </LoadingContainer>
-            )
-          : (
-            <div className='base-wrapper'>
-              {localStorage.getItem('isLogin') ? <Nav navOn={navOn} setNavOn={setNavOn} /> : null}
-              <div className='route-wrapper'>
-                <Routes>
-                  <Route
-                    exact
-                    path='/'
-                    element={
-                      <Home
-                        showLogin={showLogin}
-                        setShowLogin={setShowLogin}
-                        isLogin={isLogin}
-                      />
+        {isLoading ? (
+          <LoadingContainer>
+            <Loading>
+              <img src={`${process.env.PUBLIC_URL}/loading.gif`} />
+            </Loading>
+          </LoadingContainer>
+        ) : (
+          <div className='base-wrapper'>
+            {localStorage.getItem('isLogin')
+              ? (
+                <Nav navOn={navOn} setNavOn={setNavOn} />
+                )
+              : null}
+            <div className='route-wrapper'>
+              <Routes>
+                <Route
+                  exact
+                  path='/'
+                  element={
+                    <Home
+                      showLogin={showLogin}
+                      setShowLogin={setShowLogin}
+                      isLogin={isLogin}
+                    />
                   }
-                  />
-                  {localStorage.getItem('isLogin')
-                    ? (
-                      <Route path='/dashboard' element={<Dashboard />} />
-                      )
-                    : (
-                      <Route path='/dashboard' element={<Navigate to='/' />} />
-                      )}
-                  <Route path='/dashboard' element={<Dashboard />} />
-                  {localStorage.getItem('isLogin')
-                    ? (
-                      <Route
-                        path='/profile'
-                        element={
-                          <Profile
-                            userInfo={userInfo}
-                            setUserInfo={setUserInfo}
-                            isLogin={isLogin}
-                            setIsLogin={setIsLogin}
-                          />
+                />
+                {localStorage.getItem('isLogin')
+                  ? (
+                    <Route path='/dashboard' element={<Dashboard />} />
+                    )
+                  : (
+                    <Route path='/dashboard' element={<Navigate to='/' />} />
+                    )}
+                <Route path='/dashboard' element={<Dashboard />} />
+                {localStorage.getItem('isLogin')
+                  ? (
+                    <Route
+                      path='/profile'
+                      element={
+                        <Profile
+                          userInfo={userInfo}
+                          setUserInfo={setUserInfo}
+                          isLogin={isLogin}
+                          setIsLogin={setIsLogin}
+                        />
                     }
                     />
                     )

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { LoginModal } from './';
 import { useNavigate } from 'react-router';
 import url from '../urlSetup';
+import color from '../colorSetup';
 
 // require("dotenv").config();
 
@@ -31,60 +32,73 @@ const Title = styled.h1`
   margin: 0;
   font-size: 3.5em;
   padding-left: 20px;
-  color: violet;
+  /* color: violet; */
   /* border: 1px solid blue; */
   img {
     margin-right: 20px;
   }
   a {
     display: flex;
-    color: black;
+    color: ${color.black01};
     text-decoration: none;
     span {
       padding-top: 5px;
     }
   }
   a:visited {
-    color: black;
+    color: ${color.black01};
   }
 `;
 
 const ControlBox = styled.div`
   display: flex;
   flex: 1 0 auto;
+  /* justify-content: center; */
   align-items: center;
 
   .sub {
+    /* display: inline-block; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 1px;
-    background-color: #ccc;
+    /* background-color: #ccc; */
+    text-decoration: none;
     text-align: center;
     vertical-align: middle;
-    height: 25px;
+    height: 30px;
     width: 100px;
+    box-shadow: 0 0 2px 2px ${color.black01} inset;
     cursor: pointer;
+
+    :visited {
+      color: ${color.black01};
+    }
+    :hover {
+      color: ${color.black04};
+      box-shadow: 0 0 2px 2px ${color.black04} inset;
+    }
   }
 `;
 
-function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
+const Div = styled.div`
+  
+`;
+
+function Header ({ showLogin, setShowLogin, isLogin, setIsLogin, setNavOn }) {
   const navigate = useNavigate();
   const handleLoginModal = () => {
     setShowLogin(true);
   };
 
   const handleLogout = () => {
-    // //! test 진행 후 삭제할 것
-
-    // setIsLogin(false);
-    // navigate('/');
-
-    // //! --------------------------->
     axios
       .post(`${url}/user/logout`, {}, { withCredentials: true })
       .then((res) => {
-        // 유저 정보 핸들링 함수
         setIsLogin(false);
-        navigate('/');
+        setNavOn(false);
         localStorage.removeItem('isLogin');
+        navigate('/');
       });
   };
 
@@ -103,24 +117,24 @@ function Header ({ showLogin, setShowLogin, isLogin, setIsLogin }) {
           </Link>
         </Title>
         {/* 로그인 및 회원가입 탭, 로그인시 로그아웃으로 변경 */}
-        {isLogin
-          ? (
-            <ControlBox>
-              <div className='sub logout' onClick={handleLogout}>
-                로그아웃
-              </div>
-            </ControlBox>
-            )
-          : (
-            <ControlBox>
-              <div className='sub login' onClick={handleLoginModal}>
-                로그인
-              </div>
-              <div className='sub signup'>
-                <Link to='/signup'>회원가입</Link>
-              </div>
-            </ControlBox>
-            )}
+        {isLogin ? (
+          <ControlBox>
+            <div className='sub logout' onClick={handleLogout}>
+              로그아웃
+            </div>
+          </ControlBox>
+        ) : (
+          <ControlBox>
+            <div className='sub login' onClick={handleLoginModal}>
+              로그인
+            </div>
+            {/* <div className="sub signup"> */}
+            <Link to='/signup' className='sub signup'>
+              회원가입
+            </Link>
+            {/* </div> */}
+          </ControlBox>
+        )}
 
         {showLogin
           ? (

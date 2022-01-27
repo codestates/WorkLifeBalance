@@ -19,6 +19,7 @@ module.exports = {
         } else {
           const work1 = await Tasks.findAndCountAll({
             where: {
+              userId,
               tag: {
                 [Op.eq]: 'Work'
               }
@@ -26,6 +27,7 @@ module.exports = {
           });
           const life1 = await Tasks.findAndCountAll({
             where: {
+              userId,
               tag: {
                 [Op.eq]: 'Life'
               }
@@ -33,6 +35,7 @@ module.exports = {
           });
           const check1 = await Tasks.findAndCountAll({
             where: {
+              userId,
               check: {
                 [Op.eq]: 1
               }
@@ -40,6 +43,7 @@ module.exports = {
           });
           const time1 = await Tasks.findAndCountAll({
             where: {
+              userId,
               time: {
                 [Op.lt]: now
               },

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import axios from 'axios';
 import url from '../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   position: fixed;
@@ -11,7 +12,18 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  margin: 5px;
+  margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+  width: 100px;
+  height: 30px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.black04};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const Canvas = styled.div`
@@ -21,8 +33,8 @@ const Canvas = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  /* background-color: rgba(0,0,0,0.4); */
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  /* background-color: white; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,54 +43,71 @@ const Canvas = styled.div`
 const View = styled.div.attrs((props) => ({
   role: 'dialog'
 }))`
+  position: fixed;
+  top: 25%;
+  padding: 50px 60px 50px 60px;
   border-radius: 5px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
+  width: 460px;
   height: 300px;
 `;
 
 const Box = styled.div`
-  background: white;
+  /* background: wheat; */
   text-align: center;
   display: flex;
   justify-content: left;
   align-items: center;
-  border: 0.1rem solid blue;
-  margin-top: 1rem;
-  flex: 1;
-  width: 25rem;
+  /* border: 0.1rem solid blue; */
+  margin: 24px 0 6px 0;
+
+  flex: 1 0 auto;
+  width: 100%;
 `;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  margin-right: 10px;
+  white-space: nowrap;
+  /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
-  width: 6rem;
-  border: solid 0.1rem black;
+  width: 7rem;
+  /* border: solid 0.1rem black; */
+`;
+
+const Wrap = styled.div`
+  padding: 0 0 0.5rem 0;
 `;
 
 const Input = styled.input`
-  background: wheat;
+  /* border-radius: 1rem; */
+  flex: 2 0 auto;
+  font-size: 1.3rem;
+  padding: 0 1rem 0 0;
   margin: 0.5rem;
-  height: 3rem;
+  margin-bottom: 0;
+  height: 2rem;
   width: 20rem;
   border: none;
+  border-bottom: 1px solid black;
   :focus {
     outline: none;
+    background-color: ${color.black08};
   }
 `;
 
 const Desc = styled.div`
   background-color: white;
   text-align: right;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
   width: 20rem;
   height: 1rem;
   color: ${(props) => (props.valid ? 'green' : 'red')};
@@ -88,7 +117,7 @@ const Div = styled.div`
   display: flex;
   align-items: right;
   justify-content: right;
-  width: 25rem;
+  width: 28rem;
 `;
 
 function PasswordModal ({ show, setShow }) {
@@ -129,11 +158,13 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>현재 비밀번호</div>
             </Title>
-            <Input
-              onChange={(e) => setPassword(e.target.value)}
-              type='password'
-              value={password}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                type='password'
+                value={password}
+              />
+            </Wrap>
           </Box>
           <div>
             <Desc />
@@ -142,12 +173,14 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>새 비밀번호</div>
             </Title>
-            <Input
-              onChange={(e) => setNewpassword(e.target.value)}
-              onBlur={() => setPwfocus(true)}
-              type='password'
-              value={newPassword}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setNewpassword(e.target.value)}
+                onBlur={() => setPwfocus(true)}
+                type='password'
+                value={newPassword}
+              />
+            </Wrap>
           </Box>
           <div>
             {!pwfocus
@@ -166,12 +199,14 @@ function PasswordModal ({ show, setShow }) {
             <Title>
               <div>비밀번호 확인</div>
             </Title>
-            <Input
-              onChange={(e) => setRepeat(e.target.value)}
-              onBlur={() => setRpfocus(true)}
-              type='password'
-              value={repeat}
-            />
+            <Wrap>
+              <Input
+                onChange={(e) => setRepeat(e.target.value)}
+                onBlur={() => setRpfocus(true)}
+                type='password'
+                value={repeat}
+              />
+            </Wrap>
           </Box>
           <div>
             {!rpfocus

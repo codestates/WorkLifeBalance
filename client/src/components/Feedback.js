@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ClickToEdit as Cte } from '.';
 import url from '../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   /* border: 1px solid green; // 테스트용 테두리 */
@@ -25,13 +26,13 @@ const Filter = styled.input`
   border-radius: 5px;
   color: white;
   font-weight: bold;
-  background-color: seagreen;
+  background-color: ${color.green01};
   ::-webkit-calendar-picker-indicator {
-    background-color: #62b270;
+    background-color: ${color.green02};
     border-radius: 3px;
     cursor: pointer;
     :hover {
-      background-color: #acd8a7;
+      background-color: ${color.green03};
     }
   }
 `;
@@ -58,9 +59,12 @@ function Feedback () {
   const handleBlur = async () => {
     const modified = day.split('-').join('.');
     await axios
-      .get(`${url}/feedback/info?d=${modified}`, {
-        withCredentials: true
-      })
+      .get(
+        `${url}/feedback/info?d=${modified}`,
+        {
+          withCredentials: true
+        }
+      )
       .then((res) => {
         setContent(res.data.data.content);
       })

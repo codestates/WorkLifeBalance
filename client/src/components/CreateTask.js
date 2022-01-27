@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
+import color from '../colorSetup';
 import url from '../urlSetup';
 
 const Container = styled.div`
-  min-width: 500px;
-  min-height: 70px;
+  /* min-width: 500px;
+  min-height: 70px; */
+  height: 4rem;
+  width: 44rem;
   margin-bottom: 5px;
+  display: flex;
 `;
 
 const Checkbox = styled.input`
@@ -39,22 +43,63 @@ const Checkbox = styled.input`
 `;
 
 const InfoWrapper = styled.div`
+  box-sizing: border-box;
   background-color: #ccc;
-  height: 30px;
+  height: 3.5rem;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &.left {
+    align-items: center;
+    justify-content: center;
+    /* border: solid 0.1rem rgb(80, 91, 239); */
+    border-radius: 10px 0 0 10px;
+    flex: 1;
+  }
+
+  &.center {
+    line-height: 100%;
+    /* border: solid 0.1rem #ccc; */
+    flex: 4;
+  }
+
+  &.right {
+    align-items: right;
+    justify-content: space-evenly;
+    /* border: solid 0.1rem #ccc; */
+    border-radius: 0 10px 10px 0;
+    flex: 1.7;
+  }
 `;
 
-const TaskInput = styled.input``;
+const TaskInput = styled.input`
+  margin-top: 12px;
+  font-size: 1rem;
+  width: 400px;
+  height: 25px;
+  outline: none;
+`;
 
-const DateInput = styled.input``;
+const DateInput = styled.input`
+  margin: 3px 0 0 3px;
+  width: 160px;
+`;
 
 const TagInput = styled.div`
   display: inline-block;
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
   margin-left: 5px;
-  background-color: #eee;
+  border-radius: 5px;
   color: ${(props) =>
     props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
   cursor: pointer;
+  :hover {
+    background-color: ${color.black08};
+  }
 `;
 
 const ButtonDiv = styled.div`
@@ -68,11 +113,11 @@ const ButtonDiv = styled.div`
   }
 `;
 
-function CreateTask ({ setCreateForm }) {
+function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
   const [inputValue, setInputValue] = useState({
     tag: 'Work',
     task: '',
-    deadline: '',
+    time: '',
     check: false
   });
 
@@ -88,7 +133,7 @@ function CreateTask ({ setCreateForm }) {
 
   const handleConfirm = () => {
     // 요청 바디는 task, tag, deadline, 해더에 cookie
-    const { task, tag, deadline } = inputValue;
+    const { task, tag, time } = inputValue;
 
     axios
       .post(
@@ -96,20 +141,17 @@ function CreateTask ({ setCreateForm }) {
         {
           task,
           tag,
-          deadline
+          time
         },
         { withCredentials: true }
       )
       .then(() => {
-        axios
-          .get(`${url}/task/list`)
-          .then((res) => {})
-          .catch();
+        window.location.reload();
         setCreateForm(false);
         setInputValue({
           tag: 'Work',
           task: '',
-          deadline: '',
+          time: '',
           check: false
         });
       })
@@ -120,31 +162,36 @@ function CreateTask ({ setCreateForm }) {
   };
   return (
     <Container>
-      <InfoWrapper>
-        <Checkbox
+      <InfoWrapper className='left'>
+        {/* <Checkbox
           type='checkbox'
           // onChange={handleInputValue("check")}
           checked={inputValue.check}
           deactive
-        />
+        /> */}
+        <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
+          {inputValue.tag}
+        </TagInput>
+
+        {/* deadline 형식: 2022-22-22T22:22 */}
+      </InfoWrapper>
+      <InfoWrapper className='center'>
         <TaskInput
           onChange={handleInputValue('task')}
           value={inputValue.task || ''}
         />
+        {/* 작성완료 눌렀을 때 서버로 요청하는 코드 작성 */}
+      </InfoWrapper>
+      <InfoWrapper className='right'>
         <DateInput
           type='datetime-local'
-          onChange={handleInputValue('deadline')}
-          value={inputValue.deadline || ''}
+          onChange={handleInputValue('time')}
+          value={inputValue.time || ''}
         />
-        {/* deadline 형식: 2022-22-22T22:22 */}
-      </InfoWrapper>
-      <InfoWrapper>
-        <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
-          {inputValue.tag}
-        </TagInput>
-        <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
-        <ButtonDiv onClick={handleConfirm}>작성완료</ButtonDiv>
-        {/* 작성완료 눌렀을 때 서버로 요청하는 코드 작성 */}
+        <div>
+          <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>
+          <ButtonDiv onClick={handleConfirm}>작성완료</ButtonDiv>
+        </div>
       </InfoWrapper>
     </Container>
   );

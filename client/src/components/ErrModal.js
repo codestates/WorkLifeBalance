@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import color from '../colorSetup';
 
 const Container = styled.div`
     position: fixed;
@@ -8,7 +9,18 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-    margin: 5px;
+  margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+  width: 80px;
+  height: 30px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.black04};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const Canvas = styled.div`
@@ -37,6 +49,12 @@ const View = styled.div.attrs(props => ({
 
 `;
 
+const Div = styled.div`
+  font-size: 2rem;
+  margin-bottom: 5rem;
+  background-color: #fff;
+`;
+
 function ErrModal ({ message, show, setShow }) {
   const handleClick = () => {
     setShow(!show);
@@ -45,7 +63,7 @@ function ErrModal ({ message, show, setShow }) {
     <Container>
       <Canvas onClick={handleClick}>
         <View onClick={e => e.stopPropagation()}>
-          <div> {message} </div>
+          <Div> {message} </Div>
           <Button onClick={handleClick}> 확인 </Button>
         </View>
       </Canvas>

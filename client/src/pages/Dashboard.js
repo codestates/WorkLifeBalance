@@ -72,11 +72,6 @@ const Bar = styled.progress`
 `;
 
 const IsNothing = styled.div`
-  -ms-user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
   width: 400px;
   height: 40px;
   padding-top: 10px;
@@ -92,19 +87,24 @@ const IsNothing = styled.div`
 
 function Dashboard () {
   const [rateInfo, setRateInfo] = useState({
-    work: 2,
-    life: 1,
-    check: 5,
-    timeout: 1
+    work: 0,
+    life: 0,
+    check: 0,
+    timeout: 0
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get(`${url}/task/info`, { withCredentials: true }).then((res) => {
-      setRateInfo(res.data.data);
-      setIsLoading(false);
-    });
+    axios
+      .get(`${url}/task/info`, { withCredentials: true })
+      .then((res) => {
+        setRateInfo(res.data.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const { work, life, check, timeout } = rateInfo;

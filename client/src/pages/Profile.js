@@ -5,6 +5,7 @@ import DropModal from '../components/DropModal';
 import PasswordModal from '../components/PasswordModal';
 import { Navigate } from 'react-router-dom';
 import url from './../urlSetup';
+import color from '../colorSetup';
 
 const Container = styled.div`
   /* background: wheat; */
@@ -13,58 +14,85 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: left;
   align-items: center;
-  height: 100%;
+  /* height: 130%; */
   min-height: 70vh;
 `;
 
 const Contents = styled.div`
   display: flex;
+  flex: 2 0 auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  width: 80%;
+`;
+
+const Edit = styled.div`
+  flex: 2 0 auto;
+  margin-bottom: 8rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 80%;
+  /* height: 100%; */
+`;
+
+const DropWrapper = styled.div`
+  flex: 1 0 auto;
+  display: flex;
+  color: red;
+  justify-content: right;
+  width: 100%;
+  height: 2rem;
 `;
 
 const Box = styled.div`
-  background: wheat;
+  /* background: wheat; */
   text-align: center;
   display: flex;
   justify-content: left;
   align-items: center;
-  border: 0.1rem solid blue;
-  margin-top: 1rem;
-  flex: 1;
-  width: 40rem;
+  /* border: 0.1rem solid blue; */
+  margin: 24px 0 6px 0;
+
+  flex: 1 0 auto;
+  width: 100%;
 `;
 
 const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(166, 167, 243);
   font-weight: bold;
   height: 3rem;
   width: 6rem;
-  border: solid 0.1rem black;
 `;
 
 const Info = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.3rem;
   background: white;
   height: 3rem;
   width: 34rem;
-  border: solid 0.1rem black;
+  border-radius: 8px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
 `;
 
 const Input = styled.input`
-  background: wheat;
+  /* border-radius: 1rem; */
+  font-size: 1.3rem;
+  padding: 0 1rem 0 1rem;
   margin: 0.5rem;
   height: 2rem;
+  width: 20rem;
+  text-align: center;
   border: none;
+  border-bottom: 1px solid ${color.black01};
   :focus {
-    background: wheat;
+    background-color: ${color.black08};
     outline: none;
   }
 `;
@@ -75,29 +103,35 @@ const GrayDiv = styled.div`
   height: 1.5rem;
 `;
 
-const Edit = styled.div`
-  margin-bottom: 10rem;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const DropWrapper = styled.div`
-  display: flex;
-  color: red;
-  justify-content: right;
-  width: 100%;
-  height: 2rem;
-`;
-
 const Button = styled.button`
   margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+  width: 120px;
+  height: 30px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.black04};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const DropButton = styled.button`
   color: red;
+  margin: 0.5rem;
+  background-color: white;
+  border: none;
+  font-size: 0.9rem;
+  width: 100px;
+  height: 25px;
+  box-shadow: 0 0 2px 2px ${color.black02} inset;
+  :hover {
+    color: ${color.red01};
+    box-shadow: 0 0 2px 2px ${color.black04} inset;
+    cursor: pointer;
+  }
 `;
 
 const Desc = styled.div`
@@ -217,7 +251,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
                 <div>{userInfo.userId}</div>
                 )
               : (
-                <input
+                <Input
                   onChange={(e) => setUserId(e.target.value)}
                   onBlur={() => idfunc('userId', userId)}
                   value={userId}
@@ -256,7 +290,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
                 <div>{userInfo.name}</div>
                 )
               : (
-                <input onChange={(e) => setName(e.target.value)} value={name} />
+                <Input onChange={(e) => setName(e.target.value)} value={name} />
                 )}
           </Info>
         </Box>
@@ -270,7 +304,7 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
                 <div>{userInfo.email}</div>
                 )
               : (
-                <input
+                <Input
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => emfunc('email', email)}
                   value={email}

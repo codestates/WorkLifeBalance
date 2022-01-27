@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import url from '../urlSetup';
 import '@fortawesome/fontawesome-free/js/all.js';
+import color from '../colorSetup';
 
 const Container = styled.div`
   /* min-width: 500px;
@@ -52,20 +53,20 @@ const InfoWrapper = styled.div`
 
   &.left {
     align-items: center;
-    border: solid 0.1rem rgb(80, 91, 239);
+    /* border: solid 0.1rem #505bf0; */
     border-radius: 10px 0 0 10px;
     flex: 1;
   }
 
   &.center {
     padding: 0.2rem;
-    border: solid 0.1rem #ccc; 
+    /* border: solid 0.1rem #ccc; */
     flex: 4;
   }
 
   &.right {
     align-items: right;
-    border: solid 0.1rem #ccc;
+    /* border: solid 0.1rem #ccc; */
     border-radius: 0 10px 10px 0;
     flex: 1.7;
   }
@@ -106,9 +107,18 @@ const Modify = styled.div`
   }
 `;
 
-const TaskInput = styled.input``;
+const TaskInput = styled.input`
+  margin-top: 10px;
+  font-size: 1rem;
+  width: 400px;
+  height: 25px;
+  outline: none;
+`;
 
-const DateInput = styled.input``;
+const DateInput = styled.input`
+  margin: 3px 0 0 3px;
+  width: 160px;
+`;
 
 const TagInput = styled.div`
   display: inline-block;
@@ -117,6 +127,9 @@ const TagInput = styled.div`
   color: ${(props) =>
     props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
   cursor: pointer;
+  :hover {
+    background-color: ${color.black08};
+  }
 `;
 
 function Task ({ list }) {
@@ -130,24 +143,21 @@ function Task ({ list }) {
   const handleInputValue = (key) => (e) => {
     setInputValue({ ...inputValue, [key]: e.target.value });
   };
-  const handleChangeCheck = (e, obj) => {
+
+  const handleChangeCheck = (e) => {
     // # check 상태 변경 코드
     setInputValue({ ...inputValue, check: e.target.checked });
-    // # check 서버 요청
+    // # check 서버 요청 -> useEffect
     console.log('check sending...');
-    const { id, check } = obj;
+    // const { id, check } = obj;
     // ! 더미데이터로 요청테스트 해보아야함
-    axios
-      .post(`${url}/task/check`, { id, check }, { withCredentials: true })
-      .then((res) => console.log('체크 전송완료됨!'))
-      .catch((err) => console.log(err));
 
     // console.log(e);
   };
 
   const handleModify = (key) => (e) => {
     //! 서버로 변경된 정보를 보내야함
-    const { id, task, tag, deadline } = list;
+    const { id, task, tag, time } = inputValue;
     if (key === 'ok') {
       axios
         .post(
@@ -156,12 +166,13 @@ function Task ({ list }) {
             id,
             task,
             tag,
-            deadline
+            time
           },
           { withCredentials: true }
         )
         .then(() => {
           setModify(false);
+          window.location.reload();
         })
         .catch(() => {
           setModify(true);
@@ -187,10 +198,26 @@ function Task ({ list }) {
 
   // const [dateInfo, timeInfo] = list.deadline.split('T');
   const [dateInfo, setDateInfo] = useState(list.time.split('T')[0]);
-  const [timeInfo, setTimeInfo] = useState(list.time.split('T')[1]);
+  const [timeInfo, setTimeInfo] = useState(
+    list.time.split('T')[1].split('.')[0]
+  );
 
   // const [timeInfo, setTimeInfo] = useState(Date.parse(Date.now()));
   // console.log(x.toLocaleTimeString().slice(3, 8));
+
+  useEffect(() => {
+    axios
+      .post(
+        `${url}/task/check`,
+        { id: inputValue.id, check: inputValue.check },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log('체크 전송완료됨!');
+        // window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }, [inputValue]);
 
   return (
     <>
@@ -203,23 +230,25 @@ function Task ({ list }) {
               checked={inputValue.check}
               deactive
             />
+            <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
+              {inputValue.tag}
+            </TagInput>
+          </InfoWrapper>
+          <InfoWrapper className='center'>
             <TaskInput
               onChange={handleInputValue('task')}
               value={inputValue.task || ''}
             />
-            <DateInput
-              type='datetime-local'
-              onChange={handleInputValue('deadline')}
-              value={inputValue.deadline || ''}
-            />
+
             {/* deadline 형식: 2022-22-22T22:22 */}
           </InfoWrapper>
-          <InfoWrapper>
-            <TagInput onClick={handleTagClick()} tag={inputValue.tag}>
-              {inputValue.tag}
-            </TagInput>
+          <InfoWrapper className='right'>
+            <DateInput
+              type='datetime-local'
+              onChange={handleInputValue('time')}
+              value={inputValue.time || ''}
+            />
             <Modify onClick={handleModify('ok')}>적용</Modify>
-            {/* 적용 눌렀을 때 변경하는 코드 작성 */}
           </InfoWrapper>
         </Container>
       ) : (
@@ -227,8 +256,7 @@ function Task ({ list }) {
           <InfoWrapper className='left'>
             <Checkbox
               type='checkbox'
-              onChange={(e) =>
-                handleChangeCheck(e, { id: list.id, check: list.check })}
+              onChange={handleChangeCheck}
               checked={inputValue.check}
             />
             <TagDiv tag={list.tag}>{list.tag}</TagDiv>
@@ -237,7 +265,6 @@ function Task ({ list }) {
             <TaskDiv check={inputValue.check}>{list.task}</TaskDiv>
           </InfoWrapper>
           <InfoWrapper className='right'>
-
             <DateDiv align='right'>
               {dateInfo}&nbsp;{timeInfo}
             </DateDiv>
