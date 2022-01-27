@@ -178,41 +178,6 @@ function Home({ showLogin, setShowLogin, isLogin }) {
   };
 
   useEffect(async () => {
-    if (isLogin) {
-      const res1 = await axios.get(
-        `${url}/task/list?check=0&time=1&index=${idx1}`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (res1.data.data.tasks.length > 0) {
-        setIdx3(idx1 + res1.data.data.tasks.length);
-      }
-      setTasks([...tasks].concat([...res1.data.data.tasks]));
-      const res2 = await axios.get(
-        `${url}/task/list?check=1&time=0&index=${idx2}`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (res2.data.data.tasks.length > 0) {
-        setIdx3(idx2 + res2.data.data.tasks.length);
-      }
-      setComplete([...complete].concat([...res2.data.data.tasks]));
-      const res3 = await axios.get(
-        `${url}/task/list?check=0&time=0&index=${idx3}`,
-        {
-          withCredentials: true,
-        }
-      );
-      if (res3.data.data.tasks.length > 0) {
-        setIdx3(idx3 + res3.data.data.tasks.length);
-      }
-      setUncomplete([...uncomplete].concat([...res3.data.data.tasks]));
-    }
-  }, []);
-
-  useEffect(async () => {
     const observer1 = new IntersectionObserver(handleTarget1, {
       root: taskRef.current,
       threshold: 1.0,
@@ -265,15 +230,17 @@ function Home({ showLogin, setShowLogin, isLogin }) {
             })}
             <Div ref={lastRef1} />
           </Box>
-          {createForm ? (
-            <CreateTask
-              setCreateForm={setCreateForm}
-              setTasks={setTasks}
-              setIdx1={setIdx1}
-            />
-          ) : (
-            <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
-          )}
+          {createForm
+            ? (
+              <CreateTask
+                setCreateForm={setCreateForm}
+                setTasks={setTasks}
+                setIdx1={setIdx1}
+              />
+              )
+            : (
+              <NewTask onClick={handleCreateTask}>+ 새 할일 추가</NewTask>
+              )}
           <hr />
           <Subject>Complete List</Subject>
           <Box ref={completeRef}>

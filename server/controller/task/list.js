@@ -27,7 +27,7 @@ module.exports = {
               : { [Op.lt]: new Date() }
           }
         });
-        const list = tasks.slice(index, index + 5);
+        const list = tasks.sort((a, b) => a.time - b.time).slice(index, index + 5);
         return res.status(200).send({ data: { tasks: list }, message: 'ok' });
       }
     } catch (err) {

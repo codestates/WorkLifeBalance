@@ -16,12 +16,10 @@ module.exports = {
       if (!user) {
         return res.status(401).send({ message: 'not authorized' });
       } else {
-      // await Tasks.findOne({ where: { id } });
         await Tasks.destroy({ where: { id } });
         return res.status(200).send({ message: 'ok' });
       }
     } catch (err) {
-      console.log(err);
       return res.status(500).send({ message: 'server error' });
     }
   }
