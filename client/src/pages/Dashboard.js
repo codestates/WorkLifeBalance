@@ -87,10 +87,10 @@ const IsNothing = styled.div`
 
 function Dashboard () {
   const [rateInfo, setRateInfo] = useState({
-    work: 2,
-    life: 1,
-    check: 5,
-    timeout: 1
+    work: 0,
+    life: 0,
+    check: 0,
+    timeout: 0
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -100,6 +100,9 @@ function Dashboard () {
       .get(`${url}/task/info`, { withCredentials: true })
       .then((res) => {
         setRateInfo(res.data.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
         setIsLoading(false);
       });
   }, []);

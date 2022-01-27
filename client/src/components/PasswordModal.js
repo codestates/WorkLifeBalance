@@ -87,6 +87,7 @@ const Input = styled.input`
   font-size: 1.3rem;
   padding: 0 1rem 0 0;
   margin: 0.5rem;
+  margin-bottom: 0;
   height: 2rem;
   width: 20rem;
   border: none;
@@ -100,7 +101,8 @@ const Input = styled.input`
 const Desc = styled.div`
   background-color: white;
   text-align: right;
-  font-size: 0.5rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
   width: 20rem;
   height: 1rem;
   color: ${(props) => (props.valid ? 'green' : 'red')};

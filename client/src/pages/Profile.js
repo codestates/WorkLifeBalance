@@ -64,11 +64,9 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
   width: 6rem;
-  /* border: solid 0.1rem black; */
 `;
 
 const Info = styled.div`
@@ -81,19 +79,20 @@ const Info = styled.div`
   width: 34rem;
   border-radius: 8px;
   box-shadow: 0 0 2px 2px ${color.black02} inset;
-  /* border: solid 0.1rem black; */
 `;
 
 const Input = styled.input`
-  background-color: #eee;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   font-size: 1.3rem;
   padding: 0 1rem 0 1rem;
   margin: 0.5rem;
   height: 2rem;
   width: 20rem;
+  text-align: center;
   border: none;
+  border-bottom: 1px solid ${color.black01};
   :focus {
+    background-color: ${color.black08};
     outline: none;
   }
 `;
@@ -229,7 +228,9 @@ function Profile ({ userInfo, setUserInfo, setIsLogin }) {
 
   useEffect(async () => {
     try {
-      const res = await axios.get(`${url}/user/info`, { withCredentials: true });
+      const res = await axios.get(`${url}/user/info`, {
+        withCredentials: true
+      });
       setUserInfo({ ...res.data.user });
       setIsLogin(true);
     } catch {

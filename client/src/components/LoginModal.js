@@ -14,10 +14,12 @@ const Container = styled.div`
 `;
 
 const Input = styled.input`
+  flex: 2 0 auto;
   margin: 5px;
   height: 32px;
   width: 280px;
   font-size: 1.4rem;
+  align-self: flex-end;
   border: none;
   border-bottom: 1px solid black;
   :focus {
@@ -102,7 +104,9 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   span {
-    width: 75px;
+    flex: 1 0 auto;
+    max-width: 100px;
+    white-space: nowrap;
   }
 `;
 
@@ -165,13 +169,15 @@ function LoginModal ({ setShowLogin, isLogin, setIsLogin }) {
         .then((res) => {
           // 로그인 확인
           //
-          axios.get(`${url}/user/info`, { withCredentials: true }).then((res) => {
-            // 유저 정보 저장 핸들러 함수 필요 (state)
-            setIsLogin(true);
-            setShowLogin(false);
-            navigate('/');
-            localStorage.setItem('isLogin', '1');
-          });
+          axios
+            .get(`${url}/user/info`, { withCredentials: true })
+            .then((res) => {
+              // 유저 정보 저장 핸들러 함수 필요 (state)
+              setIsLogin(true);
+              setShowLogin(false);
+              navigate('/');
+              localStorage.setItem('isLogin', '1');
+            });
         })
         .catch(() => {
           setErrMsg('아이디 혹은 비밀번호가 잘못되었습니다');

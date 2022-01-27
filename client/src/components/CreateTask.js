@@ -59,7 +59,7 @@ const InfoWrapper = styled.div`
 
   &.center {
     padding: 0.2rem;
-    border: solid 0.1rem #ccc; 
+    border: solid 0.1rem #ccc;
     flex: 4;
   }
 
@@ -78,6 +78,9 @@ const DateInput = styled.input``;
 
 const TagInput = styled.div`
   display: inline-block;
+  width: 50px;
+  height: 30px;
+  text-align: center;
   margin-left: 5px;
   background-color: #eee;
   color: ${(props) =>

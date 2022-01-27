@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import color from '../colorSetup';
 import url from '../urlSetup';
 
 const Container = styled.div`
@@ -11,8 +12,32 @@ const Container = styled.div`
   margin: 120px auto;
 `;
 
+const Input = styled.input`
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  font-size: 1.2rem;
+  border: none;
+  border-bottom: 1px solid ${color.black01};
+  :focus {
+    outline: none;
+    background-color: ${color.black08};
+  }
+`;
+
 const Button = styled.button`
   margin: 5px;
+  width: 80px;
+  height: 30px;
+  font-size: 1rem;
+  border: none;
+  background-color: white;
+  box-shadow: 0 0 2px 2px ${color.black01} inset;
+  :hover {
+    color: ${color.black05};
+    box-shadow: 0 0 2px 2px ${color.black05} inset;
+    cursor: pointer;
+  }
 `;
 
 const Canvas = styled.div`
@@ -36,8 +61,8 @@ const View = styled.div.attrs((props) => ({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
-  height: 300px;
+  width: 400px;
+  height: 200px;
 `;
 
 function DropModal ({ show, setShow, setIsLogin }) {
@@ -74,9 +99,15 @@ function DropModal ({ show, setShow, setIsLogin }) {
     <Container>
       <Canvas onClick={handleClick}>
         <View onClick={(e) => e.stopPropagation()}>
-          <div> 삭제하려면 'delete'를 입력하세요. </div>
-          <input onChange={(e) => setInput(e.target.value)} value={input} />
-          <Button onClick={drop}> 확인 </Button>
+          <div className='notice'>
+            삭제하려면 <i>delete</i>를 입력하세요.
+          </div>
+          <Input
+            maxLength='6'
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+          />
+          <Button onClick={drop}>확인</Button>
         </View>
       </Canvas>
     </Container>
