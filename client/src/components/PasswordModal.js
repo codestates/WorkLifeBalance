@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { useState } from 'react';
-import axios from 'axios';
-import url from '../urlSetup';
-import color from '../colorSetup';
+import styled from "styled-components";
+import { useState } from "react";
+import axios from "axios";
+import url from "../urlSetup";
+import color from "../colorSetup";
 
 const Container = styled.div`
   position: fixed;
@@ -16,7 +16,7 @@ const Button = styled.button`
   background-color: white;
   border: none;
   font-size: 1rem;
-  width: 80px;
+  width: 100px;
   height: 30px;
   box-shadow: 0 0 2px 2px ${color.black02} inset;
   :hover {
@@ -33,25 +33,26 @@ const Canvas = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  /* background-color: rgba(0,0,0,0.4); */
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  /* background-color: white; */
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const View = styled.div.attrs((props) => ({
-  role: 'dialog'
+  role: "dialog",
 }))`
   position: fixed;
-  top: 100px;
+  top: 25%;
+  padding: 50px 60px 50px 60px;
   border-radius: 5px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 500px;
+  width: 460px;
   height: 300px;
 `;
 
@@ -72,6 +73,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
   /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
@@ -80,10 +82,10 @@ const Title = styled.div`
 `;
 
 const Input = styled.input`
-  background-color: #eee;
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
+  flex: 2 0 auto;
   font-size: 1.3rem;
-  padding: 0 1rem 0 1rem;
+  padding: 0 1rem 0 0;
   margin: 0.5rem;
   height: 2rem;
   width: 20rem;
@@ -91,6 +93,7 @@ const Input = styled.input`
   border-bottom: 1px solid black;
   :focus {
     outline: none;
+    background-color: ${color.black08};
   }
 `;
 
@@ -100,20 +103,20 @@ const Desc = styled.div`
   font-size: 0.5rem;
   width: 20rem;
   height: 1rem;
-  color: ${(props) => (props.valid ? 'green' : 'red')};
+  color: ${(props) => (props.valid ? "green" : "red")};
 `;
 
 const Div = styled.div`
   display: flex;
   align-items: right;
   justify-content: right;
-  width: 25rem;
+  width: 28rem;
 `;
 
-function PasswordModal ({ show, setShow }) {
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewpassword] = useState('');
-  const [repeat, setRepeat] = useState('');
+function PasswordModal({ show, setShow }) {
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewpassword] = useState("");
+  const [repeat, setRepeat] = useState("");
   const [pwfocus, setPwfocus] = useState(false);
   const [rpfocus, setRpfocus] = useState(false);
 
@@ -132,7 +135,7 @@ function PasswordModal ({ show, setShow }) {
         `${url}/user/update/password`,
         { password, newPassword },
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
       if (res.status === 200) handleClick();
@@ -150,7 +153,7 @@ function PasswordModal ({ show, setShow }) {
             </Title>
             <Input
               onChange={(e) => setPassword(e.target.value)}
-              type='password'
+              type="password"
               value={password}
             />
           </Box>
@@ -164,22 +167,18 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setNewpassword(e.target.value)}
               onBlur={() => setPwfocus(true)}
-              type='password'
+              type="password"
               value={newPassword}
             />
           </Box>
           <div>
-            {!pwfocus
-              ? (
-                <Desc valid />
-                )
-              : validPw(newPassword)
-                ? (
-                  <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
-                  )
-                : (
-                  <Desc valid={false}>4~20자 여야 합니다.</Desc>
-                  )}
+            {!pwfocus ? (
+              <Desc valid />
+            ) : validPw(newPassword) ? (
+              <Desc valid>사용할 수 있는 비밀번호입니다.</Desc>
+            ) : (
+              <Desc valid={false}>4~20자 여야 합니다.</Desc>
+            )}
           </div>
           <Box>
             <Title>
@@ -188,22 +187,18 @@ function PasswordModal ({ show, setShow }) {
             <Input
               onChange={(e) => setRepeat(e.target.value)}
               onBlur={() => setRpfocus(true)}
-              type='password'
+              type="password"
               value={repeat}
             />
           </Box>
           <div>
-            {!rpfocus
-              ? (
-                <Desc valid />
-                )
-              : newPassword === repeat
-                ? (
-                  <Desc valid>비밀번호가 일치합니다.</Desc>
-                  )
-                : (
-                  <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
-                  )}
+            {!rpfocus ? (
+              <Desc valid />
+            ) : newPassword === repeat ? (
+              <Desc valid>비밀번호가 일치합니다.</Desc>
+            ) : (
+              <Desc valid={false}>비밀번호가 일치하지 않습니다.</Desc>
+            )}
           </div>
           <Div>
             <Button onClick={update}> 확인 </Button>
