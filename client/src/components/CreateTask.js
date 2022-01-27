@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useState } from "react";
-import styled from "styled-components";
-import color from "../colorSetup";
-import url from "../urlSetup";
+import axios from 'axios';
+import { useState } from 'react';
+import styled from 'styled-components';
+import color from '../colorSetup';
+import url from '../urlSetup';
 
 const Container = styled.div`
   /* min-width: 500px;
@@ -17,7 +17,7 @@ const Checkbox = styled.input`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: ${(props) => (props.deactive ? "#ddd" : "#fff")};
+  background: ${(props) => (props.deactive ? '#ddd' : '#fff')};
   height: 20px;
   width: 20px;
   border-radius: 8px;
@@ -35,7 +35,7 @@ const Checkbox = styled.input`
     width: 20%;
   }
   :checked {
-    background: ${(props) => (props.deactive ? "#aaa" : "#505bf0")};
+    background: ${(props) => (props.deactive ? '#aaa' : '#505bf0')};
   }
   :checked::after {
     display: block;
@@ -95,7 +95,7 @@ const TagInput = styled.div`
   margin-left: 5px;
   border-radius: 5px;
   color: ${(props) =>
-    props.tag === "Work" ? "red" : props.tag === "Life" ? "blue" : "black"};
+    props.tag === 'Work' ? 'red' : props.tag === 'Life' ? 'blue' : 'black'};
   cursor: pointer;
   :hover {
     background-color: ${color.black08};
@@ -113,12 +113,12 @@ const ButtonDiv = styled.div`
   }
 `;
 
-function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
+function CreateTask ({ setCreateForm, setTasks, setIdx1 }) {
   const [inputValue, setInputValue] = useState({
-    tag: "Work",
-    task: "",
-    time: "",
-    check: false,
+    tag: 'Work',
+    task: '',
+    time: '',
+    check: false
   });
 
   const handleInputValue = (key) => (e) => {
@@ -127,8 +127,8 @@ function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
   const handleTagClick = () => (e) => {
     const text = e.target.textContent;
 
-    if (text === "Work") setInputValue({ ...inputValue, tag: "Life" });
-    if (text === "Life") setInputValue({ ...inputValue, tag: "Work" });
+    if (text === 'Work') setInputValue({ ...inputValue, tag: 'Life' });
+    if (text === 'Life') setInputValue({ ...inputValue, tag: 'Work' });
   };
 
   const handleConfirm = () => {
@@ -141,26 +141,18 @@ function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
         {
           task,
           tag,
-          time,
+          time
         },
         { withCredentials: true }
       )
       .then(() => {
-        axios
-          .get(`${url}/task/list?check=0&time=1&index=${0}`, {
-            withCredentials: true,
-          })
-          .then((res) => {
-            setIdx1(res.data.data.tasks.length);
-            setTasks([...res.data.data.tasks]);
-          })
-          .catch();
+        window.location.reload();
         setCreateForm(false);
         setInputValue({
-          tag: "Work",
-          task: "",
-          time: "",
-          check: false,
+          tag: 'Work',
+          task: '',
+          time: '',
+          check: false
         });
       })
       .catch();
@@ -170,7 +162,7 @@ function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
   };
   return (
     <Container>
-      <InfoWrapper className="left">
+      <InfoWrapper className='left'>
         {/* <Checkbox
           type='checkbox'
           // onChange={handleInputValue("check")}
@@ -183,18 +175,18 @@ function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
 
         {/* deadline 형식: 2022-22-22T22:22 */}
       </InfoWrapper>
-      <InfoWrapper className="center">
+      <InfoWrapper className='center'>
         <TaskInput
-          onChange={handleInputValue("task")}
-          value={inputValue.task || ""}
+          onChange={handleInputValue('task')}
+          value={inputValue.task || ''}
         />
         {/* 작성완료 눌렀을 때 서버로 요청하는 코드 작성 */}
       </InfoWrapper>
-      <InfoWrapper className="right">
+      <InfoWrapper className='right'>
         <DateInput
-          type="datetime-local"
-          onChange={handleInputValue("time")}
-          value={inputValue.time || ""}
+          type='datetime-local'
+          onChange={handleInputValue('time')}
+          value={inputValue.time || ''}
         />
         <div>
           <ButtonDiv onClick={handleCancel}>취소</ButtonDiv>

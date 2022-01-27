@@ -74,6 +74,7 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 10px;
+  white-space: nowrap;
   /* background: rgb(166, 167, 243); */
   font-weight: bold;
   height: 3rem;
