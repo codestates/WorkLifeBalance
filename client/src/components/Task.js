@@ -172,7 +172,7 @@ function Task({ list }) {
         )
         .then(() => {
           setModify(false);
-          // window.location.reload();
+          window.location.reload();
         })
         .catch(() => {
           setModify(true);

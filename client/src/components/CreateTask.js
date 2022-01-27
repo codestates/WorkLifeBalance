@@ -151,7 +151,7 @@ function CreateTask({ setCreateForm, setTasks, setIdx1 }) {
             withCredentials: true,
           })
           .then((res) => {
-            setIdx1(5);
+            setIdx1(res.data.data.task.length);
             setTasks([...res.data.data.tasks]);
           })
           .catch();
