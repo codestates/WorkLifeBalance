@@ -4,6 +4,7 @@ import { Task, CreateTask } from '../components';
 import url from '../urlSetup';
 import '@fortawesome/fontawesome-free/js/all.js';
 import axios from 'axios';
+import { sample1, sample2, sample3 } from '../images';
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -60,6 +61,35 @@ const Loading = styled.div`
   min-height: 25rem;
   border-radius: 5px;
   background-color: wheat;
+`;
+
+const SampleImage = styled.img`
+  width: 80%;
+  margin-left: ${(props) => (props.right ? '143px' : '0')};
+`;
+
+const SampleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  position: relative;
+  height: fit-content;
+`;
+
+const SampleSubWrap = styled.div`
+  position: relative;
+  margin-bottom: 100px;
+`;
+
+const SampleText = styled.span`
+  position: absolute;
+  width: 300px;
+  top: 45%;
+  font-size: 1.2rem;
+  font-weight: 900;
+  ${(props) => (props.align ? 'text-align: right;' : '')}
+  -webkit-text-stroke: 1px #cee;
+  ${(props) => (props.right ? 'right: 35px;' : 'left: 35px;')};
 `;
 
 function Home ({ showLogin, setShowLogin, isLogin }) {
@@ -143,9 +173,12 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const handleTarget2 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=1&time=0&index=${idx2}`, {
-        withCredentials: true
-      });
+      const res1 = await axios.get(
+        `${url}/task/list?check=1&time=0&index=${idx2}`,
+        {
+          withCredentials: true
+        }
+      );
       if (res1.data.data.tasks.length > 0) {
         setIdx2(idx2 + res1.data.data.tasks.length);
         setComplete([...complete].concat([...res1.data.data.tasks]));
@@ -158,9 +191,12 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
   const handleTarget3 = async ([entry], observer) => {
     if (entry.intersectionRatio === 1) {
       console.log(entry.intersectionRatio);
-      const res1 = await axios.get(`${url}/task/list?check=0&time=0&index=${idx3}`, {
-        withCredentials: true
-      });
+      const res1 = await axios.get(
+        `${url}/task/list?check=0&time=0&index=${idx3}`,
+        {
+          withCredentials: true
+        }
+      );
       if (res1.data.data.tasks.length > 0) {
         setIdx3(idx3 + res1.data.data.tasks.length);
         setUncomplete([...uncomplete].concat([...res1.data.data.tasks]));
@@ -255,7 +291,28 @@ function Home ({ showLogin, setShowLogin, isLogin }) {
         </Container>
       ) : (
         <Container center>
-          <div>목업 이미지 보여줘야함</div>
+          <SampleWrapper>
+            <SampleSubWrap>
+              <SampleImage src={sample1} />
+              <SampleText right>
+                <div>여러분의 할일을 메모형태로 저장하고</div>
+                <div>리스트를 확인할 수 있어요!</div>
+              </SampleText>
+            </SampleSubWrap>
+            <SampleSubWrap>
+              <SampleText align>
+                <div>여러분들이 기록한 메모들의 비율을 확인할 수 있어요</div>
+              </SampleText>
+              <SampleImage src={sample2} right />
+            </SampleSubWrap>
+            <SampleSubWrap>
+              <SampleImage src={sample3} />
+              <SampleText right>
+                <div>여러분이 매일 남긴 메모에 대해서</div>
+                <div>스스로 피드백을 남길수도 있어요!</div>
+              </SampleText>
+            </SampleSubWrap>
+          </SampleWrapper>
         </Container>
       )}
     </>
